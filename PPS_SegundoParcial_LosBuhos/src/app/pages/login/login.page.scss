@@ -3,6 +3,25 @@
   background: #333333;
   padding-left: 10px;
   padding-right: 10px;
+
+  img{
+    display: flex;
+    margin: 0 auto;
+    margin-top: 2em;
+    height: 10em;
+    align-self: center;
+    justify-self: center;
+  }
+
+  h1{
+    color: wheat;
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+
+  form{
+    margin-bottom: 1em;
+  }
 }
 
 .ctas {

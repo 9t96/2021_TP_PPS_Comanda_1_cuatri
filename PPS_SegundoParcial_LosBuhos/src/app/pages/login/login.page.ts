@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
         this.loginForm.controls['password'].setValue('222222')
         break;
       case 3:
-        this.loginForm.controls['email'].setValue('usuerio@usuario.com') 
+        this.loginForm.controls['email'].setValue('usuario@usuario.com') 
         this.loginForm.controls['password'].setValue('333333')
         break;
       case 4:

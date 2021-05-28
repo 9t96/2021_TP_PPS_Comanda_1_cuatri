@@ -67,11 +67,18 @@
           >
         </ion-input>
       </ion-item>
-
+      
+      <!-- QR -->
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button  expand="block" color="secondary" class="" (click)="escanearClick()">Escanear DNI <ion-icon style="margin-left: 1rem;" name="qr-code-outline"></ion-icon></ion-button>
+      </p>
+          
+ 
       <br>  
       <p class="ion-padding-start ion-padding-end" > 
         <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Siguiente</ion-button>
       </p>
+
       </form>
 
       <!-- Form 2 -->

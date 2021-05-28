@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Photo } from '@capacitor/camera';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/clases/usuario';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { CameraService } from 'src/app/services/camera.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-register',
@@ -20,13 +24,17 @@ export class RegisterComponent implements OnInit {
   user:Usuario;
   formSelected:number;
   srcTest = "../../../assets/bulldog francés.jpg";
+  uploadProgress:number;
+  log = "log";
 
   constructor(
-    //private authService:AuthService, 
+    private authService:AuthService, 
     public toastController:ToastController,
     private router:Router,
     private formBuilder: FormBuilder,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private cameraService:CameraService,
+    private storageService: StorageService
     ) {    
       this.user = new Usuario();  
       this.formSelected = 1;           
@@ -38,7 +46,11 @@ export class RegisterComponent implements OnInit {
   }
 
   tomarFotoPerfil(){
-    console.log("test");
+    this.addPhotoToGallery();
+  }
+
+  escanearClick(){
+
   }
 
   createForm() {
@@ -126,4 +138,56 @@ export class RegisterComponent implements OnInit {
      }
    }
 
+   async addPhotoToGallery() {
+    const photo = await this.cameraService.addNewToGallery();
+    this.uploadPhoto(photo).then().catch((err) => {
+      this.log = err;
+    });
+  }
+
+  private async uploadPhoto(cameraPhoto: Photo) {    
+    const response = await fetch(cameraPhoto.webPath!);
+    const blob = await response.blob();
+    const filePath = this.getFilePath();
+    
+    const uploadTask = this.storageService.saveFile(blob, filePath);    
+    
+    uploadTask.percentageChanges().subscribe(change =>{
+      this.uploadProgress = change;
+    });
+
+    uploadTask.then(async res =>{
+      const downloadURL = await res.ref.getDownloadURL();
+      this.user.img_src = downloadURL;
+      this.srcTest = downloadURL;
+      // await this.savePhotoData(downloadURL, filePath).then(async res =>{
+      //   const toast = await this.toastController.create({
+      //     duration:3000,
+      //     message: "Se completó la subida"
+      //   });
+      //   toast.present();
+      // });
+    })
+    .catch((err)=>{
+      this.log = err;
+    });    
+  }
+
+  getFilePath(){
+    return new Date().getTime() + '-test';
+  }
+
+  // private async savePhotoData(fileUrl:string, fileName:string){
+  //   let data:PhotoData = new PhotoData();
+
+  //   data.date = Date.now();
+  //   data.photoUrl = fileUrl;
+  //   data.points = 0;
+  //   data.type = type;
+  //   data.userEmail = this.userEmail;
+  //   data.userName = this.userName;
+  //   data.photoName = fileName;
+
+  //   return this.photoDataService.addItem(data);
+  // }
 }

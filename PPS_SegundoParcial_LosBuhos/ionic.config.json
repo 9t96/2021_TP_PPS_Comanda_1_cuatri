@@ -1,5 +1,7 @@
 {
   "name": "PPS_SegundoParcial_LosBuhos",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

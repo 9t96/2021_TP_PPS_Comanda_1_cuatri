@@ -1,0 +1,85 @@
+<div class="container">
+  <img src="../../../assets/images/buho.svg" alt="" />
+  <h1>Inicar sesión</h1>
+  <form [formGroup]="loginForm">
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label>Correo electrónico</ion-label>
+      <ion-input type="email" formControlName="email" required></ion-input>
+    </ion-item>
+    <ion-row class="hiddenItems">
+      <small
+        *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)"
+        style="color: var(--ion-color-danger)"
+        >Por favor, ingrese su correo.</small
+      >
+      <small
+        *ngIf="loginForm.get('email').hasError('email')"
+        style="color: var(--ion-color-danger)"
+        >Ingrese un correo valido.</small
+      >
+    </ion-row>
+
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label>Contaseña</ion-label>
+      <ion-input
+        type="password"
+        required
+        formControlName="password"
+      ></ion-input>
+    </ion-item>
+    <ion-row class="hiddenItems">
+      <ion-icon *ngIf="showErrors" name="alert-circle-outline"></ion-icon
+      ><small *ngIf="showErrors">{{message}}</small>
+      <small
+        *ngIf="loginForm.get('password').hasError('required') && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+        style="color: var(--ion-color-danger)"
+        [ngClass]="loginForm.get('password').hasError('required') && loginForm.get('password').touched ? 'visible' : 'hidden'"
+        >Por favor, ingrese una constraseña.</small
+      >
+      <small
+        *ngIf="loginForm.get('password').hasError('maxlength') && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+        [ngClass]="loginForm.get('password').hasError('maxlength') && loginForm.get('password').touched ? 'visible' : 'hidden'"
+        style="color: var(--ion-color-danger)"
+        >La contraseña no debe contener mas de 6 caracteres.</small
+      >
+    </ion-row>
+
+    <ion-row class="ctas">
+      <ion-button
+        (click)="Login()"
+        type="submit"
+        size="medium"
+        color="primary"
+        [disabled]="!loginForm.valid"
+        >Ingresar</ion-button
+      >
+      <a routerLink="registro">Registrase</a>
+    </ion-row>
+  </form>
+
+  <ion-row style="justify-content: space-around; margin-bottom: 1em">
+    <ion-button (click)="testUser(1)" color="secondary" expand="block">
+      Admin
+    </ion-button>
+
+    <ion-button (click)="testUser(2)" color="warning" expand="block">
+      Invitado
+    </ion-button>
+  </ion-row>
+
+  <ion-row style="justify-content: center; margin-bottom: 1em">
+    <ion-button (click)="testUser(5)" color="light" expand="block">
+      Usuario
+    </ion-button>
+  </ion-row>
+
+  <ion-row style="justify-content: space-around; margin-bottom: 1em">
+    <ion-button (click)="testUser(3)" color="tertiary" expand="block">
+      Anonimo
+    </ion-button>
+
+    <ion-button (click)="testUser(2)" color="dark" expand="block">
+      Tester
+    </ion-button>
+  </ion-row>
+</div>

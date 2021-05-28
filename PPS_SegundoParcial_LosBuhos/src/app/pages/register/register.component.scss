@@ -1,0 +1,37 @@
+.form-register{
+    margin-top: 0rem;
+}
+
+.form-register .btn-register{
+    height: 6rem;
+    margin-bottom: 0rem;
+    margin-top: -2rem;
+}
+
+.form-register .btn-login{
+    height: 4rem;
+}
+
+.form-register ion-item{
+    margin-bottom: 1rem;
+}
+
+.error-input-message{
+    color:#eb445a;
+    margin-top: -5%;
+    margin-bottom: 0%;
+}
+
+.circular--portrait {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+.circular--portrait img {
+    width: 100%;
+    height: auto;
+    margin-top: -20px;
+}

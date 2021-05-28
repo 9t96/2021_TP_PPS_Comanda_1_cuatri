@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">PPS_SegundoParcial_LosBuhos</string>
-    <string name="title_activity_main">PPS_SegundoParcial_LosBuhos</string>
-    <string name="package_name">pps.segundoparcial.losbuhos</string>
-    <string name="custom_url_scheme">pps.segundoparcial.losbuhos</string>
-</resources>

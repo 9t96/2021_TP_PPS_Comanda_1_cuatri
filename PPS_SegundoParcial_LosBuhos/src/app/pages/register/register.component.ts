@@ -10,6 +10,8 @@ import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -34,7 +36,8 @@ export class RegisterComponent implements OnInit {
     private loadingController: LoadingController,
     private cameraService:CameraService,
     private storageService: StorageService,
-    private userService:UserService
+    private userService:UserService,
+    private barcodeScanner: BarcodeScanner
     ) {    
       this.user = new Usuario();   
       this.user.rol = Rol.CLIENTE; 
@@ -53,8 +56,13 @@ export class RegisterComponent implements OnInit {
   }
 
   escanearClick(){
-    console.log("usuario: " + this.user.img_src);
-    console.log(this.form1);
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      this.presentToast(barcodeData.text);
+     }).catch(err => {
+         console.log('Error', err);
+         this.presentToast("Error al escanear DNI");
+     });
   }
 
   createForm() {

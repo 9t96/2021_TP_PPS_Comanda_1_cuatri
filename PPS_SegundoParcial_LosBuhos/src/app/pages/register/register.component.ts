@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Photo } from '@capacitor/camera';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/clases/usuario';
+import { Rol } from 'src/app/enums/roles';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -35,8 +36,11 @@ export class RegisterComponent implements OnInit {
     private storageService: StorageService,
     private userService:UserService
     ) {    
-      this.user = new Usuario();      
-      this.formSelected = 1; 
+      this.user = new Usuario();   
+      this.user.rol = Rol.CLIENTE; 
+      this.user.apellido =''; // porque sino al guardar rope al ser undefined
+      this.user.dni = '';  // porque sino al guardar rope al ser undefined
+      this.formSelected = 1;       
       this.hasErrorPerfil = false;                
   }
 
@@ -75,8 +79,10 @@ export class RegisterComponent implements OnInit {
     this.spinner.present();
     
     this.authService.CreaterUser(this.user.correo, this.getPass1Control().value)
-    .then((credential) => {            
+    .then((credential) => {        
+      //console.log(credential.user.);      
       this.userService.addItem(this.user);
+      //this.userService.setItemWithId(this.user, credential.credential.providerId);
     }).catch((err) => {
       console.log(err);
       this.presentToast("Error al registrar el usuario");

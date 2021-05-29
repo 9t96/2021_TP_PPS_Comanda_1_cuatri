@@ -1,12 +1,12 @@
-import { IRol } from "../interfaces/rol";
+import { Rol } from "../enums/roles";
 
 export class Usuario{
     nombre:string;
-    apellido?:string;
+    apellido:string;
     correo: string;
-    dni?: string;
+    dni: string;
     cuil?: string;
-    rol: IRol;
+    rol: Rol;
     img_src?: string;
-    tipo_empleado?: IRol;
+    tipo_empleado?: Rol;
 }

@@ -13,11 +13,13 @@
 
         <!-- foto perfil -->
         <div class="" >
-          <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.required && getNameControl().touched">Campo obligatorio</small>          
+          <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="hasErrorPerfil">Debe cargar una foto de perfil</small>          
         </div>
+
         <ion-item >          
           <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">            
-            <img [src]="srcTest" >
+            <img [src]="user.img_src" *ngIf="user.img_src != null">
+            <img [src]="imagenPerfil" *ngIf="user.img_src == null">
           </div>            
         </ion-item>
 
@@ -73,8 +75,6 @@
         <ion-button  expand="block" color="secondary" class="" (click)="escanearClick()">Escanear DNI <ion-icon style="margin-left: 1rem;" name="qr-code-outline"></ion-icon></ion-button>
       </p>
           
- 
-      <br>  
       <p class="ion-padding-start ion-padding-end" > 
         <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Siguiente</ion-button>
       </p>
@@ -86,11 +86,15 @@
 
         <ion-item >          
           <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">            
-            <img [src]="srcTest" >
+            <img [src]="user.img_src" *ngIf="user.img_src != null">
           </div>            
         </ion-item>
 
       <!-- email -->
+      <div>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.required && getEmailControl().touched">Campo obligatorio</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.email && getEmailControl().touched">Formato incorrecto</small>
+      </div>
       <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
         <ion-label position= "floating"><ion-icon name="mail-outline"></ion-icon> Email *</ion-label><br>
         <ion-input 
@@ -100,38 +104,36 @@
           >
         </ion-input>
       </ion-item>
-      <div>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.required && getEmailControl().touched">Campo obligatorio</small>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.email && getEmailControl().touched">Formato incorrecto</small>
-      </div>
   
       <!-- pass 01 -->
+      <div>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.required && getPass1Control().touched">Campo obligatorio</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.minlength && getPass1Control().touched">Mínimo 6 caracteres</small>
+      </div>
       <ion-item class="ion-padding-start ion-padding-end" color="">
         <ion-label position= "floating"><ion-icon name="lock-closed-outline"></ion-icon> Contraseña *</ion-label>
         <ion-input 
           type="password" 
           formControlName="pass1"
-          [(ngModel)]="pass" >
+          >
         </ion-input>
       </ion-item>
-      <div>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.required && getPass1Control().touched">Campo obligatorio</small>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.minlength && getPass1Control().touched">Mínimo 6 caracteres</small>
-      </div>
   
       <!-- pass 02 -->
+      <div>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control().errors?.required  && getPass2Control().touched">Campo obligatorio</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control().errors?.minlength  && getPass2Control().touched">Mínimo 6 caracteres</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control()?.errors?.mustMatch && getPass2Control()?.touched">La contraseña debe ser la misma</small>
+      </div>
       <ion-item class="ion-padding-start ion-padding-end" color="">
         <ion-label position= "floating"><ion-icon name="lock-closed-outline"></ion-icon> Confirmar Contraseña *</ion-label>
         <ion-input 
           type="password"
           formControlName="pass2"
-          [(ngModel)]="passConfirmation">
+          >
         </ion-input>
       </ion-item>
-      <div>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control().errors?.required  && getPass2Control().touched">Campo obligatorio</small>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control().errors?.minlength  && getPass2Control().touched">Mínimo 6 caracteres</small>
-      </div>
+
       <br>
   
       <p class="ion-padding-start ion-padding-end" > 

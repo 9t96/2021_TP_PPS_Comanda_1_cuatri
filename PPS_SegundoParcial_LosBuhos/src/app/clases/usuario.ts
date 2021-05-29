@@ -2,9 +2,9 @@ import { IRol } from "../interfaces/rol";
 
 export class Usuario{
     nombre:string;
-    apellido:string;
+    apellido?:string;
     correo: string;
-    dni: string;
+    dni?: string;
     cuil?: string;
     rol: IRol;
     img_src?: string;

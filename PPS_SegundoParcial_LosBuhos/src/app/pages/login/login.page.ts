@@ -50,6 +50,10 @@ export class LoginPage implements OnInit {
     })
   }
 
+  goToRegister(){
+    this.router.navigate(["registro"]);
+  }
+
   testUser(accountNumber: number){
     switch (accountNumber) {
       case 1:

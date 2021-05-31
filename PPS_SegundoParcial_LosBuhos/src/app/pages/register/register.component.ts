@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
+declare let window: any;
 
 @Component({
   selector: 'app-register',
@@ -54,8 +55,26 @@ export class RegisterComponent implements OnInit {
   }
 
   escanearClick(){
-    console.log("usuario: " + this.user.img_src);
-    console.log(this.form1);
+    window.cordova.plugins.barcodeScanner.scan(
+      (result) => {
+        var dniData = result.text.split('@');
+        this.form1.patchValue({
+          name: dniData[2],
+          lastName: dniData[1],      
+          dni: dniData[4], 
+        });
+      },
+      (err) => {
+        console.log(err);
+        this.presentToast("Error al escanear el DNI");
+      },
+      {
+        showTorchButton: true,
+        prompt: 'Scan your code',
+        formats: 'PDF_417',
+        resultDisplayDuration: 2,
+      }
+    );
   }
 
   createForm() {

@@ -1,4 +1,5 @@
-import { Rol } from "../enums/roles";
+import { eEmpleado } from "../enums/eEmpleado";
+import { eRol } from "../enums/eRol";
 
 export class Usuario{
     nombre:string;
@@ -6,7 +7,7 @@ export class Usuario{
     correo: string;
     dni: string;
     cuil?: string;
-    rol: Rol;
+    rol: eRol;
     img_src?: string;
-    tipo_empleado?: Rol;
+    tipo_empleado?: eEmpleado;
 }

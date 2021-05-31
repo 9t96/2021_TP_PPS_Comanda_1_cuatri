@@ -4,13 +4,10 @@ import { Router } from '@angular/router';
 import { Photo } from '@capacitor/camera';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/clases/usuario';
-import { Rol } from 'src/app/enums/roles';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
-
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-register',
@@ -36,14 +33,10 @@ export class RegisterComponent implements OnInit {
     private loadingController: LoadingController,
     private cameraService:CameraService,
     private storageService: StorageService,
-    private userService:UserService,
-    private barcodeScanner: BarcodeScanner
+    private userService:UserService
     ) {    
-      this.user = new Usuario();   
-      this.user.rol = Rol.CLIENTE; 
-      this.user.apellido =''; // porque sino al guardar rope al ser undefined
-      this.user.dni = '';  // porque sino al guardar rope al ser undefined
-      this.formSelected = 1;       
+      this.user = new Usuario();      
+      this.formSelected = 1; 
       this.hasErrorPerfil = false;                
   }
 
@@ -56,13 +49,8 @@ export class RegisterComponent implements OnInit {
   }
 
   escanearClick(){
-    this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
-      this.presentToast(barcodeData.text);
-     }).catch(err => {
-         console.log('Error', err);
-         this.presentToast("Error al escanear DNI");
-     });
+    console.log("usuario: " + this.user.img_src);
+    console.log(this.form1);
   }
 
   createForm() {
@@ -87,10 +75,9 @@ export class RegisterComponent implements OnInit {
     this.spinner.present();
     
     this.authService.CreaterUser(this.user.correo, this.getPass1Control().value)
-    .then((credential) => {        
-      //console.log(credential.user.);      
+    .then((credential) => {   
+      //credential.user.uid         
       this.userService.addItem(this.user);
-      //this.userService.setItemWithId(this.user, credential.credential.providerId);
     }).catch((err) => {
       console.log(err);
       this.presentToast("Error al registrar el usuario");

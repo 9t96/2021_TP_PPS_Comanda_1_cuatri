@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { eRol} from '../../enums/eRol';
 
 class LoginUser{
   email: string;
@@ -18,6 +21,7 @@ export class LoginPage implements OnInit {
 
 
   showErrors: boolean = false;
+  userData$: Observable<Usuario>;
   message:string;
   user : LoginUser;
   public loginForm: FormGroup;
@@ -26,7 +30,7 @@ export class LoginPage implements OnInit {
 
   get password() { return this.loginForm.get('password'); }
 
-  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder) { 
+  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder, public userSrv: UserService) { 
     this.user = new LoginUser();
   }
 
@@ -43,7 +47,21 @@ export class LoginPage implements OnInit {
     this.user.email = this.loginForm.get('email').value;
     this.user.password = this.loginForm.get('password').value;
     this.authService.SignIn(this.user.email, this.user.password).then( res =>{
-      this.router.navigate(['home']);
+      this.userSrv.getItem(res.user.uid).subscribe( user =>{
+        //Redirect por rol
+        switch (user.rol) {
+          case eRol.DUEÑO:
+          case eRol.SUPERVISOR:
+            this.router.navigateByUrl('home')
+            break;
+          case eRol.CLIENTE:
+            this.router.navigateByUrl('home')
+            break;
+          case eRol.EMPLEADO:
+            this.router.navigateByUrl('home')
+            break;
+        }
+      })
     })
     .catch( err =>{ 
       err.code == "auth/wrong-password" ? this.presentErrors("Uno o mas campos son invalidos...") : this.presentErrors("Ha ocurrido un error vuelva a intentar.")
@@ -82,9 +100,9 @@ export class LoginPage implements OnInit {
   presentErrors(message: string){
     this.message = message;
     this.showErrors = true;
-/*     setTimeout(() => {
+    setTimeout(() => {
       this.showErrors = false;
-    }, 3500); */
+    }, 3500);
   }
 
 

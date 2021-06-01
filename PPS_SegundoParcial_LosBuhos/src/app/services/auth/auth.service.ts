@@ -12,8 +12,8 @@ import { firebaseUser } from 'src/app/interfaces/firebaseUser';
 })
 export class AuthService {
 
-  
   public user$: Observable<firebaseUser>;
+  public loggedUser: firebaseUser;
   public dbRef: AngularFirestoreCollection<Usuario>
 
   constructor(
@@ -25,12 +25,13 @@ export class AuthService {
     this.user$ = this.ngFireAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
-          return this.afStore.doc(`usuarios/${user.uid}`).valueChanges();
+          return this.afStore.doc(`users/${user.uid}`).valueChanges();
         }
         return of(null);
       })
     );
-    this.dbRef = this.afStore.collection("usuarios");
+    this.dbRef = this.afStore.collection("users");
+    console.log(this.user$)
   }
 
   // Login in with email/password

@@ -49,6 +49,7 @@ export class LoginPage implements OnInit {
     this.authService.SignIn(this.user.email, this.user.password).then( res =>{
       this.userSrv.getItem(res.user.uid).subscribe( user =>{
         //Redirect por rol
+        localStorage.setItem("userData",JSON.stringify(user));
         switch (user.rol) {
           case eRol.DUEÑO:
           case eRol.SUPERVISOR:

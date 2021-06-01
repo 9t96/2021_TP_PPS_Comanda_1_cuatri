@@ -1,12 +1,35 @@
 <ion-content fullscreen color="">
   <div class="form-register">
-    <ion-toolbar color="">
+    <ion-toolbar color="" class="mb-1">
       <ion-title class="ion-text-center">
-        <h2>Registrar Usuario</h2>
+        <h2>Registrar Personal</h2>
       </ion-title>
     </ion-toolbar>
 
     <div [ngSwitch]="formSelected">
+      <!-- Form 0 -->
+      <form *ngSwitchCase="0"> 
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="submit" expand="block" color="secondary" class="btn-tipo-personal" (click)="setRol('MOZO')">Mozo</ion-button>
+      </p>
+
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="submit" expand="block" color="secondary" class="btn-tipo-personal" (click)="setRol('BARTENDER')">Bartender</ion-button>
+      </p>
+
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="submit" expand="block" color="secondary" class="btn-tipo-personal" (click)="setRol('COCINERO')">Cocinero</ion-button>
+      </p>
+
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="submit" expand="block" color="primary" class="btn-tipo-personal" (click)="setRol('SUPERVISOR')">Supervisor</ion-button>
+      </p>
+          
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="submit" expand="block" color="primary" class="btn-tipo-personal" (click)="setRol('DUEÑO')">Dueño</ion-button>
+      </p>
+      </form>
+
       <!-- Form 1 -->
       <form [formGroup]="form1" (ngSubmit)="goTo(2)" *ngSwitchCase="1"> 
 
@@ -27,7 +50,7 @@
           <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.minlength && getNameControl().touched">Mínimo 2 caracteres</small>
         </div>
       <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
-        <ion-label position= "floating"><ion-icon name="person-outline"></ion-icon> Nombre *</ion-label><br>
+        <ion-label position= "fixed"> Nombre</ion-label><br>
         <ion-input 
           type="text" 
           formControlName="name" 
@@ -42,7 +65,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getLastNameControl().errors?.minlength && getLastNameControl().touched">Mínimo 2 caracteres</small>
       </div>
       <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
-        <ion-label position= "floating"><ion-icon name="person-outline"></ion-icon> Apellido</ion-label><br>
+        <ion-label position= "fixed"> Apellido</ion-label><br>
         <ion-input 
           type="text" 
           formControlName="lastName" 
@@ -59,11 +82,28 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getDniControl()?.errors?.pattern && getDniControl()?.touched">Sólo se permiten números</small>
       </div>
       <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
-        <ion-label position= "floating"><ion-icon name="person-outline"></ion-icon> DNI</ion-label><br>
+        <ion-label position= "fixed"> DNI</ion-label><br>
         <ion-input 
           type="text" 
           formControlName="dni" 
           [(ngModel)]="user.dni" 
+          >
+        </ion-input>
+      </ion-item>
+
+      <!-- CUIL -->
+      <div class="" >
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.required && getCuilControl()?.touched">Campo obligatorio</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.minlength && getCuilControl()?.touched && !getCuilControl()?.errors?.pattern">Mínimo de caracteres 10</small>        
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.maxlength && getCuilControl()?.touched && !getCuilControl()?.errors?.pattern">Máximo de caracteres 15</small> 
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.pattern && getCuilControl()?.touched">Sólo se permiten números</small>
+      </div>
+      <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
+        <ion-label position= "fixed"> CUIL</ion-label><br>
+        <ion-input 
+          type="text" 
+          formControlName="cuil" 
+          [(ngModel)]="user.cuil" 
           >
         </ion-input>
       </ion-item>
@@ -82,9 +122,10 @@
       <!-- Form 2 -->
       <form [formGroup]="form2" (ngSubmit)="registrarseClick()" *ngSwitchCase="2">   
 
-        <ion-item >          
+        <ion-item>          
           <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">            
             <img [src]="user.img_src" *ngIf="user.img_src != null">
+            <img [src]="imagenPerfil" *ngIf="user.img_src == null">
           </div>            
         </ion-item>
 
@@ -139,7 +180,6 @@
       </p>
       </form>
     </div>
-    
+
   </div>
 </ion-content>
-

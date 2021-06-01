@@ -15,11 +15,13 @@ import { environment } from '../environments/environment';
 import { RegisterComponent } from './pages/register/register.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent
+    RegisterComponent,
+    RegistroEmpleadoComponent
   ],
   entryComponents: [],
   imports: [

@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, Photo, CameraSource } from '@capacitor/camera';
-//import { Plugins, CameraResultType, CameraPhoto, CameraSource } from '@capacitor/core';
-
-//const { Camera, Filesystem, Storage } = Plugins;
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './pages/register/register.component';
+import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
-  {path:'registro', component:RegisterComponent},
+  {path:'registro-cliente', component:RegisterComponent},
+  {path:'registro-personal', component:RegistroEmpleadoComponent},
   {
     path: '',
     redirectTo: 'login',

@@ -72,4 +72,8 @@ export class AuthService {
     });
   } 
 
+  getCurrentUser(): Usuario{
+    let user = JSON.parse(localStorage.getItem("userData"));
+    return user;
+  }
 }

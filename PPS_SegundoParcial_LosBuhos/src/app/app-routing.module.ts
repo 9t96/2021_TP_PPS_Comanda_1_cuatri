@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { SupervisorGuard } from './guards/supervisor.guard';
 import { HomeSupervisorComponent } from './pages/home-supervisor/home-supervisor.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
@@ -17,8 +18,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {path:'registro-cliente', component:RegisterComponent},
-  {path:'registro-personal', component:RegistroEmpleadoComponent},
-  {path:'home-supervisor', component:HomeSupervisorComponent},
+  {path:'registro-personal', component:RegistroEmpleadoComponent, canActivate:[SupervisorGuard]},
+  {path:'home-supervisor', component:HomeSupervisorComponent, canActivate:[SupervisorGuard]},
   {
     path: '',
     redirectTo: 'login',

@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
         switch (user.rol) {
           case eRol.DUEÑO:
           case eRol.SUPERVISOR:
-            this.router.navigateByUrl('home')
+            this.router.navigateByUrl('home-supervisor')
             break;
           case eRol.CLIENTE:
             this.router.navigateByUrl('home')
@@ -70,14 +70,14 @@ export class LoginPage implements OnInit {
   }
 
   goToRegister(){
-    this.router.navigate(["registro-personal"]);
+    this.router.navigate(["registro-cliente"]);
   }
 
   testUser(accountNumber: number){
     switch (accountNumber) {
       case 1:
-        this.loginForm.controls['email'].setValue('admin@admin.com') 
-        this.loginForm.controls['password'].setValue('111111')
+        this.loginForm.controls['email'].setValue('supervisor@usuario.com') 
+        this.loginForm.controls['password'].setValue('123123')
         break;
       case 2:
         this.loginForm.controls['email'].setValue('invitado@invitado.com') 

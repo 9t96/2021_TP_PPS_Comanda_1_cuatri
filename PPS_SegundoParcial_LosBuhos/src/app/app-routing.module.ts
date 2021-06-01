@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { HomeSupervisorComponent } from './pages/home-supervisor/home-supervisor.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   },
   {path:'registro-cliente', component:RegisterComponent},
   {path:'registro-personal', component:RegistroEmpleadoComponent},
+  {path:'home-supervisor', component:HomeSupervisorComponent},
   {
     path: '',
     redirectTo: 'login',

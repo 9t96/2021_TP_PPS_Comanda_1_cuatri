@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { Usuario } from '../clases/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +44,8 @@ export class BaseService<T> {
       this.itemsCollection.doc(id).set(Object.assign({}, item));    
     }
     
-    getItem(id:string){
-      return this.itemsCollection.doc(id).get();
+    getItem(id:string):Observable<Usuario>{
+      return this.itemsCollection.doc<Usuario>(id).valueChanges({idField: "uid"});
     }
 
     /*

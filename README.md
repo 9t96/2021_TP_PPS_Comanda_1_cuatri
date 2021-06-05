@@ -21,18 +21,18 @@
 | - | Iconos + Splash | Rocio | Terminado
 | - | Login | Claudio | Terminado
 | - | Registro | Federico | Terminado
-| A | Alta dueño/supervisor | - | Sin asignar
-| B | Alta empleados | - | Sin asignar
+| A | Alta dueño/supervisor | Federico  | En progreso
+| B | Alta empleados | Federico  | En progreso
 | C | Alta productos | - | Sin asignar
-| D | Alta de cliente | - | Sin asignar
-| E | Alta de mesa | - | Sin asignar
+| D | Alta de cliente | Rocio | En progreso
+| E | Alta de mesa | Claudio | En progreso
 | F | Qr ingreso al local | - | Sin asignar
 | G | Qr de la mesa | - | Sin asignar |
 | H | Qr de propina  | - | Sin asignar 
-| I | Encuentas cliente | - | Sin asignar
+| I | Encuesta cliente | - | Sin asignar
 | J | Encuesta Empleado | - | Sin asignar
-| K | Ecuesta supervisor | - | Sin asignar
-| L| Pedir platos y bebidas | - | Sin asignar
+| K | Encuesta supervisor | - | Sin asignar
+| L | Pedir platos y bebidas | - | Sin asignar
 | M | Tomar pedido | - | Sin asignar
 | N | Hacer reservas agendadas | - | Sin asignar
 | O | Pedir Mesa | - | Sin asignar

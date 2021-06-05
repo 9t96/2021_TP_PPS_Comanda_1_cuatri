@@ -1,4 +1,5 @@
 export enum eTipoMesa{
-    VIP,
-    DISCAPACITADOS
+    VIP = "VIP",
+    DISCAPACITADOS = "DISCAPACITADOS",
+    COMUN = "COMUN"
 }

@@ -1,0 +1,55 @@
+<div class="container">
+  <h1 class="title">Alta de mesas</h1>
+  <form [formGroup]="mesasForm">
+    <!-- NRO DE MESA -->
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Nro Mesa</ion-label><br />
+      <ion-input type="number" formControlName="nro_mesa" required [disabled]="true">
+      </ion-input>
+    </ion-item>
+    <!-- ESTADO MESA -->
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Estado</ion-label><br />
+      <ion-input type="string" formControlName="estado" required [disabled]="true">
+      </ion-input>
+    </ion-item>
+    <!-- CAPACIDAD -->
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Capacidad</ion-label><br />
+      <ion-input type="number" formControlName="comensales" required min="1">
+      </ion-input>
+    </ion-item>
+    <!-- ERRORS CAPACIDAD -->
+    <ion-row class="hiddenItems">
+      <small
+        *ngIf="mesasForm.get('comensales').hasError('required') && (mesasForm.get('comensales').dirty || mesasForm.get('comensales').touched)"
+        style="color: var(--ion-color-danger)"
+        [ngClass]="mesasForm.get('comensales').hasError('required') && mesasForm.get('comensales').touched ? 'visible' : 'hidden'">Este
+        campo es obligatorio</small>
+    </ion-row>
+    <!-- TIPO MESA -->
+    <ion-item lines="full" class="input-wrapper" style="margin-top: 0px;">
+      <ion-label position="fixed">Tipo mesa</ion-label>
+
+      <ion-select value="0" interface="popover" formControlName="tipo_mesa" placeholder="Seleccione una opcion"
+        required>
+        <ion-select-option value="COMUN">Comun</ion-select-option>
+        <ion-select-option value="DISCAPACITADOS">Discapacitados</ion-select-option>
+        <ion-select-option value="VIP">Vip</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!-- Errors TIPO MESA -->
+    <ion-row class="hiddenItems">
+      <small
+        *ngIf="mesasForm.get('tipo_mesa').hasError('required') && (mesasForm.get('tipo_mesa').dirty || mesasForm.get('tipo_mesa').touched)"
+        style="color: var(--ion-color-danger)"
+        [ngClass]="mesasForm.get('tipo_mesa').hasError('required') && mesasForm.get('tipo_mesa').touched ? 'visible' : 'hidden'">Este
+        campo es obligatorio</small>
+    </ion-row>
+    <!-- SUBMIT -->
+    <ion-row class="cta-row">
+      <ion-button (click)="GuardarNuevaMesa()" type="submit" size="medium" color="primary"
+        [disabled]="!mesasForm.valid">Guardar</ion-button>
+    </ion-row>
+  </form>
+</div>

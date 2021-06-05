@@ -1,0 +1,42 @@
+.container{
+    height: 100%;
+    background: #333333;
+    
+    .title{
+        color: var(--ion-color-primary);
+    }
+}
+
+.hideItems {
+    visibility: hidden;
+  }
+  
+  .showItems {
+    visibility: visible;
+  }
+  
+  .hiddenItems {
+    height: 30px;
+    small {
+      margin-bottom: 7px;
+      color: var(--ion-color-danger);
+      font-weight: 700;
+      font-size: 14px;
+      align-self: center;
+      margin-left: 0.5em;
+    }
+  }
+  
+  .input-wrapper {
+    --background: #fdf0d5;
+    color:  #333333
+  }
+
+  ion-item{
+      margin-top: 2em
+  }
+
+  .cta-row{
+     float:right; 
+  }
+  

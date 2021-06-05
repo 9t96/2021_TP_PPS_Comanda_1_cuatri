@@ -6,4 +6,7 @@ export class Mesa{
     comensales: number;
     tipo_mesa: eTipoMesa;
     estado: eEstadoMesa;
+    constructor(){
+        this.estado = eEstadoMesa.LIBRE
+    }
 }

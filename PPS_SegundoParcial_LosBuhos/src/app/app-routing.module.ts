@@ -25,6 +25,12 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'altamesas',
+    loadChildren: () => import('./pages/altamesas/altamesas.module').then( m => m.AltamesasPageModule),
+    canActivate:[SupervisorGuard]
+  },
+
 ];
 
 @NgModule({

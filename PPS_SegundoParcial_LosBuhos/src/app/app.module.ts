@@ -17,17 +17,22 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
 import { HomeSupervisorComponent } from './pages/home-supervisor/home-supervisor.component';
+import { AltaProductoComponent } from './pages/alta-producto/alta-producto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     RegistroEmpleadoComponent,
-    HomeSupervisorComponent
+    HomeSupervisorComponent,
+    AltaProductoComponent
   ],
   entryComponents: [],
   imports: [
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule,
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

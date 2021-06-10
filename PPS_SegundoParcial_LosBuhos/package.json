@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "resources": "capacitor-resources -p android,ios && node resources.js"
+    "resources": "capacitor-resources -p android,ios && node ./scripts/resources.js"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +21,7 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
-    "@capacitor/android": "^3.0.0",
+    "@capacitor/android": "3.0.0",
     "@capacitor/app": "1.0.0",
     "@capacitor/camera": "^1.0.0",
     "@capacitor/core": "3.0.0",

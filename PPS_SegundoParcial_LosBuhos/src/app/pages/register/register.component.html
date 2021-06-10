@@ -26,7 +26,7 @@
           <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.required && getNameControl().touched">Campo obligatorio</small>
           <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.minlength && getNameControl().touched">Mínimo 2 caracteres</small>
         </div>
-      <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
+      <ion-item color="" fill="outline">
         <ion-label position= "floating"><ion-icon name="person-outline"></ion-icon> Nombre *</ion-label><br>
         <ion-input 
           type="text" 
@@ -41,7 +41,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getLastNameControl().errors?.required && getLastNameControl().touched">Campo obligatorio</small>
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getLastNameControl().errors?.minlength && getLastNameControl().touched">Mínimo 2 caracteres</small>
       </div>
-      <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
+      <ion-item color=""  fill="outline">
         <ion-label position= "floating"><ion-icon name="person-outline"></ion-icon> Apellido</ion-label><br>
         <ion-input 
           type="text" 
@@ -58,7 +58,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="(getDniControl()?.errors?.min || getDniControl()?.errors?.max) && getDniControl()?.touched && !getDniControl()?.errors?.pattern">El valor debe estar entre 999999999 y 1000000</small>
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getDniControl()?.errors?.pattern && getDniControl()?.touched">Sólo se permiten números</small>
       </div>
-      <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
+      <ion-item color="" fill="outline">
         <ion-label position= "floating"><ion-icon name="person-outline"></ion-icon> DNI</ion-label><br>
         <ion-input 
           type="text" 
@@ -93,7 +93,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.required && getEmailControl().touched">Campo obligatorio</small>
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.email && getEmailControl().touched">Formato incorrecto</small>
       </div>
-      <ion-item color="" class="ion-padding-start ion-padding-end" fill="outline">
+      <ion-item color="" fill="outline">
         <ion-label position= "floating"><ion-icon name="mail-outline"></ion-icon> Email *</ion-label><br>
         <ion-input 
           type="email" 
@@ -108,7 +108,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.required && getPass1Control().touched">Campo obligatorio</small>
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.minlength && getPass1Control().touched">Mínimo 6 caracteres</small>
       </div>
-      <ion-item class="ion-padding-start ion-padding-end" color="">
+      <ion-item color="">
         <ion-label position= "floating"><ion-icon name="lock-closed-outline"></ion-icon> Contraseña *</ion-label>
         <ion-input 
           type="password" 
@@ -123,7 +123,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control().errors?.minlength  && getPass2Control().touched">Mínimo 6 caracteres</small>
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control()?.errors?.mustMatch && getPass2Control()?.touched">La contraseña debe ser la misma</small>
       </div>
-      <ion-item class="ion-padding-start ion-padding-end" color="">
+      <ion-item color="">
         <ion-label position= "floating"><ion-icon name="lock-closed-outline"></ion-icon> Confirmar Contraseña *</ion-label>
         <ion-input 
           type="password"

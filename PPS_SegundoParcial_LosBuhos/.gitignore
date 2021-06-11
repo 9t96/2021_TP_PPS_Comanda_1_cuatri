@@ -29,4 +29,5 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-/android
+/android/.idea
+/android/.gradle

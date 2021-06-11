@@ -13,7 +13,7 @@ export class HomeSupervisorComponent implements OnInit {
   ngOnInit() {}
 
   goToRegister(){
-    this.router.navigate(['registro-personal']);
+    this.router.navigate(['supervisor/register']);
   }
 
 }

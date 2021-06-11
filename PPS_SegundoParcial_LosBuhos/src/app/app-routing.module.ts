@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SupervisorGuard } from './guards/supervisor.guard';
-import { HomeSupervisorComponent } from './pages/home-supervisor/home-supervisor.component';
+import { HomeSupervisorComponent } from './supervisor/pages/home-supervisor/home-supervisor.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
+import { RegistroEmpleadoComponent } from './supervisor/pages/registro-empleado/registro-empleado.component';
 
 const routes: Routes = [
   {
@@ -13,13 +13,17 @@ const routes: Routes = [
     path: 'splash',
     loadChildren: () => import('./pages/splash/splash.module').then( m => m.SplashPageModule)
   },
-    {
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'supervisor',
+    loadChildren: () => import('./supervisor/supervisor.module').then( m => m.SupervisorModule)
+  },
   {path:'registro-cliente', component:RegisterComponent},
-  {path:'registro-personal', component:RegistroEmpleadoComponent, canActivate:[SupervisorGuard]},
-  {path:'home-supervisor', component:HomeSupervisorComponent, canActivate:[SupervisorGuard]},
+  // {path:'registro-personal', component:RegistroEmpleadoComponent, canActivate:[SupervisorGuard]},
+  // {path:'home-supervisor', component:HomeSupervisorComponent, canActivate:[SupervisorGuard]},
   {
     path: '',
     redirectTo: 'login',

@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
         switch (user.rol) {
           case eRol.DUEÑO:
           case eRol.SUPERVISOR:
-            this.router.navigateByUrl('home-supervisor')
+            this.router.navigateByUrl('supervisor/home')
             break;
           case eRol.CLIENTE:
             this.router.navigateByUrl('home')

@@ -24,7 +24,7 @@ export class RegistroEmpleadoComponent implements OnInit {
   spinner: any;  
   user:Usuario;
   formSelected:number;
-  imagenPerfil = "../../../assets/bulldog francés.jpg";
+  imagenPerfil = "../../../assets/images/pngegg.png";
   uploadProgress:number;
   hasErrorPerfil:boolean;
 

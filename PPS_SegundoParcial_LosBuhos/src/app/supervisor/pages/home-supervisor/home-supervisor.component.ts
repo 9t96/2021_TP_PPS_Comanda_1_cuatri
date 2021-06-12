@@ -16,4 +16,8 @@ export class HomeSupervisorComponent implements OnInit {
     this.router.navigate(['supervisor/register']);
   }
 
+  goToClientes(){
+    this.router.navigate(['supervisor/clientes']);
+  }
+
 }

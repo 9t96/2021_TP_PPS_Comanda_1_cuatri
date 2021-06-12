@@ -6,11 +6,13 @@ import { HomeSupervisorComponent } from './pages/home-supervisor/home-supervisor
 import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 
 @NgModule({
   declarations: [
     HomeSupervisorComponent,
-    RegistroEmpleadoComponent
+    RegistroEmpleadoComponent,
+    ClientesComponent
   ],
   imports: [
     CommonModule,

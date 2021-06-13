@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
+import { eEmpleado } from 'src/app/enums/eEmpleado';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { eRol} from '../../enums/eRol';
@@ -56,10 +57,10 @@ export class LoginPage implements OnInit {
             this.router.navigateByUrl('home-supervisor')
             break;
           case eRol.CLIENTE:
-            this.router.navigateByUrl('home')
+            this.router.navigateByUrl('home-clientes')
             break;
           case eRol.EMPLEADO:
-            this.router.navigateByUrl('home')
+            user.tipo_empleado == eEmpleado.MOZO ? this.router.navigateByUrl('home-mozo') : this.router.navigateByUrl('home-empleado')
             break;
         }
       })
@@ -85,11 +86,11 @@ export class LoginPage implements OnInit {
         break;
       case 3:
         this.loginForm.controls['email'].setValue('usuario@usuario.com') 
-        this.loginForm.controls['password'].setValue('333333')
+        this.loginForm.controls['password'].setValue('666666')
         break;
       case 4:
-        this.loginForm.controls['email'].setValue('anonimo@anonimo.com') 
-        this.loginForm.controls['password'].setValue('444444')
+        this.loginForm.controls['email'].setValue('hectornozo@mozo.com') 
+        this.loginForm.controls['password'].setValue('999999')
         break;
       case 5:
         this.loginForm.controls['email'].setValue('tester@tester.com') 

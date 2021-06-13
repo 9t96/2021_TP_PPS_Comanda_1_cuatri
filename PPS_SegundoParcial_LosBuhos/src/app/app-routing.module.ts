@@ -30,6 +30,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/altamesas/altamesas.module').then( m => m.AltamesasPageModule),
     canActivate:[SupervisorGuard]
   },
+  {
+    path: 'home-clientes',
+    loadChildren: () => import('./pages/home-clientes/home-clientes.module').then( m => m.HomeClientesPageModule)
+  },  {
+    path: 'home-mozo',
+    loadChildren: () => import('./pages/home-mozo/home-mozo.module').then( m => m.HomeMozoPageModule)
+  }
+
+
 
 ];
 

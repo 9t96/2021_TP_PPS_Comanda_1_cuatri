@@ -9,20 +9,30 @@ import { Mesa } from 'src/app/clases/mesa';
   providedIn: 'root',
 })
 export class MesasService {
-  public dbRef: AngularFirestoreCollection<any>;
+  public dbRefMesas: AngularFirestoreCollection<any>;
+  public dbRefEspera: AngularFirestoreCollection<any>;
   constructor(
     public afStore: AngularFirestore,
     public ngFireAuth: AngularFireAuth
   ) {
-    this.dbRef = this.afStore.collection("mesas");
+    this.dbRefMesas = this.afStore.collection("mesas");
+    this.dbRefEspera = this.afStore.collection("listaEspera");
   }
 
     TraerMesas(): Observable<any>{
-      return this.dbRef.valueChanges();
+      return this.dbRefMesas.valueChanges();
     }
 
     GuardarNuevaMesa(nuevaMesa: Mesa): any{
-      return this.dbRef.add(Object.assign({},nuevaMesa));
+      return this.dbRefMesas.add(Object.assign({},nuevaMesa));
+    }
+
+    TraerListaEspera(): Observable<any>{
+      return this.dbRefEspera.valueChanges({idField: "doc_id"})
+    }
+
+    SolicitarMesa(currentUser: any){
+      return this.dbRefEspera.add({user_uid: currentUser.uid, nombre: currentUser.nombre, apellido: currentUser.apellido, img_src: currentUser.img_src});
     }
   
 }

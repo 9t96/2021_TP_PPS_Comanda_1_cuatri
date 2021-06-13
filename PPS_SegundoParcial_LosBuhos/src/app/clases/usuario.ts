@@ -3,6 +3,7 @@ import { eRol } from "../enums/eRol";
 
 export class Usuario{
     nombre:string;
+    aceptado:boolean;
     apellido:string;
     correo: string;
     dni: string;

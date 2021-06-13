@@ -9,7 +9,8 @@ import { Usuario } from '../clases/usuario';
 export class BaseService<T> {
 
     protected itemsCollection: AngularFirestoreCollection<T>;
-    items: Observable<T[]>;    
+    items: Observable<T[]>;  
+
 
     constructor(private afs: AngularFirestore) {
       

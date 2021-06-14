@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   spinner: any;  
   user:Usuario;
   formSelected:number;
-  imagenPerfil = "../../../assets/bulldog francés.jpg";
+  imagenPerfil = "../../../assets/images/pngegg.png";
   uploadProgress:number;
   hasErrorPerfil:boolean;
 
@@ -41,6 +41,7 @@ export class RegisterComponent implements OnInit {
       this.user.apellido = '';
       this.user.dni = '';
       this.user.rol = eRol.CLIENTE;
+      this.user.aceptado = false;
         
       this.formSelected = 1; 
       this.hasErrorPerfil = false;                
@@ -66,7 +67,7 @@ export class RegisterComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.presentToast("Error al escanear el DNI");
+        this.presentToast("Error al escanear el DNI", 'warning');
       },
       {
         showTorchButton: true,
@@ -101,15 +102,18 @@ export class RegisterComponent implements OnInit {
     this.authService.CreaterUser(this.user.correo, this.getPass1Control().value)
     .then((credential) => {   
       this.userService.setItemWithId(this.user, credential.user.uid);
+      this.presentToast("Registro Exitoso", 'success').then(()=>{
+        this.router.navigate([""]);
+      });
     }).catch((err) => {
       console.log(err);
-      this.presentToast("Error al registrar el usuario");
+      this.presentToast("Error al registrar el usuario", 'warning');
     }).finally(()=>{
       this.spinner.dismiss();
     });
   }
 
-  async presentToast(message:string){
+  async presentToast(message:string, color:string){
     const toast = await this.toastController.create({
       color: 'warning',
       message: message,

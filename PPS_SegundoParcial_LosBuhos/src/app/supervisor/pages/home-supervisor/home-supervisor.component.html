@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="mt-3">
   <p class="ion-padding-start ion-padding-end" > 
     <ion-button  expand="block" color="secondary" class="" (click)="goToRegister()">Registrar Usuario</ion-button>
   </p>
@@ -12,6 +12,6 @@
     <ion-button  expand="block" color="secondary" class="" [routerLink]="['/altamesas']">Alta mesas</ion-button>
   </p>
   <p class="ion-padding-start ion-padding-end" > 
-    <ion-button  expand="block" color="secondary" class="" [routerLink]="['/producto']">Producto</ion-button>
+    <ion-button  expand="block" color="secondary" class="" (click)="goToClientes()">Administración Clientes</ion-button>
   </p>
 </ion-content>

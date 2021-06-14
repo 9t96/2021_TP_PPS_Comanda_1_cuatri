@@ -24,7 +24,7 @@ export class RegistroEmpleadoComponent implements OnInit {
   spinner: any;  
   user:Usuario;
   formSelected:number;
-  imagenPerfil = "../../../assets/bulldog francés.jpg";
+  imagenPerfil = "../../../assets/images/pngegg.png";
   uploadProgress:number;
   hasErrorPerfil:boolean;
 
@@ -85,9 +85,9 @@ export class RegistroEmpleadoComponent implements OnInit {
   createForm() {
     this.form1 = this.formBuilder.group({
       name: ["", [Validators.required, Validators.minLength(2)]],
-      lastName: ["", [ Validators.minLength(2)]],      
-      dni:['', [ Validators.max(999999999), Validators.min(1000000), Validators.pattern("^[0-9]*$")]],
-      cuil:['',[ Validators.minLength(10), Validators.maxLength(15) , Validators.pattern("^[0-9]*$")]]
+      lastName: ["", [Validators.required, Validators.minLength(2)]],      
+      dni:['', [Validators.required, Validators.max(999999999), Validators.min(1000000), Validators.pattern("^[0-9]*$")]],
+      cuil:['',[Validators.required, Validators.minLength(10), Validators.maxLength(15) , Validators.pattern("^[0-9]*$")]]
     });
 
     this.form2 = this.formBuilder.group({

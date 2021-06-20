@@ -33,6 +33,7 @@ export class AltamesasPage implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
     //Obtengo las mesas existenetes para obtener el nro de la nueva mesa
     const mesas$ = this.mesasSrv.TraerMesas().subscribe( mesas =>{
+      console.log(mesas);
       this.mesasList = mesas;
       let mesanuevanro = this.mesasList.length + 1;
       this.mesasForm.get('nro_mesa').setValue(mesanuevanro);

@@ -17,57 +17,56 @@ declare let window: any;
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-    
-  form1:FormGroup;
-  form2:FormGroup;
-  spinner: any;  
-  user:Usuario;
-  formSelected:number;
-  imagenPerfil = "../../../assets/images/pngegg.png";
-  uploadProgress:number;
-  hasErrorPerfil:boolean;
+  form1: FormGroup;
+  form2: FormGroup;
+  spinner: any;
+  user: Usuario;
+  formSelected: number;
+  imagenPerfil = '../../../assets/images/pngegg.png';
+  uploadProgress: number;
+  hasErrorPerfil: boolean;
 
   constructor(
-    private authService:AuthService, 
-    public toastController:ToastController,
-    private router:Router,
+    private authService: AuthService,
+    public toastController: ToastController,
+    private router: Router,
     private formBuilder: FormBuilder,
     private loadingController: LoadingController,
-    private cameraService:CameraService,
+    private cameraService: CameraService,
     private storageService: StorageService,
-    private userService:UserService
-    ) {    
-      this.user = new Usuario();    
-      this.user.apellido = '';
-      this.user.dni = '';
-      this.user.rol = eRol.CLIENTE;
-      this.user.aceptado = false;
-        
-      this.formSelected = 1; 
-      this.hasErrorPerfil = false;                
+    private userService: UserService
+  ) {
+    this.user = new Usuario();
+    this.user.apellido = '';
+    this.user.dni = '';
+    this.user.rol = eRol.CLIENTE;
+    this.user.aceptado = false;
+
+    this.formSelected = 1;
+    this.hasErrorPerfil = false;
   }
 
   ngOnInit() {
-    this.createForm();    
+    this.createForm();
   }
 
-  tomarFotoPerfil(){
+  tomarFotoPerfil() {
     this.addPhotoToGallery();
   }
 
-  escanearClick(){
+  escanearClick() {
     window.cordova.plugins.barcodeScanner.scan(
       (result) => {
         var dniData = result.text.split('@');
         this.form1.patchValue({
           name: dniData[2],
-          lastName: dniData[1],      
-          dni: dniData[4], 
+          lastName: dniData[1],
+          dni: dniData[4],
         });
       },
       (err) => {
         console.log(err);
-        this.presentToast("Error al escanear el DNI", 'warning');
+        this.presentToast('Error al escanear el DNI', 'warning');
       },
       {
         showTorchButton: true,
@@ -80,44 +79,57 @@ export class RegisterComponent implements OnInit {
 
   createForm() {
     this.form1 = this.formBuilder.group({
-      name: ["", [Validators.required, Validators.minLength(2)]],
-      lastName: ["", [ Validators.minLength(2)]],      
-      dni:['', [ Validators.max(999999999), Validators.min(1000000), Validators.pattern("^[0-9]*$")]],
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required,Validators.minLength(2)]],
+      dni: [
+        '',
+        [
+          Validators.required,
+          Validators.max(999999999),
+          Validators.min(1000000),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
     });
 
-    this.form2 = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
-      pass1: ["", [Validators.required, Validators.minLength(6)]],         
-      pass2: ["", [Validators.required, Validators.minLength(6)]]
-    },
-    {
-      validator: this.MustMatch('pass1', 'pass2')
-    });
+    this.form2 = this.formBuilder.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        pass1: ['', [Validators.required, Validators.minLength(6)]],
+        pass2: ['', [Validators.required, Validators.minLength(6)]],
+      },
+      {
+        validator: this.MustMatch('pass1', 'pass2'),
+      }
+    );
   }
 
-  async registrarseClick(){        
+  async registrarseClick() {
     await this.presentLoading();
     this.spinner.present();
-    
-    this.authService.CreaterUser(this.user.correo, this.getPass1Control().value)
-    .then((credential) => {   
-      this.userService.setItemWithId(this.user, credential.user.uid);
-      this.presentToast("Registro Exitoso", 'success').then(()=>{
-        this.router.navigate([""]);
+
+    this.authService
+      .CreaterUser(this.user.correo, this.getPass1Control().value)
+      .then((credential) => {
+        this.userService.setItemWithId(this.user, credential.user.uid);
+        this.presentToast('Registro Exitoso', 'success').then(() => {
+          this.router.navigate(['']);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.presentToast('Error al registrar el usuario', 'warning');
+      })
+      .finally(() => {
+        this.spinner.dismiss();
       });
-    }).catch((err) => {
-      console.log(err);
-      this.presentToast("Error al registrar el usuario", 'warning');
-    }).finally(()=>{
-      this.spinner.dismiss();
-    });
   }
 
-  async presentToast(message:string, color:string){
+  async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
       color: 'warning',
       message: message,
-      duration: 2000
+      duration: 2000,
     });
     toast.present();
   }
@@ -125,89 +137,101 @@ export class RegisterComponent implements OnInit {
   async presentLoading() {
     this.spinner = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait...'
+      message: 'Please wait...',
     });
   }
 
-  getEmailControl() { return this.form2.controls["email"]; }
-  getPass1Control() { return this.form2.controls["pass1"]; }
-  getPass2Control() { return this.form2.controls["pass2"]; }
+  getEmailControl() {
+    return this.form2.controls['email'];
+  }
+  getPass1Control() {
+    return this.form2.controls['pass1'];
+  }
+  getPass2Control() {
+    return this.form2.controls['pass2'];
+  }
 
-  getNameControl() { return this.form1.controls["name"]; }    
-  getLastNameControl() { return this.form1.controls["lastName"]; }
-  getDniControl() { return this.form1.controls["dni"]; }
-  
+  getNameControl() {
+    return this.form1.controls['name'];
+  }
+  getLastNameControl() {
+    return this.form1.controls['lastName'];
+  }
+  getDniControl() {
+    return this.form1.controls['dni'];
+  }
 
-  goToLogin(){ 
+  goToLogin() {
     this.router.navigate(['login']);
     this.ngOnInit();
-   }
-
-   goTo(idPage:number){
-     switch(idPage){
-      case 0:
-         this.goToLogin();
-         break;
-      case 1:
-          this.formSelected = 1;
-          break;
-      case 2:
-          if(this.user.img_src != null){
-            this.formSelected = 2;
-          }
-          else{
-            this.hasErrorPerfil = true;
-          }
-          
-          break;
-     }
-   }
-
-   async addPhotoToGallery() {
-    const photo = await this.cameraService.addNewToGallery();
-    this.uploadPhoto(photo).then().catch((err) => {
-      console.log(err);
-    });
   }
 
-  private async uploadPhoto(cameraPhoto: Photo) {    
+  goTo(idPage: number) {
+    switch (idPage) {
+      case 0:
+        this.goToLogin();
+        break;
+      case 1:
+        this.formSelected = 1;
+        break;
+      case 2:
+        if (this.user.img_src != null) {
+          this.formSelected = 2;
+        } else {
+          this.hasErrorPerfil = true;
+        }
+
+        break;
+    }
+  }
+
+  async addPhotoToGallery() {
+    const photo = await this.cameraService.addNewToGallery();
+    this.uploadPhoto(photo)
+      .then()
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  private async uploadPhoto(cameraPhoto: Photo) {
     const response = await fetch(cameraPhoto.webPath!);
     const blob = await response.blob();
     const filePath = this.getFilePath();
-    
-    const uploadTask = this.storageService.saveFile(blob, filePath);    
 
-    uploadTask.then(async res =>{
-      const downloadURL = await res.ref.getDownloadURL();
-      this.user.img_src = downloadURL;
-      this.hasErrorPerfil = false;
-    })
-    .catch((err)=>{
-      console.log(err);
-    });    
+    const uploadTask = this.storageService.saveFile(blob, filePath);
+
+    uploadTask
+      .then(async (res) => {
+        const downloadURL = await res.ref.getDownloadURL();
+        this.user.img_src = downloadURL;
+        this.hasErrorPerfil = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  getFilePath(){
+  getFilePath() {
     return new Date().getTime() + '-test';
   }
 
   MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
-        const control = formGroup.controls[controlName];
-        const matchingControl = formGroup.controls[matchingControlName];
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
 
-        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-            // return if another validator has already found an error on the matchingControl
-            return;
-        }
+      if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
 
-        // set error on matchingControl if validation fails
-        if (control.value !== matchingControl.value) {
-            matchingControl.setErrors({ mustMatch: true });
-        } else {
-            matchingControl.setErrors(null);
-        }
-    }
+      // set error on matchingControl if validation fails
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
-
 }

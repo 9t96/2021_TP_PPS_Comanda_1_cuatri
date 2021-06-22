@@ -42,11 +42,15 @@ export class BaseService<T> {
     }
 
     setItemWithId(item: T, id:string) {
-      this.itemsCollection.doc(id).set(Object.assign({}, item));    
+      return this.itemsCollection.doc(id).set(Object.assign({}, item));    
     }
     
     getItem(id:string):Observable<Usuario>{
       return this.itemsCollection.doc<Usuario>(id).valueChanges({idField: "uid"});
+    }
+
+    deleteItem(id:string){
+      return this.itemsCollection.doc(id).delete();
     }
 
     /*

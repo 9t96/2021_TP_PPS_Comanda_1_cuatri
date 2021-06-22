@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Email } from 'src/app/interfaces/email';
+import { EmailService } from 'src/app/services/email.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,9 +12,15 @@ export class ClientesComponent implements OnInit {
 
   clientes:any[];
 
-  constructor(private userService:UserService) { }
+  constructor(private userService:UserService, private emailService:EmailService) { 
+    this.clientes = [];
+  }
 
   ngOnInit() {
+    this.getUsers();
+  }
+
+  private getUsers(){
     this.userService.getClientesByStatus(false)
     .then((querySnapshot)=>{      
       this.clientes = querySnapshot.docs.map(d => {
@@ -21,7 +29,7 @@ export class ClientesComponent implements OnInit {
           user:d.data()
         };
       });
-      console.log(this.clientes);           
+      //console.log(this.clientes);           
     })
     .catch((err)=>{
       console.log(err);
@@ -34,4 +42,29 @@ export class ClientesComponent implements OnInit {
   saveUser(item:any){
     this.userService.setItemWithId(item.user, item.id)
   }
+
+  aceptarCliente(aceptar:boolean, item:any){
+    if(aceptar){
+      item.user.aceptado = aceptar;    
+      this.userService.setItemWithId(item.user, item.id).then(()=>{
+        this.getUsers();
+      });
+    }
+    else{
+      this.userService.deleteItem(item.id).then(()=>{
+        this.getUsers();
+      });
+    }
+        
+    const email: Email = {
+      email: item.user.correo,
+      asunto: aceptar? "Aceptado" : "Rechazado",
+      destinatario: item.user.nombre  + " " + item.user.apellido,
+      rechazo: !aceptar
+    };    
+
+    this.emailService.sendEmail(email).toPromise().catch((err) => {
+      console.log(err);
+    });
+  }  
 }

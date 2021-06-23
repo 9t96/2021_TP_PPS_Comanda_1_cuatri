@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { RegisterComponent } from './pages/register/register.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ], 
   providers: [
     BarcodeScanner,

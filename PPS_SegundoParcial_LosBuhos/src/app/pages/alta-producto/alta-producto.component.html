@@ -1,0 +1,60 @@
+<div class="container">
+  <h1 class="title">Alta de productos</h1>
+  <form  [formGroup]="formProducto">
+     
+    <!-- Nombre -->
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Nombre</ion-label><br />
+      <ion-input type="text"   #nombre formControlName="nombre">
+      </ion-input>
+
+      <small class="invalid" *ngIf="formProducto.controls.nombre.errors?.required && formProducto.controls.nombre.touched ">El nombre es requerido</small> 
+    </ion-item>
+    <!-- descripcion -->
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Descripcion</ion-label><br />
+      <ion-input type="text" #descripcion  formControlName="descripcion">
+        <small class="invalid" *ngIf="formProducto.controls.descripcion.errors?.required && formProducto.controls.descripcion.touched ">La descripcion es requerida</small> 
+   
+      </ion-input>
+    </ion-item>
+    <!-- tiempo -->
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Tiempo</ion-label><br />
+      <ion-input type="number" #tiempo formControlName="tiempo">
+          <small class="invalid" *ngIf="formProducto.controls.tiempo.errors?.required && formProducto.controls.tiempo.touched ">El tiempo es requerido</small> 
+      </ion-input>
+    </ion-item>
+    
+     <!-- precio -->
+     <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Precio</ion-label><br />
+      <ion-input type="number" #precio formControlName="precio">
+        <small class="invalid" *ngIf="formProducto.controls.precio.errors?.required && formProducto.controls.precio.touched ">El precio es requerido</small> 
+      
+      </ion-input>
+    </ion-item>
+    
+    <!-- imagen -->
+
+    <div class="" >
+      <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="hasErrorProducto">Debe cargar la foto del producto</small>          
+    </div>
+    <ion-item >   
+      <ion-label position="fixed">Imagen</ion-label><br />       
+      <div class="mx-auto d-block circular--portrait" (click)="tomarFotoProducto()">            
+        <img [src]="producto.img_src" *ngIf="producto.img_src != null">
+        <img [src]="imagenPerfil" *ngIf="producto.img_src == null">
+      </div>            
+    </ion-item>
+
+
+    
+
+    <!-- SUBMIT -->
+    <ion-row class="cta-row">
+      <ion-button  type="submit" size="medium" color="primary" (click)="GuardarNuevoProducto()"
+      [disabled]="!formProducto.valid" >Guardar </ion-button>
+    </ion-row>
+  </form>
+</div>

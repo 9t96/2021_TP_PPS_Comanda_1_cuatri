@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { ProductosGuard } from './guards/productos/productos.guard';
 import { SupervisorGuard } from './guards/supervisor.guard';
 import { HomeSupervisorComponent } from './supervisor/pages/home-supervisor/home-supervisor.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegistroEmpleadoComponent } from './supervisor/pages/registro-empleado/registro-empleado.component';
+import { AltaProductoComponent } from './pages/alta-producto/alta-producto.component';
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  },{
+  },
+  {
     path: 'splash',
     loadChildren: () => import('./pages/splash/splash.module').then( m => m.SplashPageModule)
   },
@@ -21,13 +24,24 @@ const routes: Routes = [
     path: 'supervisor',
     loadChildren: () => import('./supervisor/supervisor.module').then( m => m.SupervisorModule)
   },
-  {path:'registro-cliente', component:RegisterComponent},
+  {
+    path:'registro-cliente', component:RegisterComponent
+  },
   // {path:'registro-personal', component:RegistroEmpleadoComponent, canActivate:[SupervisorGuard]},
   // {path:'home-supervisor', component:HomeSupervisorComponent, canActivate:[SupervisorGuard]},
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    path:'registro-cliente', 
+    component:RegisterComponent
+  },
+  {
+    path:'registro-personal', 
+    component:RegistroEmpleadoComponent, 
+    canActivate:[SupervisorGuard]
+  },
+  {
+    path:'home-supervisor', 
+    component:HomeSupervisorComponent,
+    canActivate:[SupervisorGuard]
   },
   {
     path: 'altamesas',
@@ -35,13 +49,24 @@ const routes: Routes = [
     canActivate:[SupervisorGuard]
   },
   {
+    path: 'producto',
+    component:AltaProductoComponent,
+    //canActivate:[ProductosGuard]
+    canActivate:[ProductosGuard]
+  },  
+  {
     path: 'home-clientes',
     loadChildren: () => import('./pages/home-clientes/home-clientes.module').then( m => m.HomeClientesPageModule)
   },
   {
     path: 'home-mozo',
     loadChildren: () => import('./pages/home-mozo/home-mozo.module').then( m => m.HomeMozoPageModule)
+  },
+  {
+    path: 'home-cocinero',
+    loadChildren: () => import('./pages/home-cocinero/home-cocinero.module').then( m => m.HomeCocineroPageModule)
   }
+
 
 ];
 

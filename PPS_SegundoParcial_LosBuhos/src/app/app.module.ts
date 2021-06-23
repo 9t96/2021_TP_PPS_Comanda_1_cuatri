@@ -15,16 +15,21 @@ import { environment } from '../environments/environment';
 import { RegisterComponent } from './pages/register/register.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { AltaProductoComponent } from './pages/alta-producto/alta-producto.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent
+    RegisterComponent,
+    AltaProductoComponent
   ],
   entryComponents: [],
   imports: [
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule,
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

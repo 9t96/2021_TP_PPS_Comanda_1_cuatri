@@ -67,7 +67,8 @@ export class LoginPage implements OnInit {
               this.router.navigateByUrl('home-clientes')
               break;
             case eRol.EMPLEADO:
-              user.tipo_empleado == eEmpleado.MOZO ? this.router.navigateByUrl('home-mozo') : this.router.navigateByUrl('home-empleado')
+              user.tipo_empleado == eEmpleado.MOZO ? this.router.navigateByUrl('home-mozo') : (
+                user.tipo_empleado == eEmpleado.COCINERO ? this.router.navigateByUrl('home-cocinero') : this.router.navigateByUrl('home-empleado'))
               break;
           }
         }

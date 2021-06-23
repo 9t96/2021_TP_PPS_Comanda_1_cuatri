@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { Usuario } from '../clases/usuario';
 import { eRol } from '../enums/eRol';
 import { BaseService } from './base.service';
 
@@ -26,7 +24,7 @@ export class UserService extends BaseService<any>{
   getClientesByStatus(aceptado:boolean){
     return this.itemsCollection.ref
       .where("rol",'==', eRol.CLIENTE)
-      //.where("aceptado",'==', eRol.CLIENTE)
+      .where("aceptado",'==', false)
       .get();
   }
 }

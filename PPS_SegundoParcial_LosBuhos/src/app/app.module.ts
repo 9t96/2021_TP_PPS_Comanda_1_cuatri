@@ -16,6 +16,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AltaProductoComponent } from './pages/alta-producto/alta-producto.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AltaProductoComponent } from './pages/alta-producto/alta-producto.compo
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ], 
   providers: [
     BarcodeScanner,

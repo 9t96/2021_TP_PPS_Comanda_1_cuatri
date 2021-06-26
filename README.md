@@ -29,14 +29,14 @@
 | F | Qr ingreso al local | Claudio | Terminado
 | G | Qr de la mesa | Rocio | En progreso 
 | H | Qr de propina  | Federico | En progreso
-| I | Encuesta cliente | - | Sin asignar
-| J | Encuesta Empleado | - | Sin asignar
-| K | Encuesta supervisor | - | Sin asignar
-| L | Pedir platos y bebidas | - | Sin asignar
+| I | Encuesta cliente | Federico | En progreso
+| J | Encuesta Empleado | Rocio | En progreso
+| K | Encuesta supervisor | Claudio | En progreso
+| L | Pedir platos y bebidas | Claudio | En progreso
 | M | Tomar pedido | - | Sin asignar
 | N | Hacer reservas agendadas | - | Sin asignar
-| O | Pedir Mesa | - | Sin asignar
-| P | Pedido platos y bebidas | - | Sin asignar
+| O | PushN - Pedir Mesa | - | Sin asignar
+| P | PushN - Pedido platos y bebidas | - | Sin asignar
 
 
 

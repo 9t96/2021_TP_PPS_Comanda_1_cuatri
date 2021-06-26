@@ -8,6 +8,8 @@ import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 declare let window: any;
+
+
 @Component({
   selector: 'app-home-clientes',
   templateUrl: './home-clientes.page.html',
@@ -21,12 +23,14 @@ export class HomeClientesPage implements OnInit {
   public mesaSolicitada: Mesa;
   public docID_Mesa: string;
   public esperaID: string;
+
+  public mesaCliente: any;
   constructor(public mesasSrv: MesasService) {
 
   }
 
   ngOnInit() {
-    
+
     this.isOnEspera = false;
     this.mesaSolicitada = new Mesa();
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
@@ -53,7 +57,6 @@ export class HomeClientesPage implements OnInit {
     //console.log(this.currentUser);
 
 
-    this.asignarMesa(2);
   }
 
   ScanQr() {
@@ -119,35 +122,31 @@ export class HomeClientesPage implements OnInit {
    * Y por ultimo debe redirigir a otra pagina. 
    */
 
-  asignarMesa(nro_Mesa: number) {
+  asignarMesa(nro_mesa: number) {
     //NO FUNCIONA BIEN LA VARIABLE DE SI ESTA EN ESPERA EL USUARIO.
-    console.log("Esta el usuario en la lista: ", this.isOnEspera);
 
-    if (!this.isOnEspera) {
+    if (this.isOnEspera) {
       //1 Verificar que la mesa este libre
-      this.mesaSolicitada= this.getMesa(nro_Mesa);
-      
-      console.log(  this.docID_Mesa + " "+ this.mesaSolicitada.tipo_mesa);
+      this.getMesa(nro_mesa);
       if (this.mesaSolicitada.estado == eEstadoMesa.LIBRE) {
         //2 verificar que la mesa no este en mesaCliente activa
-        let inactiva = this.getEstadoMesaCliente(nro_Mesa);
-         
+        let inactiva = this.getEstadoMesaCliente(nro_mesa);
+
         if (inactiva == true) {
-          alert("libre id: " + this.docID_Mesa);//no se carga.
-           
-          this.mesasSrv.AsignarMesaCliente(nro_Mesa, '75sQZgNmQGNyExtO3tHG', this.currentUser.uid);
-           
+
+          this.mesasSrv.AsignarMesaCliente(nro_mesa, this.docID_Mesa, this.currentUser.uid);
+
           this.mesasSrv.EliminarClienteListaEspera(this.esperaID);
-        
-          this.mesasSrv.ActualizarMesaEstado('75sQZgNmQGNyExtO3tHG', eEstadoMesa.OCUPADA);
-          
+
+          this.mesasSrv.ActualizarMesaEstado(this.docID_Mesa, eEstadoMesa.OCUPADA);
+
           alert("REDIRIGIR...");
 
         } else {
-          console.log("MESA NO DISPONIBLE- esta activa con otro usuario");
+          alert("MESA NO DISPONIBLE- esta activa con otro usuario");
         }
       } else {
-        console.log("MESA NO DISPONIBLE");
+        alert("MESA NO DISPONIBLE");
       }
     } else {
       alert("NO ESTA EN ESPERA");
@@ -158,41 +157,35 @@ export class HomeClientesPage implements OnInit {
    * Retorna una mesa especifica como un objeta MESA
    * y tambien retorna el id del documento en Firebase.
   */
-    getMesa(nro_mesa: number):Mesa{
-    var mesa: any;
-    var mesaSolicitada = new Mesa();
-    this.mesasSrv.TraerMesas().subscribe(res => {
-     
-      mesa = res;
-      mesa.forEach(m => {
-        if (m.nro_mesa == nro_mesa) {
-           this.mesaSolicitada.comensales = m.comensales;
-           this.mesaSolicitada.estado = m.estado;
-           this.mesaSolicitada.nro_mesa = m.nro_mesa;
-           this.mesaSolicitada.tipo_mesa = m.tipo_mesa;
-           this.docID_Mesa =  m.doc_id_mesa ;
-           return  mesaSolicitada;
-        }
-      }); 
-    })
+  getMesa(nro_mesa: number) {
 
-    return mesaSolicitada;
+    this.mesas.forEach(m => {
+      if (m.nro_mesa == nro_mesa) {
+
+        this.mesaSolicitada.comensales = m.comensales;
+        this.mesaSolicitada.estado = m.estado;
+        this.mesaSolicitada.nro_mesa = m.nro_mesa;
+        this.mesaSolicitada.tipo_mesa = m.tipo_mesa;
+        this.docID_Mesa = m.doc_id_mesa;
+        alert(" NRO MESA =>  " + m.nro_mesa);
+
+      }
+    });
   }
-
   /*Retorna true si la mesa no esta en la coleccion mesaCliente
     Retorna false si la mesa se encuentra en la 
       coleccion mesaCliente con el esta ACTIVA(no esta liberada).
   */
   getEstadoMesaCliente(nro_mesa): boolean {
     var retorno = true;
-    this.mesasSrv.TraerMesaCliente().subscribe(res => {
-      res.forEach(mc => {
-        if (mc.nro_Mesa == nro_mesa) {
-          if (mc.estadoMesaCliente == eEstadoMesaCliente.ACTIVA) {
-            retorno=false;
-          }
+
+    this.mesaCliente.forEach(mc => {
+      if (mc.nro_mesa == nro_mesa) {
+        if (mc.estadoMesaCliente == eEstadoMesaCliente.ACTIVA) {
+          retorno = false;
         }
-      });
+      }
+
     });
     return retorno;
   }

@@ -239,4 +239,10 @@ export class RegistroEmpleadoComponent implements OnInit {
         }
     }
   }
+
+  logout(){
+    this.authService.SignOut().then(()=>{
+      this.router.navigate(['login']);
+    })
+  }
 }

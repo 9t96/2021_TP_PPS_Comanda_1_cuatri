@@ -65,10 +65,9 @@ export class AuthService {
   }
 
   // Sign-out
-  SignOut() {
-    return this.ngFireAuth.signOut().then(() => {
-      localStorage.removeItem("user");
-    });
+  async SignOut() {
+    await this.ngFireAuth.signOut();
+    localStorage.removeItem("user");    
   } 
 
   getCurrentUser(): Usuario{

@@ -1,10 +1,12 @@
 <ion-content fullscreen color="">
-  <div class="form-register">
-    <ion-toolbar color="" class="mb-1">
-      <ion-title class="ion-text-center">
-        <h2>Registrar Personal</h2>
-      </ion-title>
-    </ion-toolbar>
+  <ion-header>
+    <ion-item>    
+      <ion-icon slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
+      <ion-label>Registrar Personal</ion-label>
+    </ion-item>
+  </ion-header>
+
+  <div class="form-register mt-1">
 
     <div [ngSwitch]="formSelected">
       <!-- Form 0 -->

@@ -1,0 +1,20 @@
+ion-list{
+    background:none;
+    ion-item{
+        --background: none;
+        ion-label{
+            margin-left: 1em;
+        }
+        .remove{
+            margin-right: 0.5em;
+            font-size: 2em;
+        }
+        .add{
+            margin-left: 0.5em;
+            font-size: 2em;
+        }
+        strong{
+            font-size: 1.5em;
+        }
+    }
+}

@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomeClientesPageRoutingModule } from './home-clientes-routing.module';
+import { ListaEsperaPageRoutingModule } from './lista-espera-routing.module';
 
-import { HomeClientesPage } from './home-clientes.page';
+import { ListaEsperaPage } from './lista-espera.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomeClientesPageRoutingModule,
+    ListaEsperaPageRoutingModule
   ],
-  declarations: [HomeClientesPage]
+  declarations: [ListaEsperaPage]
 })
-export class HomeClientesPageModule {}
+export class ListaEsperaPageModule {}

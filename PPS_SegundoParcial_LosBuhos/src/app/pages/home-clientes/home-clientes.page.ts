@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Usuario } from 'src/app/clases/usuario';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
+import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
+import { ProductosService } from 'src/app/services/productos/productos.service';
 declare let window: any;
 @Component({
   selector: 'app-home-clientes',
@@ -14,41 +16,23 @@ export class HomeClientesPage implements OnInit {
   public isOnEspera: boolean;
   public mesas: any;
   public mesasCliente: any;
-  public nuevos: string[] = [];
-  public showCarta: boolean = false;
-  constructor(public mesasSrv: MesasService,public afStore: AngularFirestore,) {
-  }
-
+  public productos: Array<any>;
+  public comanda: Array<any>;
+  public showCarta = false;
   public dbRefDoc: AngularFirestoreDocument<any>;
   public dbRefProductos: AngularFirestoreCollection<any>;
-    
+  constructor(public mesasSrv: MesasService,public afStore: AngularFirestore,public prodSrv: ProductosService, public pedidosSrv:PedidosService) {
+  }
 
   ngOnInit() {
-    
-    this.currentUser = JSON.parse(localStorage.getItem("userData"));
-    /////////////
-    this.dbRefDoc = this.afStore.doc(`mesaCliente/q3Q9ZJfeCwAd397EfkdX`)
-    //this.dbRefProductos = this.afStore.collection("mesaCliente");
-    //this.dbRefProductos.valueChanges().subscribe(res => {console.log(res)});
-    //this.dbRefProductos.update({ productos: [{nombre:"coca",tipo:"BEBIDA",precio:"100"},{nombre:"ravioles",tipo:"COCINA",precio:"350"},{nombre:"flan",tipo:"POSTRE",precio:"150"}]})
+
+    this.currentUser = JSON.parse(localStorage.getItem('userData'));
 
     //Traigo mesaCliente
-    this.mesasSrv.TraerMesaCliente().subscribe( data =>{
+    this.pedidosSrv.TraerMesaCliente().subscribe( data =>{
       this.mesasCliente = data;
-      console.log(this.mesasCliente)
-     /*  console.log(this.mesasCliente.some( x => { x.user_id == this.currentUser.uid}));
-      this.mesasCliente.forEach(element => {
-        if(element.productos){
-          element.productos.forEach(x => {
-            let obj = JSON.parse(x)
-            this.nuevos.push(obj);
-          });
+    });
 
-          element.productos = this.nuevos;
-        }
-      }); */
-    })
-    
 
     //TRAIGO LISTA DE ESPERA PARA CHEKEAR QUE YA ESTE O NO EN ESPERA
     this.mesasSrv.TraerListaEspera().subscribe( data=>{
@@ -57,12 +41,12 @@ export class HomeClientesPage implements OnInit {
       //CHEKEO QUE NO SE ENCUENTRE EN LISTA DE ESPERA
       this.isOnEspera = data.some( x => x.user_uid === this.currentUser.uid) ? true : false;
       console.log(this.isOnEspera);
-    })
+    });
 
     //TRAIGO MESAS PARA VER SU ESTADO
     this.mesasSrv.TraerMesas().subscribe( data =>{
       this.mesas = data;
-    })
+    });
     console.log(this.currentUser);
   }
 
@@ -85,9 +69,14 @@ export class HomeClientesPage implements OnInit {
     //MOCKPRUEBA //this.resolveAction("lista-espera");
   }
 
-  resolveAction(text:string){
+  AgregarProducto(index: any) {
+    this.comanda.push(this.productos[index]);
+    console.log(this.comanda);
+  }
+
+  resolveAction(text: string){
     switch (text) {
-      case "lista-espera":
+      case 'lista-espera':
         this.SolicitarMesa();
         break;
       default:
@@ -101,13 +90,13 @@ export class HomeClientesPage implements OnInit {
     if (!this.isOnEspera) {
       this.mesasSrv.SolicitarMesa(this.currentUser);
     } else {
-      console.log("YA SE ENCUENTRA EN LISTA DE ESPERA");
+      console.log('YA SE ENCUENTRA EN LISTA DE ESPERA');
       //Error usted ya se encuentra en lista de espera.
     }
   }
 
 
- 
+
 
 
 

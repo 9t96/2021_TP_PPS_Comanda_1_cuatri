@@ -8,14 +8,11 @@ import { MesasService } from 'src/app/services/mesas/mesas.service';
 })
 export class HomeMozoPage implements OnInit {
 
-  public listaEspera: any;
 
-  constructor(public mesasSrv: MesasService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.mesasSrv.TraerListaEspera().subscribe(data =>{
-      this.listaEspera = data;
-    })
+
   }
 
 }

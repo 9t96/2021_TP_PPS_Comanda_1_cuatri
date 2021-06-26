@@ -11,14 +11,12 @@ import { Mesa } from 'src/app/clases/mesa';
 export class MesasService {
   public dbRefMesas: AngularFirestoreCollection<any>;
   public dbRefEspera: AngularFirestoreCollection<any>;
-  public dbRefmesacliente: AngularFirestoreCollection<any>;
   constructor(
     public afStore: AngularFirestore,
     public ngFireAuth: AngularFireAuth
   ) {
     this.dbRefMesas = this.afStore.collection("mesas");
     this.dbRefEspera = this.afStore.collection("listaEspera");
-    this.dbRefmesacliente = this.afStore.collection("mesaCliente");
   }
 
     TraerMesas(): Observable<any>{
@@ -35,10 +33,6 @@ export class MesasService {
 
     SolicitarMesa(currentUser: any){
       return this.dbRefEspera.add({user_uid: currentUser.uid, nombre: currentUser.nombre, apellido: currentUser.apellido, img_src: currentUser.img_src});
-    }
-
-    TraerMesaCliente(): Observable<any>{
-      return this.dbRefmesacliente.valueChanges();
     }
   
 }

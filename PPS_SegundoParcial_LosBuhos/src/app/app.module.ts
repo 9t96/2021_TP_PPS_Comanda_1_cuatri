@@ -22,12 +22,12 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     RegisterComponent,
-    AltaProductoComponent
+    AltaProductoComponent,
   ],
   entryComponents: [],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
+    BrowserModule,
+    IonicModule.forRoot(),
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -36,8 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
-    HttpClientModule
-  ], 
+    HttpClientModule,
+  ],
   providers: [
     BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

@@ -30,16 +30,16 @@ const routes: Routes = [
   // {path:'registro-personal', component:RegistroEmpleadoComponent, canActivate:[SupervisorGuard]},
   // {path:'home-supervisor', component:HomeSupervisorComponent, canActivate:[SupervisorGuard]},
   {
-    path:'registro-cliente', 
+    path:'registro-cliente',
     component:RegisterComponent
   },
   {
-    path:'registro-personal', 
-    component:RegistroEmpleadoComponent, 
+    path:'registro-personal',
+    component:RegistroEmpleadoComponent,
     canActivate:[SupervisorGuard]
   },
   {
-    path:'home-supervisor', 
+    path:'home-supervisor',
     component:HomeSupervisorComponent,
     canActivate:[SupervisorGuard]
   },
@@ -53,7 +53,7 @@ const routes: Routes = [
     component:AltaProductoComponent,
     //canActivate:[ProductosGuard]
     canActivate:[ProductosGuard]
-  },  
+  },
   {
     path: 'home-clientes',
     loadChildren: () => import('./pages/home-clientes/home-clientes.module').then( m => m.HomeClientesPageModule)
@@ -65,6 +65,18 @@ const routes: Routes = [
   {
     path: 'home-cocinero',
     loadChildren: () => import('./pages/home-cocinero/home-cocinero.module').then( m => m.HomeCocineroPageModule)
+  },
+  {
+    path: 'carta',
+    loadChildren: () => import('./pages/carta/carta.module').then( m => m.CartaPageModule)
+  },
+  {
+    path: 'lista-espera',
+    loadChildren: () => import('./pages/lista-espera/lista-espera.module').then( m => m.ListaEsperaPageModule)
+  },
+  {
+    path: 'listado-pedidos',
+    loadChildren: () => import('./pages/listado-pedidos/listado-pedidos.module').then( m => m.ListadoPedidosPageModule)
   }
 
 

@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Los Buhos - Supervisor/Dueño</ion-title>
+  <ion-toolbar color="medium">
+    <ion-title>Panel de acciones</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="mt-3">
+<!-- <ion-content class="mt-3">
   <p class="ion-padding-start ion-padding-end" > 
     <ion-button  expand="block" color="secondary" class="" (click)="goToRegister()">Registrar Usuario</ion-button>
   </p>
@@ -14,4 +14,31 @@
   <p class="ion-padding-start ion-padding-end" > 
     <ion-button  expand="block" color="secondary" class="" (click)="goToClientes()">Administración Clientes</ion-button>
   </p>
+</ion-content> -->
+<ion-content>
+  <div class="hero">
+    <img src="../../../../assets/images/buho.svg" alt="">
+  </div>
+  <div style="display:flex; flex-direction: column;">
+    <ion-row>
+      <div class="menu-item" [routerLink]="['/supervisor/clientes']">
+        <ion-icon name="construct-outline"></ion-icon>
+        <p>Gestionar usuarios</p>
+      </div>
+      <div class="menu-item" [routerLink]="['/supervisor/register']">
+        <ion-icon name="people-outline"></ion-icon>
+        <p>Administrar clientes</p>
+      </div>
+    </ion-row> 
+    <ion-row>
+      <div class="menu-item" [routerLink]="['/altamesas']">
+        <ion-icon name="cafe-outline"></ion-icon>
+        <p>Mesas</p>
+      </div>
+      <div class="menu-item">
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        <p>Estadisticas</p>
+      </div>
+    </ion-row>
+  </div>
 </ion-content>

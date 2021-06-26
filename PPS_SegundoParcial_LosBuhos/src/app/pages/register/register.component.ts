@@ -25,8 +25,10 @@ export class RegisterComponent implements OnInit {
   imagenPerfil = '../../../assets/images/pngegg.png';
   uploadProgress: number;
   hasErrorPerfil: boolean;
+  anonimo:boolean;
 
   constructor(
+
     private authService: AuthService,
     public toastController: ToastController,
     private router: Router,
@@ -34,7 +36,8 @@ export class RegisterComponent implements OnInit {
     private loadingController: LoadingController,
     private cameraService: CameraService,
     private storageService: StorageService,
-    private userService: UserService
+    private userService: UserService 
+
   ) {
     this.user = new Usuario();
     this.user.apellido = '';
@@ -44,6 +47,7 @@ export class RegisterComponent implements OnInit {
 
     this.formSelected = 1;
     this.hasErrorPerfil = false;
+    this.anonimo = false;
   }
 
   ngOnInit() {
@@ -233,5 +237,25 @@ export class RegisterComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
+  }
+
+  setAnonimo(){
+    this.anonimo = !this.anonimo;
+  }
+
+  isForm1Invalid():boolean{
+    let invalid:boolean = true;
+    if(this.anonimo){
+      if(this.user.img_src != null && this.getNameControl().valid){
+        invalid = false;
+      }
+      else{
+        invalid = true;
+      }
+    }else{
+      invalid = this.form1.invalid;
+    }
+
+    return invalid;
   }
 }

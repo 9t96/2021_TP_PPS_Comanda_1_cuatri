@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Email } from 'src/app/interfaces/email';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { EmailService } from 'src/app/services/email.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,7 +14,10 @@ export class ClientesComponent implements OnInit {
 
   clientes:any[];
 
-  constructor(private userService:UserService, private emailService:EmailService) { 
+  constructor(private userService:UserService, 
+    private emailService:EmailService,
+    private authService:AuthService,
+    private router:Router) { 
     this.clientes = [];
   }
 
@@ -67,4 +72,10 @@ export class ClientesComponent implements OnInit {
       console.log(err);
     });
   }  
+
+  logout(){
+    this.authService.SignOut().then(()=>{
+      this.router.navigate(['login']);
+    })
+  }
 }

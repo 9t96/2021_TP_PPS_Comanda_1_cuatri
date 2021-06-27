@@ -10,21 +10,21 @@
     <div [ngSwitch]="formSelected">
       <!-- Form 1 -->
       <form [formGroup]="form1" (ngSubmit)="goTo(2)" *ngSwitchCase="1">
+        
         <!-- foto perfil -->
-        <div
-          class="mx-auto d-block circular--portrait"
-          (click)="tomarFotoPerfil()"
-        >
-          <img [src]="user.img_src" *ngIf="user.img_src != null" />
-          <img [src]="imagenPerfil" *ngIf="user.img_src == null" />
+        <div class="text-center">
+          <small class="ion-padding-start ion-padding-end">*Foto de perfil obligatoria</small>
         </div>
-        <div class="">
-          <small
-            class="error-input-message ion-padding-start ion-padding-end"
-            *ngIf="hasErrorPerfil"
-            >Debe cargar una foto de perfil</small
-          >
-        </div>
+        <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">
+          <img [src]="user.img_src" *ngIf="user.img_src != null" (click)="tomarFotoPerfil()"/>
+          <img [src]="imagenPerfil" *ngIf="user.img_src == null" (click)="tomarFotoPerfil()"/>          
+        </div>   
+
+        <!-- Anónimo -->
+        <div class="ml-auto">
+          <ion-label position="fluid">Anónimo</ion-label><br />
+          <ion-toggle (click)="setAnonimo()"></ion-toggle>     
+        </div>       
 
         <!-- nombre -->
         <ion-item color="" fill="outline" class="input-wrapper">
@@ -60,17 +60,18 @@
         <!-- apellido -->
         <ion-item color="" fill="outline" class="input-wrapper">
           <ion-label position="fixed"
-            ><ion-icon name="person-outline"></ion-icon> Apellido</ion-label
+            ><ion-icon name="person-outline"></ion-icon> Apellido *</ion-label
           ><br />
           <ion-input
             type="text"
             formControlName="lastName"
             [(ngModel)]="user.apellido"
+            [disabled]="anonimo"
           >
           </ion-input>
         </ion-item>
         <!-- APELLIDO ERRORS -->
-        <ion-row class="errors">
+        <ion-row class="errors" *ngIf="!anonimo">
           <small
             class="error-input-message ion-padding-start ion-padding-end"
             *ngIf="
@@ -93,13 +94,13 @@
         <!-- dni -->
         <ion-item color="" fill="outline" class="input-wrapper">
           <ion-label position="fixed"
-            ><ion-icon name="person-outline"></ion-icon> DNI</ion-label
+            ><ion-icon name="person-outline"></ion-icon> DNI *</ion-label
           ><br />
-          <ion-input type="text" formControlName="dni" [(ngModel)]="user.dni">
+          <ion-input type="text" formControlName="dni" [(ngModel)]="user.dni" [disabled]="anonimo">
           </ion-input>
         </ion-item>
         <!-- DNI ERRORS -->
-        <ion-row class="errors">
+        <ion-row class="errors" *ngIf="!anonimo">
           <small
             class="error-input-message ion-padding-start ion-padding-end"
             *ngIf="
@@ -146,7 +147,7 @@
               expand="block"
               color=""
               class="btn-siguiente"
-              [disabled]="form1.invalid"
+              [disabled]="isForm1Invalid()"
               >Siguiente</ion-button
             >
           </p>

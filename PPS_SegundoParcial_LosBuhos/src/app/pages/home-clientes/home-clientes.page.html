@@ -1,8 +1,18 @@
 <ion-content>
+  <div *ngIf="!isOnEspera">
+   
+    <ion-button color="warning" expand="block" (click)="ScanQr()">
+      <img src="./../../../assets/icon/qr_icon.png" style="width: 38px">
+      Ponerse en lista de espera
+    </ion-button>
+  </div>
+  <!--MOSTRAR SOLO SI ESTA EN ESPERA -- LA FUNCION ES ESCANEAR QR-->
+  <div *ngIf="isOnEspera">
+     <ion-button color="warning" expand="block" (click)="ScanQr()">
+      <img src="./../../../assets/icon/qr_icon.png" style="width: 38px">
+      Escanear mesa
+    </ion-button>
+  </div>
 
-  <ion-button color="warning" expand="block" (click)="ScanQr()">
-    Escaner QR
-  </ion-button>
-
-    <p [routerLink]="['/carta']">Carta page</p>
+  <p [routerLink]="['/carta']">Carta page</p>
 </ion-content>

@@ -5,7 +5,7 @@ export class Mesa{
     nro_mesa: number;
     comensales: number;
     tipo_mesa: eTipoMesa;
-    estado: eEstadoMesa;
+    estado: eEstadoMesa; 
     constructor(){
         this.estado = eEstadoMesa.LIBRE
     }

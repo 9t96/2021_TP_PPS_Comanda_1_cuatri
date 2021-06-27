@@ -21,43 +21,48 @@ declare let window: any;
 export class HomeClientesPage implements OnInit {
 
   public currentUser: any;
-  public isOnEspera: boolean;
+  public isOnEspera: boolean = false; //Indica si el usuario esta o no en lista de espera
+  public isOnMesa: boolean = false; //Indica si el usuario esta o no actualmente relacionado con una mesa
   public mesas: any;
-  public mesasCliente: any;
+  public mesasCliente: Array<any>;
   public productos: Array<any>;
   public comanda: Array<any>;
   public showCarta = false;
-  public dbRefDoc: AngularFirestoreDocument<any>;
-  public dbRefProductos: AngularFirestoreCollection<any>;
   public mesaSolicitada: Mesa;
   public docID_Mesa: string;
   public esperaID: string;
   public mesaCliente: any;
-  constructor(public mesasSrv: MesasService,public afStore: AngularFirestore,public prodSrv: ProductosService, public pedidosSrv:PedidosService) {
+  public currentMesaCliente: any;
+  public qrBtnText: string;
+  public showCartaBtn: boolean;
+  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService) {
+    this.mesaSolicitada = new Mesa();
   }
 
   ngOnInit() {
-
-    this.isOnEspera = false;
-    this.mesaSolicitada = new Mesa();
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
-        //Traigo mesaCliente
-        this.pedidosSrv.TraerMesaCliente().subscribe( data =>{
-          this.mesasCliente = data;
-        });
+    //Traigo mesaCliente
+    this.pedidosSrv.TraerMesaCliente().subscribe( data =>{
+      this.mesasCliente = data;
+      console.log(data)
+      this.isOnMesa = this.mesasCliente.some( x => {return x.user_uid == this.currentUser.uid})
+      console.log("Esta sentado?" + this.isOnMesa)
+      this.currentMesaCliente = this.mesasCliente.find( x =>  x.user_uid == this.currentUser.uid)
+      console.log("Datos de mi mesa:" + JSON.stringify(this.currentMesaCliente));
+    });
     //TRAIGO LISTA DE ESPERA PARA CHEKEAR QUE YA ESTE O NO EN ESPERA
     this.mesasSrv.TraerListaEspera().subscribe(data => {
-      //console.log(data);
       //Validar que no puede ponerse en espera una vez que se asigno a una mesa
       //CHEKEO QUE NO SE ENCUENTRE EN LISTA DE ESPERA
       this.isOnEspera = data.some( x => x.user_uid === this.currentUser.uid) ? true : false;
-      console.log(this.isOnEspera);
-      data.forEach(res => {
-        if (res.user_uid == this.currentUser.uid) {
-          this.isOnEspera = true;
-          this.esperaID = res.doc_id_espera;
-        }
-      });
+      this.qrBtnText = this.isOnEspera ? "Ponerse en lista de espera" : "Escanear Qr mesa"
+      console.log("Esta en lista de espera?" + this.isOnEspera);
+      // data.forEach(res => {
+      //   if (res.user_uid == this.currentUser.uid) {
+      //     this.isOnEspera = true;
+      //     this.esperaID = res.doc_id_espera;
+      //   }
+      // });
     });
 
     //TRAIGO MESAS PARA VER SU ESTADO
@@ -68,22 +73,22 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-    window.cordova.plugins.barcodeScanner.scan(
-      (result) => {
-        this.resolveAction(result.text);
-      },
-      (err) => {
-        console.log(err);
-        //error al escanear
-      },
-      {
-        showTorchButton: true,
-        prompt: 'Scan your code',
-        formats: 'QR_CODE',
-        resultDisplayDuration: 2,
-      }
-    );
-    //MOCKPRUEBA //this.resolveAction("lista-espera");
+    // window.cordova.plugins.barcodeScanner.scan(
+    //    (result) => {
+    //      this.resolveAction(result.text);
+    //    },
+    //    (err) => {
+    //      console.log(err);
+    //      //error al escanear
+    //    },
+    //    {
+    //      showTorchButton: true,
+    //      prompt: 'Scan your code',
+    //      formats: 'QR_CODE',
+    //      resultDisplayDuration: 2,
+    //    }
+    // );
+    this.resolveAction("2");
   }
 
   AgregarProducto(index: any) {
@@ -92,24 +97,50 @@ export class HomeClientesPage implements OnInit {
   }
 
   resolveAction(text: string){
+
+    console.log("Resolve action")
     const regex = /^[0-9]*$/;
 
     if (regex.test(text) == true) {
       var nro_Mesa = Number(text);
-      text = "asignar-mesa"
+      text = "action-mesa"
     }
+
     switch (text) {
       case 'lista-espera':
         this.SolicitarMesa();
         break;
-      case "asignar-mesa":
-        this.asignarMesa(nro_Mesa);
+      case "action-mesa": //DESPUES DE ESTO MOSTRAR CARTA
+        this.ResolveActionMesa(nro_Mesa);
         break;
       default:
         //Si el valor del qe es un numero se procede a asingar la mesa y se saca de la lista de espera al cliente
         //Validar que no puede ponerse en espera una vez que se asigno a una mesa
         break;
     }
+  }
+
+  ResolveActionMesa(nro_mesa:number){
+    if (this.isOnEspera) {
+      //asignarmesa
+    }
+    else if(this.isOnMesa){
+      this.ResolveActionInMesa();
+    }
+
+  }
+
+  ResolveActionInMesa(){
+    if (this.currentMesaCliente.estado == eEstadoMesaCliente.SENTADO) {
+      this.showCartaBtn = true;
+    }
+    else if (this.currentMesaCliente.estado == eEstadoMesaCliente.CONFIRMANDO_PEDIDO) {
+      console.log("ESPERANDO CONFIRMACION MOZO")
+    }
+    else if (this.currentMesaCliente.estado == eEstadoMesaCliente.ESPERANDO_PEDIDO) {
+      console.log("ESPERANDO PEDIDO")
+    }
+    //Pagando
   }
 
   SolicitarMesa() {
@@ -122,16 +153,8 @@ export class HomeClientesPage implements OnInit {
   }
 
   /**
-   * Si el usuario esta en lista de espera obtiene la mesa que esta solicitando
-   * Si esa mesa tiene un estado LIBRE en la coleccion mesa de firebase
-   * pasa a verificar  que en la coleccion mesaCliente no activa.
-   * 
-   * Cuando pasa todas estas verificaciones se procede a :
-   * Asignar la mesa al usuario en la coleccion mesaUsuario
-   * Eliminar al cliente en lista de espera
-   * Actualizar el estado de la mesa como OCUPADA.
-   * 
-   * Y por ultimo debe redirigir a otra pagina. 
+   * Asigna la mesa al usuario si esta en lista de espera.
+   * No se checkea mesaCliente porque no podria estar en espera si esta sentado..
    */
 
   asignarMesa(nro_mesa: number) {
@@ -142,9 +165,6 @@ export class HomeClientesPage implements OnInit {
       this.getMesa(nro_mesa);
       if (this.mesaSolicitada.estado == eEstadoMesa.LIBRE) {
         //2 verificar que la mesa no este en mesaCliente activa
-        let inactiva = this.getEstadoMesaCliente(nro_mesa);
-
-        if (inactiva == true) {
 
           this.mesasSrv.AsignarMesaCliente(nro_mesa, this.docID_Mesa, this.currentUser.uid);
 
@@ -153,15 +173,11 @@ export class HomeClientesPage implements OnInit {
           this.mesasSrv.ActualizarMesaEstado(this.docID_Mesa, eEstadoMesa.OCUPADA);
 
           alert("REDIRIGIR...");
-
-        } else {
-          alert("MESA NO DISPONIBLE- esta activa con otro usuario");
-        }
       } else {
-        alert("MESA NO DISPONIBLE");
+        alert("MESA OCUPADA MOSTRAR MENSAJE");
       }
     } else {
-      alert("NO ESTA EN ESPERA");
+      alert("NO ESTA EN ESPERA"); //MOSTRAR ERROR
     }
   }
 
@@ -188,12 +204,12 @@ export class HomeClientesPage implements OnInit {
     Retorna false si la mesa se encuentra en la 
       coleccion mesaCliente con el esta ACTIVA(no esta liberada).
   */
-  getEstadoMesaCliente(nro_mesa): boolean {
+  MesaHasCliente(nro_mesa): boolean {
     var retorno = true;
 
     this.mesaCliente.forEach(mc => {
       if (mc.nro_mesa == nro_mesa) {
-        if (mc.estadoMesaCliente == eEstadoMesaCliente.ACTIVA) {
+        if (mc.estadoMesaCliente == eEstadoMesaCliente.SENTADO) {
           retorno = false;
         }
       }

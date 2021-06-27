@@ -45,11 +45,11 @@ export class MesasService {
     }
   
     AsignarMesaCliente( nro_Mesa:number, id_mesa:string, id_usuario:string){
-      this.dbRefMesaCliente.add({user_uid: id_usuario, id_mesa: id_mesa ,nro_Mesa:nro_Mesa, estadoMesaCliente: eEstadoMesaCliente.ACTIVA});
+      this.dbRefMesaCliente.add({user_uid: id_usuario, id_mesa: id_mesa ,nro_mesa:nro_Mesa, estado: eEstadoMesaCliente.SENTADO});
     }
 
     TraerMesaCliente(): Observable<any>{
-      return this.dbRefMesaCliente.valueChanges({idField: "doc_id_mesaCliente"});
+      return this.dbRefMesaCliente.valueChanges({idField: "doc_id"});
     }
 
     ActualizarMesaEstado(mesaID:string, est:eEstadoMesa){

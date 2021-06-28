@@ -13,7 +13,7 @@ import { HomeClientesPage } from './home-clientes.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomeClientesPageRoutingModule
+    HomeClientesPageRoutingModule,
   ],
   declarations: [HomeClientesPage]
 })

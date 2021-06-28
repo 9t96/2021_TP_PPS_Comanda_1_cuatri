@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button defaultHref="home-mozo" slot="start"></ion-back-button>
+    <ion-title>Lista de espera</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of listaEspera">
+      <ion-avatar slot="start">
+        <img [src]="item.img_src">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{item.nombre}} {{item.apellido}}</h2>
+        <h3>EN ESPERA</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

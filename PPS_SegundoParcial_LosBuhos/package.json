@@ -10,6 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "open:android": "npx cap open android",
     "resources": "capacitor-resources -p android,ios && node ./scripts/resources.js"
   },
   "private": true,

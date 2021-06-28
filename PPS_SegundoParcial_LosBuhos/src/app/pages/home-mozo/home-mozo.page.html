@@ -1,26 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>home-mozo</ion-title>
+  <ion-toolbar color="medium">
+    <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <ion-list>
-    <ion-list-header>
-      Lista de espera
-    </ion-list-header>
-
-    <ion-item *ngFor="let item of listaEspera">
-      <ion-avatar slot="start">
-        <img [src]="item.img_src">
-      </ion-avatar>
-      <ion-label>
-        <h2>{{item.nombre}} {{item.apellido}}</h2>
-        <h3>EN ESPERA</h3>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-
+  <div class="hero">
+    <img src="../../../../assets/images/buho.svg" alt="">
+  </div>
+  <div style="display:flex; flex-direction: column;">
+    <ion-row>
+      <div class="menu-item" [routerLink]="['/lista-espera']">
+        <ion-icon name="newspaper-outline"></ion-icon>
+        <p>Lista de espera</p>
+      </div>
+      <div class="menu-item" [routerLink]="['/altamesas']">
+        <ion-icon name="cafe-outline"></ion-icon>
+        <p>Mesas</p>
+      </div>
+    </ion-row>
+  </div>
 </ion-content>

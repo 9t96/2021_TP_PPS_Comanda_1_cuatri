@@ -67,7 +67,7 @@ export class LoginPage implements OnInit {
               this.router.navigateByUrl('home-clientes')
               break;
             case eRol.EMPLEADO:
-              user.tipo_empleado == eEmpleado.MOZO ? this.router.navigateByUrl('home-mozo') : this.router.navigateByUrl('home-empleado')
+              user.tipo_empleado == eEmpleado.MOZO ? this.router.navigateByUrl('home-mozo') : this.router.navigateByUrl('home-cocinero')
               break;
           }
         }
@@ -89,8 +89,8 @@ export class LoginPage implements OnInit {
         this.loginForm.controls['password'].setValue('123123')
         break;
       case 2:
-        this.loginForm.controls['email'].setValue('cliente@user.com') 
-        this.loginForm.controls['password'].setValue('123123')
+         this.loginForm.controls['email'].setValue('elcocinero@mail.com') 
+         this.loginForm.controls['password'].setValue('123456') 
         break;
       case 3:
         this.loginForm.controls['email'].setValue('usuario@usuario.com') 
@@ -101,8 +101,8 @@ export class LoginPage implements OnInit {
         this.loginForm.controls['password'].setValue('999999')
         break;
       case 5:
-        this.loginForm.controls['email'].setValue('tester@tester.com') 
-        this.loginForm.controls['password'].setValue('555555')
+        this.loginForm.controls['email'].setValue('elbartender@mail.com') 
+        this.loginForm.controls['password'].setValue('123456')
     }
     
   }

@@ -1,6 +1,19 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title>Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-
-  <ion-button color="warning" expand="block" (click)="ScanQr()">
-    Escaner QR
-  </ion-button>
+  <div style="display:flex; flex-direction: column;">
+    <ion-row>
+      <div class="menu-item" (click)="ScanQr()">
+        <ion-icon name="qr-code-outline"></ion-icon>
+        <p>{{qrBtnText}}</p>
+      </div>
+      <div class="menu-item" [routerLink]="['/carta']" *ngIf="showCartaBtn">
+        <ion-icon name="fast-food-outline"></ion-icon>
+        <p>Mis pedidos</p>
+      </div>
+    </ion-row>
+  </div>
 </ion-content>

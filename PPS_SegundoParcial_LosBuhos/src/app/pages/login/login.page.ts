@@ -44,38 +44,36 @@ export class LoginPage implements OnInit {
 
 
   Login(){
-
     this.user.email = this.loginForm.get('email').value;
     this.user.password = this.loginForm.get('password').value;
-    this.authService.SignIn(this.user.email, this.user.password).then( res =>{
-      this.userSrv.getItem(res.user.uid).subscribe( user =>{
-        console.log(user);
-        if(user.rol == eRol.CLIENTE && !user.aceptado){
-          console.log(user.aceptado);
-          this.authService.SignOut();
-          this.presentErrors("Todavía no fue confirmada su cuenta")
-        }else{
-          //Redirect por rol
-          localStorage.setItem("userData",JSON.stringify(user));
-                  
-          switch (user.rol) {
-            case eRol.DUEÑO:
-            case eRol.SUPERVISOR:
-              this.router.navigateByUrl('supervisor/home')
-              break;
-            case eRol.CLIENTE:
-              this.router.navigateByUrl('home-clientes')
-              break;
-            case eRol.EMPLEADO:
-              user.tipo_empleado == eEmpleado.MOZO ? this.router.navigateByUrl('home-mozo') : this.router.navigateByUrl('home-cocinero')
-              break;
-          }
+    
+    this.authService.SignIn(this.user.email, this.user.password)
+    .then( async(res) => {    
+      const user = await (await this.userSrv.getUserByUid(res.user.uid).toPromise()).data();
+      
+      if(user.rol == eRol.CLIENTE && !user.aceptado){
+        this.authService.SignOut();
+        this.presentErrors("Todavía no fue confirmada su cuenta")
+      }else{
+        localStorage.setItem("userData",JSON.stringify(user));
+                
+        switch (user.rol) {
+          case eRol.DUEÑO:
+          case eRol.SUPERVISOR:
+            this.router.navigateByUrl('supervisor/home')
+            break;
+          case eRol.CLIENTE:
+            this.router.navigateByUrl('home-clientes')
+            break;
+          case eRol.EMPLEADO:
+            user.tipo_empleado == eEmpleado.MOZO ? this.router.navigateByUrl('home-mozo') : this.router.navigateByUrl('home-cocinero')
+            break;
         }
-      })
+      }
     })
     .catch( err =>{ 
-      err.code == "auth/wrong-password" ? this.presentErrors("Uno o más campos son inválidos...") : this.presentErrors("Ha ocurrido un error vuelva a intentar.")
-    })
+    err.code == "auth/wrong-password" ? this.presentErrors("Uno o más campos son inválidos...") : this.presentErrors("Ha ocurrido un error vuelva a intentar.")
+    });
   }
 
   goToRegister(){

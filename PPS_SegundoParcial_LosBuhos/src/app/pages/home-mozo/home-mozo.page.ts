@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 
 @Component({
@@ -9,10 +11,16 @@ import { MesasService } from 'src/app/services/mesas/mesas.service';
 export class HomeMozoPage implements OnInit {
 
 
-  constructor() { }
+  constructor(public authSrv: AuthService, public router: Router) { }
 
   ngOnInit() {
 
+  }
+
+  logout(){
+    this.authSrv.SignOut().then(()=>{
+      this.router.navigate(['login']);
+    })
   }
 
 }

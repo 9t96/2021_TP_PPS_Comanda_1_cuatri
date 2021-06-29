@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
+import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { eProducto } from 'src/app/enums/eProducto';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
@@ -66,7 +68,14 @@ export class CartaPage implements OnInit {
   }
 
   EnviarPedido(){
-    this.pedidosSrv.GenerarPedido(this.currentMesaClient.doc_id,this.comanda)
+    //Falta validar que la comanda tenga productos
+    if(this.comanda.length > 0){
+      this.pedidosSrv.GenerarPedido(this.currentMesaClient.doc_id,this.comanda)
+      this.pedidosSrv.CambiarEstadoMesaCli(this.currentMesaClient.doc_id, eEstadoMesaCliente.CONFIRMANDO_PEDIDO);
+    }
+    else{
+      console.log("ERROR NO TIENE PRODUCTOS EN CARRTITO");
+    }
   }
   
 

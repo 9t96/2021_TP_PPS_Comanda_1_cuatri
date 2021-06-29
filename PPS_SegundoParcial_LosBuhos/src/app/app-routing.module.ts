@@ -77,6 +77,14 @@ const routes: Routes = [
   {
     path: 'listado-pedidos',
     loadChildren: () => import('./pages/listado-pedidos/listado-pedidos.module').then( m => m.ListadoPedidosPageModule)
+  },
+  {
+    path: 'mesas',
+    loadChildren: () => import('./pages/mesas/mesas.module').then( m => m.MesasPageModule)
+  },
+  {
+    path: 'detalle-pedido',
+    loadChildren: () => import('./pages/detalle-pedido/detalle-pedido.module').then( m => m.DetallePedidoPageModule)
   }
 
 

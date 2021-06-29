@@ -1,12 +1,14 @@
 import { templateVisitAll } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { promise } from 'protractor';
 import { Observable } from 'rxjs';
 import { Mesa } from 'src/app/clases/mesa';
 import { Usuario } from 'src/app/clases/usuario';
 import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
@@ -35,7 +37,7 @@ export class HomeClientesPage implements OnInit {
   public currentMesaCliente: any;
   public qrBtnText: string;
   public showCartaBtn: boolean;
-  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService) {
+  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService, public authSrv: AuthService, public router: Router) {
     this.mesaSolicitada = new Mesa();
   }
 
@@ -70,6 +72,12 @@ export class HomeClientesPage implements OnInit {
       this.mesas = data;
     });
     console.log(this.currentUser);
+  }
+
+  logout(){
+    this.authSrv.SignOut().then(()=>{
+      this.router.navigate(['login']);
+    })
   }
 
   ScanQr() {

@@ -16,19 +16,20 @@ export class DetallePedidoPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.route.paramMap.subscribe(params => {
-    //   if (params && params.special) {
-    //     this.paramDocId = JSON.parse(params.special);
-
-    //   }
-
-    // });
     this.pedidosSrv.TraerPedido(this.route.snapshot.paramMap.get('special')).subscribe( pedido => {
       this.pedido = pedido;
       this.isLoaded = true;
       console.log(this.pedido)
     })
 
+  }
+
+  navigateCarta(){
+    this.router.navigate(['carta',{mesa: this.pedido.nro_mesa}])
+  }
+
+  AprobarPedido(){
+    
   }
 
 }

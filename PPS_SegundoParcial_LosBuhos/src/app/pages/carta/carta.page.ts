@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { eProducto } from 'src/app/enums/eProducto';
@@ -20,7 +21,7 @@ export class CartaPage implements OnInit {
   public currentUser: any;
   public total: number = 0;
   public filtro: eProducto
-  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService) { }
+  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('userData'));
@@ -35,7 +36,7 @@ export class CartaPage implements OnInit {
     this.pedidosSrv.TraerMesaCliente().subscribe( mesas => {
       this.mesasCliente = mesas;
       this.currentMesaClient = this.mesasCliente.find( x => {
-        return x.user_uid = this.currentUser.uid
+        return x.user_uid == this.route.snapshot.paramMap.get('mesa')
       })
     })
   }

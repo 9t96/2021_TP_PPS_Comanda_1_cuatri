@@ -28,8 +28,11 @@
       
     </ion-item>
   </ion-list>
-  <ion-button>
-    Aprobar peedido
+  <ion-button *ngIf="pedido.estado == 'SENTADO'" (click)="navigateCarta()">
+    Tomar pedido
+  </ion-button>
+  <ion-button *ngIf="pedido.estado == 'CONFIRMANDO_PEDIDO'" (click)="AprobarPedido()">
+    Aprobar pedido
   </ion-button>
 </div>
 </ion-content>

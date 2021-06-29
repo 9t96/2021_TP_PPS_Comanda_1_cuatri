@@ -226,5 +226,9 @@ export class HomeClientesPage implements OnInit {
     return retorno;
   }
 
+  navigateCarta(){
+    this.router.navigate(['carta', {mesa: this.currentMesaCliente.nro_mesa}])
+  }
+
 
 }

@@ -25,7 +25,10 @@ export class DetallePedidoPage implements OnInit {
       this.pedido = pedido;
       if (this.pedido.productos) {
         this.pedido.demora_estimada = Math.max.apply(Math, this.pedido.productos.map( x => {return x.tiempo_elaboracion}))
-        this.pedido.total = this.pedido.productos.reduce( (a,b) => {return a.precio * a.cantidad + b.precio* b.cantidad})
+        this.pedido.total = 0;
+        this.pedido.productos.forEach(element => {
+          this.pedido.total += element.precio * element.cantidad;
+        });
       }
       this.isLoaded = true;
       console.log(this.pedido)

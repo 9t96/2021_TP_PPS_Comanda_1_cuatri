@@ -43,7 +43,8 @@ export class AltaProductoComponent implements OnInit {
       'nombre': ['', [Validators.required ]],
       'descripcion': ['', [Validators.required ]],
       'tiempo': ['', [Validators.required ]],
-      'precio': ['', [Validators.required ]]
+      'precio': ['', [Validators.required ]],
+      'sector': ['', [Validators.required ]]
     });
   }
 
@@ -56,6 +57,7 @@ export class AltaProductoComponent implements OnInit {
     this.producto.descripcion =this.formProducto.get('descripcion').value;
     this.producto.tiempo_elaboracion  =this.formProducto.get('tiempo').value;
     this.producto.precio  =this.formProducto.get('precio').value;
+    this.producto.sector  =this.formProducto.get('sector').value;
      
 
      var resp = this.prodSrv.GuardarNuevoProducto(this.producto)

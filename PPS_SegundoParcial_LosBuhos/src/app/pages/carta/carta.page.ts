@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { timeStamp } from 'console';
 import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
@@ -24,8 +25,15 @@ export class CartaPage implements OnInit {
   public filtro: eProducto
   public mesaActual: any;
   public demoraEstimada: number = 0;
-  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute) { }
+  public showSpinner: boolean = false;
+  public showCarta:boolean = true;
+  public showOK: boolean = false;
+  public backbuttonHref: string;
+  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController) { }
 
+  navigateBack(){
+    this.navCtrl.back();
+  }
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('userData'));
     this.mesaActual = this.route.snapshot.paramMap.get('mesa')
@@ -47,59 +55,11 @@ export class CartaPage implements OnInit {
     })
   }
 
-  // AddProducto(index:number){
-  //   let prodIndex = this.comanda.findIndex( x =>  x.nombre === this.productos[index].nombre)
-  //   console.log("id si existe en comanda" + prodIndex)
-  //   if (prodIndex !== -1) {
-  //     this.comanda[prodIndex].cantidad,this.productos[index].cantidad = this.productos[index].cantidad-1
-  //     console.log("mas uno comanda si existe" + this.comanda[prodIndex].cantidad )
-  //     //this.productos[index].cantidad+=1;
-  //     console.log("mas uno prod" + this.productos[index].cantidad)
-  //   } else {
-  //     this.productos[index].cantidad = 1;
-  //     this.comanda.push(this.productos[index])
-  //   }
-  //   this.total += this.productos[index].precio;
-  //   console.log("comanda despues de agregar " + Object.assign({},this.comanda))
-  //   this.CalcularDemora();
-  // }
-
-  // RemoveProducto(nombre:string,index:number){
-  //   if(this.productos[index].cantidad > 0){
-  //     this.productos[index].cantidad--; 
-  //     let cmndIndex = this.comanda.findIndex(x => x.nombre == nombre)
-  //     if (this.comanda[cmndIndex].cantidad > 1) {
-  //       this.comanda[cmndIndex].cantidad--;
-  //     } else {
-  //       const auxCom = this.comanda.filter( x => { return x.nombre !== nombre})
-  //       this.comanda = auxCom;
-  //       console.log(this.comanda)
-  //     }
-  //     this.total -= this.productos[index].precio;
-  //     console.log("comanda despues de eliminar " + this.comanda)
-  //     this.CalcularDemora();
-  //   }
-  // }
-
   AddProducto(index:number){
     this.productos[index].selected = true;
     this.productos[index].cantidad++;
     this.total += this.productos[index].precio;
-
-    //  let prodIndex = this.comanda.findIndex( x =>  x.nombre === this.productos[index].nombre)
-    //  console.log("id si existe en comanda" + prodIndex)
-    //  if (prodIndex !== -1) {
-    //    this.comanda[prodIndex].cantidad,this.productos[index].cantidad = this.productos[index].cantidad-1
-    //    console.log("mas uno comanda si existe" + this.comanda[prodIndex].cantidad )
-    //    //this.productos[index].cantidad+=1;
-    //    console.log("mas uno prod" + this.productos[index].cantidad)
-    //  } else {
-    //    this.productos[index].cantidad = 1;
-    //    this.comanda.push(this.productos[index])
-    //  }
-    //  this.total += this.productos[index].precio;
-    //  console.log("comanda despues de agregar " + Object.assign({},this.comanda))
-     this.CalcularDemora();
+    this.CalcularDemora();
   }
   RemoveProducto(nombre:string,index:number){
      if(this.productos[index].cantidad > 0){
@@ -129,10 +89,23 @@ export class CartaPage implements OnInit {
     if(prodSelected > 0){
       this.pedidosSrv.GenerarPedido(this.currentMesaClient.doc_id,this.productos.filter( x=> { return x.selected == true}))
       this.pedidosSrv.CambiarEstadoMesaCli(this.currentMesaClient.doc_id, eEstadoMesaCliente.CONFIRMANDO_PEDIDO);
+      this.ShowSpinner();
     }
     else{
       console.log("ERROR NO TIENE PRODUCTOS EN CARRTITO");
     }
+  }
+
+  ShowSpinner(){
+    this.showCarta = false;
+    this.showSpinner = true;
+    setTimeout(() => {
+      this.showSpinner = false;
+      this.showOK = true;
+      setTimeout(() => {
+        this.navigateBack();
+      }, 4000);
+    }, 2000);
   }
   
 

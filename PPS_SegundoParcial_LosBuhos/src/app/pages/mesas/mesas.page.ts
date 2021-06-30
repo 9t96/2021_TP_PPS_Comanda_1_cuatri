@@ -31,12 +31,7 @@ export class MesasPage implements OnInit {
     })  
   }
   openDetailsWithQueryParams(param:any) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(param)
-      }
-    };
-    this.router.navigate(['detalle-pedido',{special:param}] );
+    this.router.navigate(['detalle-pedido',{doc_id:param}] );
   }
 
 }

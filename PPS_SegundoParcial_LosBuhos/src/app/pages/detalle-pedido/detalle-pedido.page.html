@@ -11,6 +11,8 @@
     <ion-label color="dark">{{pedido.estado}}</ion-label>
   </ion-chip></p>
   <p>Nro mesa: {{pedido.nro_mesa}}</p>
+  <p *ngIf="pedido.demora_estimada">Demora: {{pedido.demora_estimada}} min</p>
+  <p *ngIf="pedido.productos">Total: ${{pedido.total}}</p>
   <ion-list *ngIf="pedido.productos">
     <ion-item *ngFor="let item of pedido.productos; let index=index">
       <ion-avatar>
@@ -28,11 +30,24 @@
       
     </ion-item>
   </ion-list>
-  <ion-button *ngIf="pedido.estado == 'SENTADO'" (click)="navigateCarta()">
-    Tomar pedido
-  </ion-button>
-  <ion-button *ngIf="pedido.estado == 'CONFIRMANDO_PEDIDO'" (click)="AprobarPedido()">
-    Aprobar pedido
-  </ion-button>
+  <!-- ACTIONS MOZO -->
+  <div *ngIf="isMozo">
+    <ion-button *ngIf="pedido.estado == 'SENTADO'" (click)="navigateCarta()">
+      Tomar pedido
+    </ion-button>
+    <ion-button *ngIf="pedido.estado == 'CONFIRMANDO_PEDIDO'" (click)="AprobarPedido()">
+      Aprobar pedido
+    </ion-button>
+    <ion-button>
+      Chat
+    </ion-button>
+    
+  </div>
+  <!-- ACTIONS CLIENTE -->
+  <div *ngIf="!isMozo">
+    <ion-button *ngIf="pedido.estado == 'PEDIDO_ENTREGADO'">
+      Confirmar recepcion
+    </ion-button>
+  </div>
 </div>
 </ion-content>

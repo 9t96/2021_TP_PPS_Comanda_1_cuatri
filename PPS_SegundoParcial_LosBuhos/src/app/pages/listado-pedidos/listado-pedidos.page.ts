@@ -22,11 +22,11 @@ export class ListadoPedidosPage implements OnInit {
     this.sectorProd = this.currentUser.tipo_empleado == eEmpleado.COCINERO ? eProducto.COCINA : eProducto.BEBIDA;
     this.pedidosSrv.TraerMesaCliente().subscribe( mesas => {
       this.pedidosCocina = [];
-      mesas.forEach(element => {
-        if(element.productos)
-        element.productos.forEach(element => {
-          if(element.sector == this.sectorProd)
-          this.pedidosCocina.push(element);
+      mesas.forEach( mesa => {
+        if(mesa.productos)
+        mesa.productos.forEach( prod => {
+          if(prod.sector == this.sectorProd && mesa.estado == "ESPERANDO_PEDIDO")
+          this.pedidosCocina.push(prod);
         });
       });
       console.log(this.pedidosCocina)

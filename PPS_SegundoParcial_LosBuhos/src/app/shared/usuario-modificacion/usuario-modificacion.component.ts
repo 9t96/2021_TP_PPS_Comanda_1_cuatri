@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Photo } from '@capacitor/camera';
@@ -20,11 +20,11 @@ export class UsuarioModificacionComponent implements OnInit {
   form1:FormGroup;
   form2:FormGroup;
   spinner: any;  
-  user:Usuario;
   formSelected:number;
   imagenPerfil = "../../../assets/images/pngegg.png";
   uploadProgress:number;
   hasErrorPerfil:boolean;
+  @Input() user:Usuario;
 
   constructor(
     private authService:AuthService, 
@@ -36,11 +36,7 @@ export class UsuarioModificacionComponent implements OnInit {
     private storageService: StorageService,
     private userService:UserService
     ) {    
-      this.user = new Usuario();    
-      this.user.apellido = '';
-      this.user.dni = '';
-        
-      this.formSelected = 0; 
+      this.formSelected = 1; 
       this.hasErrorPerfil = false;                
   }
 

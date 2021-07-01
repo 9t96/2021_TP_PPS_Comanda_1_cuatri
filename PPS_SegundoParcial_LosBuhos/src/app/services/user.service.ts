@@ -18,7 +18,7 @@ export class UserService extends BaseService<any>{
   }
 
   getUserByUid(uid:string){
-    return this.getItem(uid);
+    return this.getItemById(uid);
   }
 
   getClientesByStatus(aceptado:boolean){

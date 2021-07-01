@@ -34,6 +34,17 @@
       
       </ion-input>
     </ion-item>
+
+      <!-- precio -->
+      <ion-item lines="full" class="input-wrapper">
+        <ion-label position="fixed">Sector</ion-label><br />
+        <ion-select value="0" interface="popover" formControlName="sector" placeholder="Seleccione una opcion"
+          required>
+          <ion-select-option value="BEBIDA">Bebidas</ion-select-option>
+          <ion-select-option value="COCINA">Cocina</ion-select-option>
+        </ion-select>
+        <small class="invalid" *ngIf="formProducto.controls.sector.errors?.required && formProducto.controls.sector.touched ">El precio es requerido</small>
+      </ion-item>
     
     <!-- imagen -->
 

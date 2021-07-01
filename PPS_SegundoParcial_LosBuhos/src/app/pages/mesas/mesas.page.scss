@@ -1,0 +1,27 @@
+ion-content{
+    div{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 1em;
+        div{
+            background: url('../../../assets/images/madera.jpg');
+            width: 45%;
+            height: 12em;
+            margin: .5em .5em .5em .6em;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            ion-badge{
+                font-size: 2em;
+            }
+            strong{
+                font-size: 3em;
+                color: var(--ion-color-primary);
+            }
+            ion-button{
+                margin-top:1em
+            }
+        }
+    }
+}

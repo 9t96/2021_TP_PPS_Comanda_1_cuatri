@@ -33,7 +33,7 @@ export class MesasService {
     }
 
     TraerListaEspera(): Observable<any>{
-      return this.dbRefEspera.valueChanges({idField: "doc_id_espera"})
+      return this.dbRefEspera.valueChanges({idField: "doc_id"})
     }
 
     SolicitarMesa(currentUser: any){

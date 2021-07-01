@@ -1,15 +1,19 @@
 import { templateVisitAll } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { NavigationStart, Router } from '@angular/router';
 import { promise } from 'protractor';
 import { Observable } from 'rxjs';
 import { Mesa } from 'src/app/clases/mesa';
 import { Usuario } from 'src/app/clases/usuario';
 import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
+import { Event as NavigationEvent } from "@angular/router";
+import { filter } from 'rxjs/operators';
 declare let window: any;
 
 
@@ -34,12 +38,24 @@ export class HomeClientesPage implements OnInit {
   public mesaCliente: any;
   public currentMesaCliente: any;
   public qrBtnText: string;
-  public showCartaBtn: boolean;
-  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService) {
+  public showCartaBtn: boolean = false;
+  public showChatBtn: boolean = false;
+  public showDetalleBtn: boolean = false;
+  public espera_docid : string;
+  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService, public authSrv: AuthService, public router: Router) {
     this.mesaSolicitada = new Mesa();
   }
 
+  ionViewWillEnter(){
+    console.log("vava entrar")
+    this.showCartaBtn = false
+    this.showChatBtn = false
+    this.showDetalleBtn = false
+    this.ngOnInit()
+  }
+
   ngOnInit() {
+    console.log("lo corrio oninit")
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
     //Traigo mesaCliente
     this.pedidosSrv.TraerMesaCliente().subscribe( data =>{
@@ -55,14 +71,10 @@ export class HomeClientesPage implements OnInit {
       //Validar que no puede ponerse en espera una vez que se asigno a una mesa
       //CHEKEO QUE NO SE ENCUENTRE EN LISTA DE ESPERA
       this.isOnEspera = data.some( x => x.user_uid === this.currentUser.uid) ? true : false;
-      this.qrBtnText = this.isOnEspera ? "Ponerse en lista de espera" : "Escanear Qr mesa"
+      if(this.isOnEspera) this.espera_docid = (data.find( x => x.user_uid === this.currentUser.uid)).doc_id;
+      this.qrBtnText = this.SetQrBtnText();
       console.log("Esta en lista de espera?" + this.isOnEspera);
-      // data.forEach(res => {
-      //   if (res.user_uid == this.currentUser.uid) {
-      //     this.isOnEspera = true;
-      //     this.esperaID = res.doc_id_espera;
-      //   }
-      // });
+      console.log("Object lista espera" + this.espera_docid);
     });
 
     //TRAIGO MESAS PARA VER SU ESTADO
@@ -70,6 +82,23 @@ export class HomeClientesPage implements OnInit {
       this.mesas = data;
     });
     console.log(this.currentUser);
+  }
+
+  SetQrBtnText():string{
+    let text;
+    if (!this.isOnEspera && !this.isOnMesa) {
+      text = "Ponerse en lista de espera";
+    }
+    else{
+      text = "Escanear Qr mesa";
+    }
+    return text;
+  }
+
+  logout(){
+    this.authSrv.SignOut().then(()=>{
+      this.router.navigate(['login']);
+    })
   }
 
   ScanQr() {
@@ -122,7 +151,7 @@ export class HomeClientesPage implements OnInit {
 
   ResolveActionMesa(nro_mesa:number){
     if (this.isOnEspera) {
-      //asignarmesa
+      this.asignarMesa(nro_mesa);
     }
     else if(this.isOnMesa){
       this.ResolveActionInMesa();
@@ -135,10 +164,12 @@ export class HomeClientesPage implements OnInit {
       this.showCartaBtn = true;
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.CONFIRMANDO_PEDIDO) {
-      console.log("ESPERANDO CONFIRMACION MOZO")
+      this.showChatBtn = true;
+      this.showDetalleBtn = true;
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.ESPERANDO_PEDIDO) {
-      console.log("ESPERANDO PEDIDO")
+      this.showChatBtn = true;
+      this.showDetalleBtn = true;
     }
     //Pagando
   }
@@ -165,12 +196,11 @@ export class HomeClientesPage implements OnInit {
       this.getMesa(nro_mesa);
       if (this.mesaSolicitada.estado == eEstadoMesa.LIBRE) {
         //2 verificar que la mesa no este en mesaCliente activa
+          this.mesasSrv.ActualizarMesaEstado(this.docID_Mesa, eEstadoMesa.OCUPADA);
 
           this.mesasSrv.AsignarMesaCliente(nro_mesa, this.docID_Mesa, this.currentUser.uid);
 
-          this.mesasSrv.EliminarClienteListaEspera(this.esperaID);
-
-          this.mesasSrv.ActualizarMesaEstado(this.docID_Mesa, eEstadoMesa.OCUPADA);
+          this.mesasSrv.EliminarClienteListaEspera(this.espera_docid);
 
           alert("REDIRIGIR...");
       } else {
@@ -195,8 +225,6 @@ export class HomeClientesPage implements OnInit {
         this.mesaSolicitada.nro_mesa = m.nro_mesa;
         this.mesaSolicitada.tipo_mesa = m.tipo_mesa;
         this.docID_Mesa = m.doc_id_mesa;
-        alert(" NRO MESA =>  " + m.nro_mesa);
-
       }
     });
   }
@@ -216,6 +244,14 @@ export class HomeClientesPage implements OnInit {
 
     });
     return retorno;
+  }
+
+  navigateCarta(){
+    this.router.navigate(['carta', {mesa: this.currentMesaCliente.nro_mesa}])
+  }
+
+  navigateDetalle(){
+    this.router.navigate(['detalle-pedido', {doc_id: this.currentMesaCliente.doc_id}])
   }
 
 

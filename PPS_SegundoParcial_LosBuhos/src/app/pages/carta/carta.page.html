@@ -1,54 +1,46 @@
 <ion-header>
   <ion-toolbar color="medium">
-    <ion-back-button defaultHref="home-clientes" slot="start"></ion-back-button>
+    <ion-back-button (click)="navigateBack()" slot="start"></ion-back-button>
     <ion-title>Carta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <p>Filtros:</p>
-  <ion-chip>
-    <ion-avatar>
-      <img src="../../../assets/images/comida.jpg">
-    </ion-avatar>
-    <ion-label>Comidas</ion-label>
-  </ion-chip>
-  <ion-chip>
-    <ion-avatar>
-      <img src="../../../assets/images/bebida.jpeg">
-    </ion-avatar>
-    <ion-label>Bebidas</ion-label>
-  </ion-chip>
-  <ion-chip>
-    <ion-avatar>
-      <img src="../../../assets/images/postre.png">
-    </ion-avatar>
-    <ion-label>Postres</ion-label>
-  </ion-chip> -->
-  <ion-list>
-    <ion-item *ngFor="let item of productos; let index=index">
-      <ion-avatar>
-        <img [src]="item.img_src">
-      </ion-avatar>
-      <ion-label>
-        <h1>{{item.nombre}}</h1>
-        <ion-row>
-          <h2>${{item.precio}}</h2>
-          <h2 style="margin-left:1em"><ion-icon name="timer-outline"></ion-icon>{{item.tiempo_elaboracion}} min</h2>
-        </ion-row>
-      </ion-label>
-      <ion-icon name="remove-outline"(click)="RemoveProducto(item.nombre,index)" class="remove"></ion-icon>
-      <strong>{{item.cantidad}}</strong>
-      <ion-icon name="add-outline" (click)="AddProducto(index)" class="add"></ion-icon>
-      
-    </ion-item>
-  </ion-list>
-
-  <ion-row>
-    <i>Total: ${{total}}</i>
-    <ion-button (click)="EnviarPedido()">
-      Confirmar
-    </ion-button>
-  </ion-row>
-
+  <div *ngIf="showCarta">
+    <ion-list>
+      <ion-item *ngFor="let item of productos; let index=index">
+        <ion-avatar>
+          <img [src]="item.img_src">
+        </ion-avatar>
+        <ion-label>
+          <h1>{{item.nombre}}</h1>
+          <ion-row>
+            <h2>${{item.precio}}</h2>
+            <h2 style="margin-left:1em"><ion-icon name="timer-outline"></ion-icon>{{item.tiempo_elaboracion}} min</h2>
+          </ion-row>
+        </ion-label>
+        <ion-icon name="remove-outline"(click)="RemoveProducto(item.nombre,index)" class="remove"></ion-icon>
+        <strong>{{item.cantidad}}</strong>
+        <ion-icon name="add-outline" (click)="AddProducto(index)" class="add"></ion-icon>
+        
+      </ion-item>
+    </ion-list>
+  
+    <ion-row>
+      <i>Total: ${{total}}</i>
+      <i>Demora estimada: {{demoraEstimada}} min</i>
+      <ion-button (click)="EnviarPedido()">
+        Confirmar
+      </ion-button>
+    </ion-row>
+  </div>
+  <div *ngIf="showSpinner" class="spinner">
+    <img src="../../../assets/spinner_buho.gif" alt="">
+    
+  </div>
+  <div *ngIf="showOK" class="ok">
+    <p class="title">¡Recibimos tu pedido!</p>
+    <img src="../../../assets/images/okay.svg" alt="">
+    <p class="sub">Mientras esperas podes obtener un decuento ingresando a "Juegos"</p>
+  </div>
 </ion-content>

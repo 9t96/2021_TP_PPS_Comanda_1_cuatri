@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar color="medium">
     <ion-title>Inicio</ion-title>
+    <ion-button color="danger" slot="end" style="margin-right: 1em;" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      Salir
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +18,7 @@
         <ion-icon name="newspaper-outline"></ion-icon>
         <p>Lista de espera</p>
       </div>
-      <div class="menu-item" [routerLink]="['/altamesas']">
+      <div class="menu-item" [routerLink]="['/mesas']">
         <ion-icon name="cafe-outline"></ion-icon>
         <p>Mesas</p>
       </div>

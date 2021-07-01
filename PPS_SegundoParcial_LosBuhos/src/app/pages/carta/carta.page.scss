@@ -18,3 +18,29 @@ ion-list{
         }
     }
 }
+.spinner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50%;
+}
+
+.ok{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2em;
+    img{
+        height: 10em;
+        margin-bottom: 2em;
+        margin-top: 2em;
+    }
+    .title{
+        font-size: 2em;
+    }
+    .sub{
+        font-size: 1.5em;
+        text-align: -webkit-center;
+    }
+}

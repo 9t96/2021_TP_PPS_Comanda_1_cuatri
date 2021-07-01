@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button defaultHref="home-mozo" slot="start"></ion-back-button>
+    <ion-title>Mesas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <div *ngFor="let mesa of mesas">
+      <strong>{{mesa.nro_mesa}}</strong>
+      <ion-badge *ngIf="mesa.estado == 'LIBRE'" color="success">LIBRE</ion-badge>
+      <ion-badge *ngIf="mesa.estado == 'OCUPADA'" color="danger">OCUPADA</ion-badge> 
+      <ion-button *ngIf="mesa.mesaCliente"(click)="openDetailsWithQueryParams(mesa.mesaCliente.doc_id)">Ver detalle</ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-home-cocinero',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeCocineroPage implements OnInit {
 
-  constructor() { }
+  constructor(public authSrv: AuthService, public router: Router) { }
 
   ngOnInit() {
+  }
+  logout(){
+    this.authSrv.SignOut().then(()=>{
+      this.router.navigate(['login']);
+    })
   }
 
 }

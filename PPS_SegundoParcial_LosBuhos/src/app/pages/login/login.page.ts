@@ -51,11 +51,14 @@ export class LoginPage implements OnInit {
     .then( async(res) => {    
       const user = await (await this.userSrv.getUserByUid(res.user.uid).toPromise()).data();
       
+      //console.log(user);
+
       if(user.rol == eRol.CLIENTE && !user.aceptado){
         this.authService.SignOut();
         this.presentErrors("Todavía no fue confirmada su cuenta")
       }else{
         localStorage.setItem("userData",JSON.stringify(user));
+        localStorage.setItem("uid",res.user.uid);
                 
         switch (user.rol) {
           case eRol.DUEÑO:

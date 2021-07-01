@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { Photo } from '@capacitor/camera';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/clases/usuario';
-import { eEmpleado } from 'src/app/enums/eEmpleado';
-import { eRol } from 'src/app/enums/eRol';
+import { eToastType } from 'src/app/enums/eToastType';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -17,8 +16,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./usuario-modificacion.component.scss'],
 })
 export class UsuarioModificacionComponent implements OnInit {
-  form1:FormGroup;
-  form2:FormGroup;
+  form1:FormGroup;  
   spinner: any;  
   formSelected:number;
   imagenPerfil = "../../../assets/images/pngegg.png";
@@ -34,7 +32,7 @@ export class UsuarioModificacionComponent implements OnInit {
     private loadingController: LoadingController,
     private cameraService:CameraService,
     private storageService: StorageService,
-    private userService:UserService
+    private userService:UserService    
     ) {    
       this.formSelected = 1; 
       this.hasErrorPerfil = false;                
@@ -59,44 +57,31 @@ export class UsuarioModificacionComponent implements OnInit {
       dni:['', [Validators.required, Validators.max(999999999), Validators.min(1000000), Validators.pattern("^[0-9]*$")]],
       cuil:['',[Validators.required, Validators.minLength(10), Validators.maxLength(15) , Validators.pattern("^[0-9]*$")]]
     });
-
-    this.form2 = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
-      pass1: ["", [Validators.required, Validators.minLength(6)]],         
-      pass2: ["", [Validators.required, Validators.minLength(6)]]
-    },
-    {
-      validator: this.MustMatch('pass1', 'pass2')
-    });
   }
-
-  getEmailControl() { return this.form2.controls["email"]; }
-  getPass1Control() { return this.form2.controls["pass1"]; }
-  getPass2Control() { return this.form2.controls["pass2"]; }
 
   getNameControl() { return this.form1.controls["name"]; }    
   getLastNameControl() { return this.form1.controls["lastName"]; }
   getDniControl() { return this.form1.controls["dni"]; }
   getCuilControl() { return this.form1.controls["cuil"]; }
 
-  async registrarseClick(){        
+  async updateUser(){        
     await this.presentLoading();
-    this.spinner.present();
+    this.spinner.present();    
     
-    this.authService.CreaterUser(this.user.correo, this.getPass1Control().value)
-    .then((credential) => {   
-      this.userService.setItemWithId(this.user, credential.user.uid);
+    this.userService.updateCurrentUser(this.user)    
+    .then(async() => {   
+      await this.presentToast("Se actualizaron los datos correctamente", eToastType.Success)
     }).catch((err) => {
       console.log(err);
-      this.presentToast("Error al registrar el usuario");
+      this.presentToast("Error al actualizar el usuario", eToastType.Warning);
     }).finally(()=>{
       this.spinner.dismiss();
     });
   }
 
-  async presentToast(message:string){
+  async presentToast(message:string, type:eToastType){
     const toast = await this.toastController.create({
-      color: 'warning',
+      color: type,
       message: message,
       duration: 2000
     });
@@ -109,59 +94,6 @@ export class UsuarioModificacionComponent implements OnInit {
       message: 'Please wait...'
     });
   }
-
-  setRol(rol:string){
-    switch(rol){
-      case "DUEÑO":
-        this.user.rol = eRol.DUEÑO;
-        break;
-      case "SUPERVISOR":
-        this.user.rol = eRol.SUPERVISOR;
-        break;
-      case "MOZO":
-        this.user.rol = eRol.EMPLEADO;
-        this.user.tipo_empleado = eEmpleado.MOZO;
-        break;
-      case "BARTENDER":
-        this.user.rol = eRol.EMPLEADO;
-        this.user.tipo_empleado = eEmpleado.BARTENDER;
-        break;
-      case "COCINERO":
-        this.user.rol = eRol.EMPLEADO;
-        this.user.tipo_empleado = eEmpleado.COCINERO;
-        break;
-    }
-    
-    this.goTo(1);
-  }
-
-  goToLogin(){ 
-    this.router.navigate(['login']);
-    this.ngOnInit();
-   }
-
-   goTo(idPage:number){
-     switch(idPage){
-      case 0:
-         this.goToLogin();
-         break;
-      case 1:
-          this.formSelected = 1;
-          break;
-      case 2:
-          if(this.user.rol == eRol.DUEÑO){
-            if(this.user.img_src != null){
-              
-            }
-            else{
-              this.hasErrorPerfil = true;
-            }
-          }else{
-            this.formSelected = 2;
-          }                    
-          break;
-     }
-   }
 
    async addPhotoToGallery() {
     const photo = await this.cameraService.addNewToGallery();
@@ -191,27 +123,9 @@ export class UsuarioModificacionComponent implements OnInit {
     return new Date().getTime() + '-test';
   }
 
-  MustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-        const control = formGroup.controls[controlName];
-        const matchingControl = formGroup.controls[matchingControlName];
-
-        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-            // return if another validator has already found an error on the matchingControl
-            return;
-        }
-
-        // set error on matchingControl if validation fails
-        if (control.value !== matchingControl.value) {
-            matchingControl.setErrors({ mustMatch: true });
-        } else {
-            matchingControl.setErrors(null);
-        }
-    }
-  }
-
   logout(){
     this.authService.SignOut().then(()=>{
       this.router.navigate(['login']);
     })
-  }}
+  }
+}

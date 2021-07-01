@@ -67,11 +67,16 @@ export class AuthService {
   // Sign-out
   async SignOut() {
     await this.ngFireAuth.signOut();
-    localStorage.removeItem("userData");    
+    localStorage.removeItem("userData");
+    localStorage.removeItem("uid");    
   } 
 
   getCurrentUser(): Usuario{
     let user = JSON.parse(localStorage.getItem("userData"));
     return user;
+  }
+
+  getUid(): string{
+    return localStorage.getItem("uid");
   }
 }

@@ -9,31 +9,9 @@
   <div class="form-register mt-1">
 
     <div [ngSwitch]="formSelected">
-      <!-- Form 0 -->
-      <form *ngSwitchCase="0"> 
-      <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="secondary" class="btn-tipo-personal" (click)="setRol('MOZO')">Mozo</ion-button>
-      </p>
-
-      <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="secondary" class="btn-tipo-personal" (click)="setRol('BARTENDER')">Bartender</ion-button>
-      </p>
-
-      <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="secondary" class="btn-tipo-personal" (click)="setRol('COCINERO')">Cocinero</ion-button>
-      </p>
-
-      <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="primary" class="btn-tipo-personal" (click)="setRol('SUPERVISOR')">Supervisor</ion-button>
-      </p>
-          
-      <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="primary" class="btn-tipo-personal" (click)="setRol('DUEÑO')">Dueño</ion-button>
-      </p>
-      </form>
 
       <!-- Form 1 -->
-      <form [formGroup]="form1" (ngSubmit)="goTo(2)" *ngSwitchCase="1"> 
+      <form [formGroup]="form1" (ngSubmit)="updateUser()" *ngSwitchCase="1"> 
 
         <!-- foto perfil -->
         <div class="" >
@@ -111,72 +89,11 @@
       </ion-item>
       
       <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Siguiente</ion-button>
+        <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Guardar</ion-button>
       </p>
 
       </form>
 
-      <!-- Form 2 -->
-      <form [formGroup]="form2" (ngSubmit)="registrarseClick()" *ngSwitchCase="2">   
-
-        <ion-item>          
-          <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">            
-            <img [src]="user.img_src" *ngIf="user.img_src != null">
-            <img [src]="imagenPerfil" *ngIf="user.img_src == null">
-          </div>            
-        </ion-item>
-
-      <!-- email -->
-      <div>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.required && getEmailControl().touched">Campo obligatorio</small>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getEmailControl().errors?.email && getEmailControl().touched">Formato incorrecto</small>
-      </div>
-      <ion-item color="" fill="outline">
-        <ion-label position= "floating"><ion-icon name="mail-outline"></ion-icon> Email *</ion-label><br>
-        <ion-input 
-          type="email" 
-          formControlName="email" 
-          [(ngModel)]="user.correo" 
-          [disabled]
-          >
-        </ion-input>
-      </ion-item>
-  
-      <!-- pass 01 -->
-      <div>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.required && getPass1Control().touched">Campo obligatorio</small>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass1Control().errors?.minlength && getPass1Control().touched">Mínimo 6 caracteres</small>
-      </div>
-      <ion-item color="">
-        <ion-label position= "floating"><ion-icon name="lock-closed-outline"></ion-icon> Contraseña *</ion-label>
-        <ion-input 
-          type="password" 
-          formControlName="pass1"
-          >
-        </ion-input>
-      </ion-item>
-  
-      <!-- pass 02 -->
-      <div>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control().errors?.required  && getPass2Control().touched">Campo obligatorio</small>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control().errors?.minlength  && getPass2Control().touched">Mínimo 6 caracteres</small>
-        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getPass2Control()?.errors?.mustMatch && getPass2Control()?.touched">La contraseña debe ser la misma</small>
-      </div>
-      <ion-item  color="">
-        <ion-label position= "floating"><ion-icon name="lock-closed-outline"></ion-icon> Confirmar Contraseña *</ion-label>
-        <ion-input 
-          type="password"
-          formControlName="pass2"
-          >
-        </ion-input>
-      </ion-item>
-
-      <br>
-  
-      <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="" class="btn-register" [disabled]="form2.invalid">Guardar</ion-button>
-      </p>
-      </form>
     </div>
 
   </div>

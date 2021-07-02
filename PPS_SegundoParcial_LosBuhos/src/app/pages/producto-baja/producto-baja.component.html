@@ -1,0 +1,47 @@
+<!--ion-content>
+  <div *ngFor="let item of productos">
+    <ion-item>
+      <p>{{item.nombre}}</p>
+      <ion-button (click)="eliminarProducto('{{item.nombre}}')">Eliminar</ion-button>
+    </ion-item>
+
+  </div>
+ 
+</ion-content-->
+
+
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button defaultHref="producto-eliminar" slot="start"></ion-back-button>
+    <ion-title>Eliminar Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-item *ngFor="let item of  productos ">
+    <ion-avatar>
+      <img [src]="item.img_src">
+    </ion-avatar>
+    <ion-label>
+      <h1>{{item.nombre}}</h1>
+      <ion-row>
+        <h2>Descripcion: </h2>
+        <p> {{item.descripcion}} </p>
+        <h2 style="margin-left:1em">
+          <ion-icon name="timer-outline"></ion-icon>{{item.tiempo_elaboracion}} min
+        </h2>
+      </ion-row>
+    </ion-label>
+    <strong>${{item.precio}}</strong>
+
+    <ion-button  (click)="eliminarProducto('{{item.nombre}}')">
+      Eliminar
+    </ion-button>
+     
+
+  </ion-item>
+
+
+</ion-content>

@@ -103,6 +103,9 @@ export class LoginPage implements OnInit {
       case 5:
         this.loginForm.controls['email'].setValue('elbartender@mail.com') 
         this.loginForm.controls['password'].setValue('123456')
+      case 6:
+          this.loginForm.controls['email'].setValue('pepe@cocinero.com.ar') 
+          this.loginForm.controls['password'].setValue('123456')
     }
     
   }

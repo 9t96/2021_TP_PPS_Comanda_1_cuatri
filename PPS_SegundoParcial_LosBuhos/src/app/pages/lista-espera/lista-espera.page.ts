@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 
+
+ 
 @Component({
   selector: 'app-lista-espera',
   templateUrl: './lista-espera.page.html',

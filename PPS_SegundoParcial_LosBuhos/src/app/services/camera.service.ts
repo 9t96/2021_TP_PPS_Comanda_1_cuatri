@@ -9,7 +9,7 @@ export class CameraService {
   constructor() {}
 
   public async addNewToGallery() :Promise<Photo> {
-    const capturedPhoto = await Camera.getPhoto ({
+    const capturedPhoto  = await Camera.getPhoto ({
       resultType: CameraResultType.Uri, 
       source: CameraSource.Camera, 
       quality: 100,

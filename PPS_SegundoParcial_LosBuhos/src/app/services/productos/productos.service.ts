@@ -19,7 +19,7 @@ export class ProductosService {
   }
 
     TraerProductos(): Observable<any>{
-      return this.dbRef.valueChanges();
+      return this.dbRef.valueChanges({idField: "doc_id"});
     }
 
     GuardarNuevoProducto(nuevaProd: Productos): any{

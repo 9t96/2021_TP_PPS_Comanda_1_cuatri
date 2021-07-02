@@ -7,6 +7,9 @@ import { RegisterComponent } from './pages/register/register.component';
 import { RegistroEmpleadoComponent } from './supervisor/pages/registro-empleado/registro-empleado.component';
 import { AltaProductoComponent } from './pages/alta-producto/alta-producto.component';
 
+
+import { ProductoBajaComponent } from './pages/producto-baja/producto-baja.component';
+import { ProductoModificacionComponent } from './pages/producto-modificacion/producto-modificacion.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -49,12 +52,6 @@ const routes: Routes = [
     canActivate:[SupervisorGuard]
   },
   {
-    path: 'producto',
-    component:AltaProductoComponent,
-    //canActivate:[ProductosGuard]
-    canActivate:[ProductosGuard]
-  },
-  {
     path: 'home-clientes',
     loadChildren: () => import('./pages/home-clientes/home-clientes.module').then( m => m.HomeClientesPageModule)
   },
@@ -85,6 +82,24 @@ const routes: Routes = [
   {
     path: 'detalle-pedido',
     loadChildren: () => import('./pages/detalle-pedido/detalle-pedido.module').then( m => m.DetallePedidoPageModule)
+  },
+  {
+    path: 'producto-alta',
+    component:AltaProductoComponent,
+    //canActivate:[ProductosGuard]
+    canActivate:[ProductosGuard]
+  },
+  {
+    path: 'producto-modificar',
+    component:ProductoModificacionComponent,
+    //canActivate:[ProductosGuard]
+    canActivate:[ProductosGuard]
+  },
+  {
+    path: 'producto-eliminar',
+    component:ProductoBajaComponent,
+    //canActivate:[ProductosGuard]
+    canActivate:[ProductosGuard]
   }
 
 

@@ -7,19 +7,23 @@ import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-em
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientesComponent } from './pages/clientes/clientes.component';
+import { UsuarioUpdateComponent } from './pages/usuario-update/usuario-update.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     HomeSupervisorComponent,
     RegistroEmpleadoComponent,
-    ClientesComponent
+    ClientesComponent,
+    UsuarioUpdateComponent
   ],
   imports: [
     CommonModule,
     SupervisorRoutingModule,
     IonicModule.forRoot(),
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class SupervisorModule { }

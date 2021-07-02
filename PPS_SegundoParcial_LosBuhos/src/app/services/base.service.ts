@@ -45,8 +45,12 @@ export class BaseService<T> {
       return this.itemsCollection.doc(id).set(Object.assign({}, item));    
     }
     
-    getItem(id:string):Observable<Usuario>{
+    protected getItem(id:string):Observable<Usuario>{
       return this.itemsCollection.doc<Usuario>(id).valueChanges({idField: "uid"});
+    }
+
+    protected getItemById(id:string){
+      return this.itemsCollection.doc<T>(id).get();
     }
 
     deleteItem(id:string){

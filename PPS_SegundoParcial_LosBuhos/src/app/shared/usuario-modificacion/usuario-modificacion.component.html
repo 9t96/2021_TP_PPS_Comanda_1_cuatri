@@ -1,0 +1,103 @@
+<ion-content fullscreen color="">
+  <ion-header>
+    <ion-item>    
+      <ion-icon slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
+      <ion-label>Registrar Personal</ion-label>
+    </ion-item>
+  </ion-header>
+
+  <div class="form-register mt-1">
+
+    <div [ngSwitch]="formSelected">
+
+      <!-- Form 1 -->
+      <form [formGroup]="form1" (ngSubmit)="updateUser()" *ngSwitchCase="1"> 
+
+        <!-- foto perfil -->
+        <div class="" >
+          <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="hasErrorPerfil">Debe cargar una foto de perfil</small>          
+        </div>
+        <ion-item >          
+          <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">            
+            <img [src]="user.img_src" *ngIf="user.img_src != null">
+            <img [src]="imagenPerfil" *ngIf="user.img_src == null">
+          </div>            
+        </ion-item>
+
+        <!-- nombre -->
+        <div class="" >
+          <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.required && getNameControl().touched">Campo obligatorio</small>
+          <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.minlength && getNameControl().touched">Mínimo 2 caracteres</small>
+        </div>
+      <ion-item color=""fill="outline">
+        <ion-label position= "fixed"> Nombre</ion-label><br>
+        <ion-input 
+          type="text" 
+          formControlName="name" 
+          [(ngModel)]="user.nombre" 
+          >
+        </ion-input>
+      </ion-item>
+  
+      <!-- apellido --> 
+      <div class="" >
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getLastNameControl().errors?.required && getLastNameControl().touched">Campo obligatorio</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getLastNameControl().errors?.minlength && getLastNameControl().touched">Mínimo 2 caracteres</small>
+      </div>
+      <ion-item color="" fill="outline">
+        <ion-label position= "fixed"> Apellido</ion-label><br>
+        <ion-input 
+          type="text" 
+          formControlName="lastName" 
+          [(ngModel)]="user.apellido" 
+          >
+        </ion-input>
+      </ion-item>
+
+  
+      <!-- dni -->
+      <div class="" >
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getDniControl()?.errors?.required && getDniControl()?.touched">Campo obligatorio</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="(getDniControl()?.errors?.min || getDniControl()?.errors?.max) && getDniControl()?.touched && !getDniControl()?.errors?.pattern">El valor debe estar entre 999999999 y 1000000</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getDniControl()?.errors?.pattern && getDniControl()?.touched">Sólo se permiten números</small>
+      </div>
+      <ion-item color="" fill="outline">
+        <ion-label position= "fixed"> DNI</ion-label><br>
+        <ion-input 
+          type="text" 
+          formControlName="dni" 
+          [(ngModel)]="user.dni" 
+          >
+        </ion-input>
+      </ion-item>
+
+      <!-- CUIL -->
+      <div class="" >
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.required && getCuilControl()?.touched">Campo obligatorio</small>
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.minlength && getCuilControl()?.touched && !getCuilControl()?.errors?.pattern">Mínimo de caracteres 10</small>        
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.maxlength && getCuilControl()?.touched && !getCuilControl()?.errors?.pattern">Máximo de caracteres 15</small> 
+        <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.pattern && getCuilControl()?.touched">Sólo se permiten números</small>
+      </div>
+      <ion-item color="" fill="outline">
+        <ion-label position= "fixed"> CUIL</ion-label><br>
+        <ion-input 
+          type="text" 
+          formControlName="cuil" 
+          [(ngModel)]="user.cuil" 
+          >
+        </ion-input>
+      </ion-item>
+      
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Actualizar</ion-button>
+      </p>
+
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="button" expand="block" color="danger" class="btn-siguiente" [disabled]="form1.invalid" (click)="deleteUser()">Baja de usuario</ion-button>
+      </p>
+      </form>
+
+    </div>
+
+  </div>
+</ion-content>

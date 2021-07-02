@@ -35,4 +35,12 @@ export class UserService extends BaseService<any>{
       localStorage.setItem("userData",JSON.stringify(user));
     });
   }
+
+  async deleteCurrentUser(){
+    await this.deleteItem(localStorage.getItem("uid"))
+    .then(() =>{
+      localStorage.removeItem("userData");
+      localStorage.removeItem("uid");
+    });
+  }
 }

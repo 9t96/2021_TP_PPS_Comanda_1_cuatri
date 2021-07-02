@@ -79,4 +79,8 @@ export class AuthService {
   getUid(): string{
     return localStorage.getItem("uid");
   }
+
+  async deleteUser(){
+    return (await this.ngFireAuth.currentUser).delete();
+  }
 }

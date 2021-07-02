@@ -89,9 +89,12 @@
       </ion-item>
       
       <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Guardar</ion-button>
+        <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Actualizar</ion-button>
       </p>
 
+      <p class="ion-padding-start ion-padding-end" > 
+        <ion-button type="button" expand="block" color="danger" class="btn-siguiente" [disabled]="form1.invalid" (click)="deleteUser()">Baja de usuario</ion-button>
+      </p>
       </form>
 
     </div>

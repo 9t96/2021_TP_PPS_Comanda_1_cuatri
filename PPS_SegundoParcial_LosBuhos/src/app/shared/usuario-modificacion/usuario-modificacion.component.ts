@@ -79,6 +79,24 @@ export class UsuarioModificacionComponent implements OnInit {
     });
   }
 
+  async deleteUser(){        
+    await this.presentLoading();
+    this.spinner.present();    
+    
+    this.authService.deleteUser()    
+    .then(async() => {  
+      await this.userService.deleteCurrentUser(); 
+      await this.presentToast("Se borró la cuenta correctamente", eToastType.Success)
+      this.router.navigate(['login']);
+    }).catch((err) => {
+      console.log(err);
+      this.presentToast("Error al borrar la cuenta", eToastType.Warning);
+    }).finally(()=>{
+      this.spinner.dismiss();
+    });
+  }
+
+
   async presentToast(message:string, type:eToastType){
     const toast = await this.toastController.create({
       color: type,

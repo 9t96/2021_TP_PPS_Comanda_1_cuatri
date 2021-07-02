@@ -2,13 +2,5 @@
 	"appId": "pps.segundoparcial.losbuhos",
 	"appName": "PPS_SegundoParcial_LosBuhos",
 	"webDir": "www",
-	"bundledWebRuntime": false,
-	"plugins": {
-		"SplashScreen":{
-			"launchShowDuration": 0
-		},
-		"PushNotifications": {
-		  "presentationOptions": ["badge", "sound", "alert"]
-		}
-	  }
+	"bundledWebRuntime": false
 }

@@ -14,9 +14,17 @@
         <ion-icon name="qr-code-outline"></ion-icon>
         <p>{{qrBtnText}}</p>
       </div>
-      <div class="menu-item" [routerLink]="['/carta']" *ngIf="showCartaBtn">
+      <div class="menu-item" (click)="navigateCarta()" *ngIf="showCartaBtn">
         <ion-icon name="fast-food-outline"></ion-icon>
-        <p>Mis pedidos</p>
+        <p>Hacer pedido</p>
+      </div>
+      <div class="menu-item" (click)="navigateDetalle()" *ngIf="showDetalleBtn">
+        <ion-icon name="fast-food-outline"></ion-icon>
+        <p>Detalle pedido</p>
+      </div>
+      <div class="menu-item" *ngIf="showChatBtn">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+        <p>Consulta mozo</p>
       </div>
     </ion-row>
   </div>

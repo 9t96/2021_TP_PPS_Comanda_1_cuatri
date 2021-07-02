@@ -21,6 +21,10 @@ export class HomeSupervisorComponent implements OnInit {
     this.router.navigate(['supervisor/clientes']);
   }
 
+  goToUpdate(){
+    this.router.navigate(['supervisor/update']);
+  }
+
   logout(){
     this.authService.SignOut().then(()=>{
       this.router.navigate(['login']);

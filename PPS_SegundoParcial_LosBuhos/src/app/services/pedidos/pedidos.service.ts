@@ -34,7 +34,7 @@ export class PedidosService {
     //this.dbRefProductos = this.afStore.collection("mesaCliente");
     //this.dbRefProductos.valueChanges().subscribe(res => {console.log(res)});
     //this.dbRefProductos.update({ productos: [{nombre:"coca",tipo:"BEBIDA",precio:"100"},{nombre:"ravioles",tipo:"COCINA",precio:"350"},{nombre:"flan",tipo:"POSTRE",precio:"150"}]})
-    return this.afStore.doc(`mesaCliente/${doc_id}`).valueChanges();
+    return this.afStore.doc(`mesaCliente/${doc_id}`).valueChanges({idField: "doc_id"});
   }
 
   

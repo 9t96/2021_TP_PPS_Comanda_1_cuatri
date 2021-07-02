@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Usuario } from '../clases/usuario';
 import { eRol } from '../enums/eRol';
 import { BaseService } from './base.service';
 
@@ -18,7 +19,7 @@ export class UserService extends BaseService<any>{
   }
 
   getUserByUid(uid:string){
-    return this.getItem(uid);
+    return this.getItemById(uid);
   }
 
   getClientesByStatus(aceptado:boolean){
@@ -26,5 +27,20 @@ export class UserService extends BaseService<any>{
       .where("rol",'==', eRol.CLIENTE)
       .where("aceptado",'==', false)
       .get();
+  }
+
+  async updateCurrentUser(user:Usuario){
+    await this.setItemWithId(user, localStorage.getItem("uid"))
+    .then(() =>{
+      localStorage.setItem("userData",JSON.stringify(user));
+    });
+  }
+
+  async deleteCurrentUser(){
+    await this.deleteItem(localStorage.getItem("uid"))
+    .then(() =>{
+      localStorage.removeItem("userData");
+      localStorage.removeItem("uid");
+    });
   }
 }

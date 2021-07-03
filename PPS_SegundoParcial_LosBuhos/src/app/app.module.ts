@@ -18,11 +18,17 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AltaProductoComponent } from './pages/alta-producto/alta-producto.component';
 import { HttpClientModule } from '@angular/common/http';
 
+
+import { ProductoBajaComponent } from './pages/producto-baja/producto-baja.component' 
+import { ProductoModificacionComponent } from './pages/producto-modificacion/producto-modificacion.component' 
+
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     AltaProductoComponent,
+    ProductoBajaComponent,
+    ProductoModificacionComponent
   ],
   entryComponents: [],
   imports: [
@@ -36,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
-    HttpClientModule,
+    HttpClientModule 
+    
   ],
   providers: [
     BarcodeScanner,

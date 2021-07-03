@@ -1,11 +1,11 @@
 <div class="container">
   <h1 class="title">Alta de productos</h1>
   <form  [formGroup]="formProducto">
-     
+      
     <!-- Nombre -->
     <ion-item lines="full" class="input-wrapper">
       <ion-label position="fixed">Nombre</ion-label><br />
-      <ion-input type="text"   #nombre formControlName="nombre">
+      <ion-input type="text" class="form-control" #nombre formControlName="nombre">
       </ion-input>
 
       <small class="invalid" *ngIf="formProducto.controls.nombre.errors?.required && formProducto.controls.nombre.touched ">El nombre es requerido</small> 
@@ -13,7 +13,7 @@
     <!-- descripcion -->
     <ion-item lines="full" class="input-wrapper">
       <ion-label position="fixed">Descripcion</ion-label><br />
-      <ion-input type="text" #descripcion  formControlName="descripcion">
+      <ion-input type="text" #descripcion  formControlName="descripcion" class="form-control"> 
         <small class="invalid" *ngIf="formProducto.controls.descripcion.errors?.required && formProducto.controls.descripcion.touched ">La descripcion es requerida</small> 
    
       </ion-input>
@@ -21,7 +21,7 @@
     <!-- tiempo -->
     <ion-item lines="full" class="input-wrapper">
       <ion-label position="fixed">Tiempo</ion-label><br />
-      <ion-input type="number" #tiempo formControlName="tiempo">
+      <ion-input type="number" #tiempo formControlName="tiempo" class="form-control">
           <small class="invalid" *ngIf="formProducto.controls.tiempo.errors?.required && formProducto.controls.tiempo.touched ">El tiempo es requerido</small> 
       </ion-input>
     </ion-item>
@@ -29,43 +29,51 @@
      <!-- precio -->
      <ion-item lines="full" class="input-wrapper">
       <ion-label position="fixed">Precio</ion-label><br />
-      <ion-input type="number" #precio formControlName="precio">
+      <ion-input type="number" #precio formControlName="precio"  class="form-control">
         <small class="invalid" *ngIf="formProducto.controls.precio.errors?.required && formProducto.controls.precio.touched ">El precio es requerido</small> 
       
       </ion-input>
     </ion-item>
 
-      <!-- precio -->
+      <!-- sector -->
       <ion-item lines="full" class="input-wrapper">
         <ion-label position="fixed">Sector</ion-label><br />
-        <ion-select value="0" interface="popover" formControlName="sector" placeholder="Seleccione una opcion"
+        <ion-select value="0"  #sector class="form-control" interface="popover"  formControlName="sector" placeholder="Seleccione una opcion"
           required>
           <ion-select-option value="BEBIDA">Bebidas</ion-select-option>
           <ion-select-option value="COCINA">Cocina</ion-select-option>
         </ion-select>
-        <small class="invalid" *ngIf="formProducto.controls.sector.errors?.required && formProducto.controls.sector.touched ">El precio es requerido</small>
+        <small class="invalid" *ngIf="formProducto.controls.sector.errors?.required && formProducto.controls.sector.touched ">El sector es requerido</small>
       </ion-item>
     
     <!-- imagen -->
 
-    <div class="" >
-      <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="hasErrorProducto">Debe cargar la foto del producto</small>          
-    </div>
-    <ion-item >   
-      <ion-label position="fixed">Imagen</ion-label><br />       
-      <div class="mx-auto d-block circular--portrait" (click)="tomarFotoProducto()">            
-        <img [src]="producto.img_src" *ngIf="producto.img_src != null">
-        <img [src]="imagenPerfil" *ngIf="producto.img_src == null">
-      </div>            
-    </ion-item>
+ 
+    <ion-item *ngIf="mostrar"> 
+      <ion-label position="fixed">Imagenes</ion-label><br />       
+      <div class="mx-auto d-block circular--portrait" (click)="tomarFotoProducto()"  #imagen>    
 
-
+        <!--img [src]="producto.img_src[0]" *ngIf="producto.img_src[0] != null" -->
+        <img src="./../../../assets/plato.png" >
+      </div>    
+      <small style="background-color:red;" *ngIf="errorImagen">Debe subir 3 imagenes.</small>
+    </ion-item> 
     
+
+    <ion-item *ngFor="let item of producto.img_src; let index=index">
+      <ion-avatar >
+        <img [src]="item">
+      </ion-avatar>
+    </ion-item>
+   
 
     <!-- SUBMIT -->
     <ion-row class="cta-row">
       <ion-button  type="submit" size="medium" color="primary" (click)="GuardarNuevoProducto()"
-      [disabled]="!formProducto.valid" >Guardar </ion-button>
+      [disabled]="!formProducto.valid">Guardar </ion-button>
     </ion-row>
   </form>
+
+  <p>CANTIDAD IMAGENES: {{i_NroImagen }} </p>
+
 </div>

@@ -6,5 +6,5 @@ export class Productos{
     tiempo_elaboracion: number;
     precio: number;
     img_src: string[];
-    sector: eProducto;
+    sector: eProducto; 
 }

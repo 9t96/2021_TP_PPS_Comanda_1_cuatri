@@ -99,7 +99,10 @@ const routes: Routes = [
     path: 'producto-eliminar',
     component:ProductoBajaComponent,
     //canActivate:[ProductosGuard]
-    canActivate:[ProductosGuard]
+    canActivate:[ProductosGuard] },
+  { 
+    path: 'modal',
+    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
   }
 
 

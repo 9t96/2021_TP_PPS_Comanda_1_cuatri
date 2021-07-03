@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { timeStamp } from 'console';
 import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
@@ -8,7 +8,8 @@ import { eProducto } from 'src/app/enums/eProducto';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
-
+import { ModalPage } from '../modal/modal.page';
+declare let window: any;
 @Component({
   selector: 'app-carta',
   templateUrl: './carta.page.html',
@@ -29,7 +30,8 @@ export class CartaPage implements OnInit {
   public showCarta:boolean = true;
   public showOK: boolean = false;
   public backbuttonHref: string;
-  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController) { }
+  public saveProdIndex: any
+  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController,public modalController: ModalController) { }
 
   navigateBack(){
     this.navCtrl.back();
@@ -39,6 +41,7 @@ export class CartaPage implements OnInit {
     this.mesaActual = this.route.snapshot.paramMap.get('mesa')
     //Traigo productos
     this.prodSrv.TraerProductos().subscribe( data => {
+      console.log(data)
       this.productos = data;
       this.productos.forEach( x => {
         x.cantidad = 0;
@@ -54,6 +57,29 @@ export class CartaPage implements OnInit {
       console.log(this.currentMesaClient)
     })
   }
+
+  async openModal(producto) {
+    const modal = await this.modalController.create({
+    component: ModalPage,
+    cssClass: 'my-modal-class',
+    componentProps: { producto: producto }
+    });
+    modal.onDidDismiss().then(data=>{
+      console.log(data)
+      this.productos[this.saveProdIndex] = data.data;
+      this.CalcularDemora();
+      this.CalcularTotal();
+    })
+    return await modal.present();
+  }
+
+  CalcularTotal(){
+    this.total = 0;
+    this.productos.forEach(x =>{
+      this.total +=  x.selected ? x.precio * x.cantidad : 0
+    })
+  }
+  
 
   AddProducto(index:number){
     this.productos[index].selected = true;
@@ -72,6 +98,25 @@ export class CartaPage implements OnInit {
      }
   }
 
+  ScanQr() {
+    window.cordova.plugins.barcodeScanner.scan(
+        (result) => {
+          this.AgregarConQr(result.text);
+        },
+        (err) => {
+          console.log(err);
+          //error al escanear
+        },
+        {
+          showTorchButton: true,
+          prompt: 'Scan your code',
+          formats: 'QR_CODE',
+         resultDisplayDuration: 2,
+        }
+     );
+    this.AgregarConQr("FPy6MuRtVpIPmLNXiX42");
+  }
+
   CalcularDemora(){
     let prodSelected = 0;
     this.productos.forEach(x =>{
@@ -80,8 +125,20 @@ export class CartaPage implements OnInit {
     this.demoraEstimada = prodSelected > 0 ? Math.max.apply(Math, this.productos.map( x => { return (x.selected ? x.tiempo_elaboracion : null)})) : 0
   }
 
+  AgregarConQr(textqr:string){
+    console.log("entro")
+    let obj = this.productos.findIndex( x => x.doc_id == textqr);
+    if (obj !== -1) {
+      console.log(obj)
+      this.saveProdIndex = obj;
+      console.log(this.saveProdIndex)
+      this.openModal(this.productos[obj])
+    } else {
+      console.log("no existe")
+    }
+  }
+
   EnviarPedido(){
-    //Falta validar que la comanda tenga productos
     let prodSelected = 0;
     this.productos.forEach(x =>{
       prodSelected += (x.selected ? 1 : 0);

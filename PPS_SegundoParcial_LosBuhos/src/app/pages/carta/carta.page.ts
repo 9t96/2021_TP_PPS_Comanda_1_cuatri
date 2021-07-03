@@ -114,7 +114,7 @@ export class CartaPage implements OnInit {
          resultDisplayDuration: 2,
         }
      );
-    this.AgregarConQr("FPy6MuRtVpIPmLNXiX42");
+    //this.AgregarConQr("FPy6MuRtVpIPmLNXiX42");
   }
 
   CalcularDemora(){

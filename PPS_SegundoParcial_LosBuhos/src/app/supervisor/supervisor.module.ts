@@ -9,13 +9,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { UsuarioUpdateComponent } from './pages/usuario-update/usuario-update.component';
 import { SharedModule } from '../shared/shared.module';
+import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
     HomeSupervisorComponent,
     RegistroEmpleadoComponent,
     ClientesComponent,
-    UsuarioUpdateComponent
+    UsuarioUpdateComponent,
+    UsuariosComponent
   ],
   imports: [
     CommonModule,

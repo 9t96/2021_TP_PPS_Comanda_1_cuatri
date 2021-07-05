@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title>Gestionar Usuarios</ion-title>
+    <ion-icon class="logout-icon" slot="end" name="log-out-outline" size="large" (click)="logout()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div *ngFor="let user of users">
+      <app-usuario-item [usuario]="user"></app-usuario-item>
+    </div>    
+  </ion-list>
+</ion-content>

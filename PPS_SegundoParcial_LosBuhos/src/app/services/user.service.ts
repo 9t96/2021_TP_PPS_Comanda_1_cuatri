@@ -7,7 +7,7 @@ import { BaseService } from './base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends BaseService<any>{
+export class UserService extends BaseService<Usuario>{
 
   constructor(private fire:AngularFirestore) { 
     super(fire);

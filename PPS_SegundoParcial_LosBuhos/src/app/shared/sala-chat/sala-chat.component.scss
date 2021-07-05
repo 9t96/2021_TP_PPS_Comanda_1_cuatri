@@ -1,0 +1,32 @@
+
+.mensajes {
+    overflow-y: auto;
+	height: auto;
+}
+
+
+.input-row{
+    position: fixed;
+    bottom: 2rem;
+    width: 100%;
+}
+
+.input-row button{
+    margin-top: 1rem;
+}
+
+.btn-back{
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+}
+
+.btn-logout{
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+}
+
+.cont-chat{
+    height: 100vh;
+}

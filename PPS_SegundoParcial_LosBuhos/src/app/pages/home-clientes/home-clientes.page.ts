@@ -254,5 +254,8 @@ export class HomeClientesPage implements OnInit {
     this.router.navigate(['detalle-pedido', {doc_id: this.currentMesaCliente.doc_id}])
   }
 
+  goToChat(){
+    this.router.navigate(['cliente/chat']);
+  }
 
 }

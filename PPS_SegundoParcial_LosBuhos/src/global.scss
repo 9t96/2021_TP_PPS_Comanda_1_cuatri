@@ -29,6 +29,13 @@ ion-content{
     --background: var(--ion-color-secondary)
 }
 
+.my-modal-class{
+    .modal-wrapper{
+     height: 52%;
+     width: 90%;
+     border-radius: 15px;
+   }
+}
 .logout-icon{
     margin-right: 1rem;
 }

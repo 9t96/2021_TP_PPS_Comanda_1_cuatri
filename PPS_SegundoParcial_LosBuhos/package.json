@@ -28,6 +28,7 @@
     "@capacitor/core": "3.0.0",
     "@capacitor/haptics": "1.0.0",
     "@capacitor/keyboard": "1.0.0",
+    "@capacitor/push-notifications": "^1.0.2",
     "@capacitor/splash-screen": "^1.0.0",
     "@ionic-native/barcode-scanner": "^5.33.1",
     "@ionic-native/core": "^5.33.1",

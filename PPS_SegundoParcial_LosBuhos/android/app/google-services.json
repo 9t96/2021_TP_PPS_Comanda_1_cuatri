@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "506480302106",
+    "project_id": "pps-segundoparcial-losbuhos",
+    "storage_bucket": "pps-segundoparcial-losbuhos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506480302106:android:f75a103a6a8215e0d2d9a3",
+        "android_client_info": {
+          "package_name": "pps.segundoparcial.losbuhos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506480302106-uvifldap4h8uht6k0ha1tq8gi09nhpr3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwQDP0FPelinzkmDmrdOuY2dqD49m3Hlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506480302106-uvifldap4h8uht6k0ha1tq8gi09nhpr3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -110,7 +110,6 @@ export class LoginPage implements OnInit {
         this.loginForm.controls['password'].setValue('123123');
         break;
     }
-    
   }
 
   presentErrors(message: string){

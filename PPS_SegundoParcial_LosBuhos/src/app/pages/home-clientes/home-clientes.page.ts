@@ -104,22 +104,22 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-    // window.cordova.plugins.barcodeScanner.scan(
-    //    (result) => {
-    //      this.resolveAction(result.text);
-    //    },
-    //    (err) => {
-    //      console.log(err);
-    //      //error al escanear
-    //    },
-    //    {
-    //      showTorchButton: true,
-    //      prompt: 'Scan your code',
-    //      formats: 'QR_CODE',
-    //      resultDisplayDuration: 2,
-    //    }
-    // );
-    this.resolveAction("2");
+    window.cordova.plugins.barcodeScanner.scan(
+      (result) => {
+        this.resolveAction(result.text);
+      },
+      (err) => {
+        console.log(err);
+        //error al escanear
+      },
+      {
+        showTorchButton: true,
+        prompt: 'Scan your code',
+        formats: 'QR_CODE',
+        resultDisplayDuration: 2,
+      }
+    );
+    //this.resolveAction("2");
   }
 
   AgregarProducto(index: any) {

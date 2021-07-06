@@ -3,7 +3,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
-
+declare let window: any;
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
@@ -31,22 +31,22 @@ export class CheckoutPage implements OnInit {
   }
 
   AgregarPropina(){
-      // window.cordova.plugins.barcodeScanner.scan(
-      //     (result) => {
-      //       this.AgregarConQr(result.text);
-      //     },
-      //     (err) => {
-      //       console.log(err);
-      //       //error al escanear
-      //     },
-      //     {
-      //       showTorchButton: true,
-      //       prompt: 'Scan your code',
-      //       formats: 'QR_CODE',
-      //      resultDisplayDuration: 2,
-      //     }
-      //  );
-      this.ResolvePropina("muy bien");
+    window.cordova.plugins.barcodeScanner.scan(
+        (result) => {
+          this.ResolvePropina(result.text);
+        },
+        (err) => {
+          console.log(err);
+          //error al escanear
+        },
+        {
+          showTorchButton: true,
+          prompt: 'Scan your code',
+          formats: 'QR_CODE',
+        resultDisplayDuration: 2,
+        }
+    );
+    //this.ResolvePropina("muy bien");
   }
 
   ResolvePropina(textQr:string){

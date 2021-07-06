@@ -14,7 +14,7 @@
         <ion-icon name="qr-code-outline"></ion-icon>
         <p>{{qrBtnText}}</p>
       </div>
-      <div class="menu-item" (click)="goToChat()">
+      <div class="menu-item" *ngIf="showChatBtn" (click)="goToChat()">
         <ion-icon name="chatbubbles-outline"></ion-icon>
         <p>Chat</p>
       </div>
@@ -25,10 +25,6 @@
       <div class="menu-item" (click)="navigateDetalle()" *ngIf="showDetalleBtn">
         <ion-icon name="fast-food-outline"></ion-icon>
         <p>Detalle pedido</p>
-      </div>
-      <div class="menu-item" *ngIf="showChatBtn">
-        <ion-icon name="chatbubbles-outline"></ion-icon>
-        <p>Consulta mozo</p>
       </div>
       <div class="menu-item" *ngIf="showGamesBtn">
         <ion-icon name="game-controller-outline"></ion-icon>

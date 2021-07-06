@@ -11,4 +11,5 @@ export class Usuario{
     rol: eRol;
     img_src?: string;
     tipo_empleado?: eEmpleado;
+    uid? :string;
 }

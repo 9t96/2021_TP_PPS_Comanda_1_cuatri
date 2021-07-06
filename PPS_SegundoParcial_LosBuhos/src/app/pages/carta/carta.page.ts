@@ -102,22 +102,22 @@ export class CartaPage implements OnInit {
   }
 
   ScanQr() {
-    // window.cordova.plugins.barcodeScanner.scan(
-    //     (result) => {
-    //       this.AgregarConQr(result.text);
-    //     },
-    //     (err) => {
-    //       console.log(err);
-    //       //error al escanear
-    //     },
-    //     {
-    //       showTorchButton: true,
-    //       prompt: 'Scan your code',
-    //       formats: 'QR_CODE',
-    //      resultDisplayDuration: 2,
-    //     }
-    //  );
-    this.AgregarConQr("FPy6MuRtVpIPmLNXiX42");
+     window.cordova.plugins.barcodeScanner.scan(
+         (result) => {
+           this.AgregarConQr(result.text);
+         },
+         (err) => {
+           console.log(err);
+           //error al escanear
+         },
+         {
+           showTorchButton: true,
+           prompt: 'Scan your code',
+           formats: 'QR_CODE',
+          resultDisplayDuration: 2,
+         }
+      );
+    //this.AgregarConQr("FPy6MuRtVpIPmLNXiX42");
   }
 
   CalcularDemora(){

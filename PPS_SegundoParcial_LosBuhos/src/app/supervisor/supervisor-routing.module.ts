@@ -5,11 +5,13 @@ import { ClientesComponent } from './pages/clientes/clientes.component';
 import { HomeSupervisorComponent } from './pages/home-supervisor/home-supervisor.component';
 import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
 import { UsuarioUpdateComponent } from './pages/usuario-update/usuario-update.component';
+import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 
 const routes: Routes = [
   {path:"home", component:HomeSupervisorComponent, canActivate:[SupervisorGuard]},
   {path:"register", component:RegistroEmpleadoComponent, canActivate:[SupervisorGuard]},
   {path:"update", component:UsuarioUpdateComponent, canActivate:[SupervisorGuard]},
+  {path:"users", component:UsuariosComponent, canActivate:[SupervisorGuard]},
   {path:"clientes", component:ClientesComponent, canActivate:[SupervisorGuard]}
 ];
 

@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 import { UsuarioModificacionComponent } from './usuario-modificacion/usuario-modificacion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { SalaChatComponent } from './sala-chat/sala-chat.component';
+import { UsuarioItemComponent } from './usuario-item/usuario-item.component';
 
 
 
 @NgModule({
   declarations: [
-    UsuarioModificacionComponent
+    UsuarioModificacionComponent,
+    SalaChatComponent,  
+    UsuarioItemComponent  
   ],
   imports: [
     CommonModule,
@@ -17,7 +21,9 @@ import { IonicModule } from '@ionic/angular';
     FormsModule,
   ],
   exports: [
-    UsuarioModificacionComponent
+    UsuarioModificacionComponent,
+    SalaChatComponent,    
+    UsuarioItemComponent
   ]
 })
 export class SharedModule { }

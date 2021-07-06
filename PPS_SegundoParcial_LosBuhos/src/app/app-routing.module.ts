@@ -28,6 +28,10 @@ const routes: Routes = [
     loadChildren: () => import('./supervisor/supervisor.module').then( m => m.SupervisorModule)
   },
   {
+    path: 'cliente',
+    loadChildren: () => import('./cliente/cliente.module').then( m => m.ClienteModule)
+  },
+  {
     path:'registro-cliente', component:RegisterComponent
   },
   // {path:'registro-personal', component:RegistroEmpleadoComponent, canActivate:[SupervisorGuard]},

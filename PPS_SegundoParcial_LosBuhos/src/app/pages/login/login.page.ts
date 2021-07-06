@@ -57,6 +57,7 @@ export class LoginPage implements OnInit {
         this.authService.SignOut();
         this.presentErrors("Todavía no fue confirmada su cuenta")
       }else{
+        user.uid = res.user.uid;
         localStorage.setItem("userData",JSON.stringify(user));
         localStorage.setItem("uid",res.user.uid);
                 

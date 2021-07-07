@@ -41,6 +41,8 @@ export class HomeClientesPage implements OnInit {
   public showCartaBtn: boolean = false;
   public showChatBtn: boolean = false;
   public showDetalleBtn: boolean = false;
+  public showGamesBtn: boolean = false;
+  public showEncuestaBtn: boolean = false;
   public espera_docid : string;
   constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService, public authSrv: AuthService, public router: Router) {
     this.mesaSolicitada = new Mesa();
@@ -102,22 +104,22 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-    // window.cordova.plugins.barcodeScanner.scan(
-    //    (result) => {
-    //      this.resolveAction(result.text);
-    //    },
-    //    (err) => {
-    //      console.log(err);
-    //      //error al escanear
-    //    },
-    //    {
-    //      showTorchButton: true,
-    //      prompt: 'Scan your code',
-    //      formats: 'QR_CODE',
-    //      resultDisplayDuration: 2,
-    //    }
-    // );
-    this.resolveAction("2");
+    window.cordova.plugins.barcodeScanner.scan(
+      (result) => {
+        this.resolveAction(result.text);
+      },
+      (err) => {
+        console.log(err);
+        //error al escanear
+      },
+      {
+        showTorchButton: true,
+        prompt: 'Scan your code',
+        formats: 'QR_CODE',
+        resultDisplayDuration: 2,
+      }
+    );
+    //this.resolveAction("2");
   }
 
   AgregarProducto(index: any) {
@@ -171,7 +173,21 @@ export class HomeClientesPage implements OnInit {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
     }
-    //Pagando
+    else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PEDIDO_ENTREGADO) {
+      this.showChatBtn = true;
+      this.showDetalleBtn = true;
+    }
+    else if(this.currentMesaCliente.estado == eEstadoMesaCliente.COMIENDO) {
+      this.showChatBtn = true;
+      this.showDetalleBtn = true;
+      this.showGamesBtn = true;
+      this.showEncuestaBtn = true;
+    }
+    else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PAGANDO) {
+      this.showDetalleBtn = true;
+      this.showEncuestaBtn = true;
+    }
+
   }
 
   SolicitarMesa() {

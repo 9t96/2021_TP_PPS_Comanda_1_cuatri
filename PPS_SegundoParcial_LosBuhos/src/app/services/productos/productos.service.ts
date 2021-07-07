@@ -25,5 +25,9 @@ export class ProductosService {
     GuardarNuevoProducto(nuevaProd: Productos): any{
       return this.dbRef.add(Object.assign({},nuevaProd));
     }
+
+    CambiarEstadoProducto(doc_id:string, productos:any){
+      this.afStore.doc(`mesaCliente/${doc_id}`).update({productos: productos })
+    }
 }
  

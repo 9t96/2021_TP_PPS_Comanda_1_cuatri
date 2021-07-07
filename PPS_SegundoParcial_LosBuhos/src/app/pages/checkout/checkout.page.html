@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar color="medium">
+      <ion-title>Solicitar cuenta</ion-title>
+      <ion-icon slot="end" (click)="dismiss()" name="close-circle-outline"></ion-icon>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <!-- Listado de productos -->
+    <ion-item *ngFor="let item of pedido.productos; let index=index">
+      <ion-avatar>
+        <img [src]="item.img_src">
+      </ion-avatar>
+      <ion-label>
+        <h1>{{item.nombre}}</h1>
+        <ion-row>
+          <h2>Cantidad: {{item.cantidad}}</h2>
+        </ion-row>
+      </ion-label>
+      <strong>$ {{item.precio}}</strong>
+    </ion-item>
+    <!-- Propina -->
+    <ion-item *ngIf="showPropina">
+      <ion-avatar>
+        <img src="../../../assets/images/propina.jpeg">
+      </ion-avatar>
+      <ion-label>
+        <h1>Propina</h1>
+        <h2>Satisfaccion {{satisfaccion}}</h2>
+      </ion-label>
+      <strong>${{valorPropina}}</strong>
+    </ion-item>
+    <!-- fin Propina -->
+  </ion-list>
+  <ion-row>
+    <ion-button (click)="AgregarPropina()">Agregar propina</ion-button>
+    <p>Total: $ {{pedido.total}}</p>
+  </ion-row>
+  <ion-row>
+    <ion-button (click)="NotificarMozo()">Notificar al mozo</ion-button>
+  </ion-row>
+</ion-content>
+

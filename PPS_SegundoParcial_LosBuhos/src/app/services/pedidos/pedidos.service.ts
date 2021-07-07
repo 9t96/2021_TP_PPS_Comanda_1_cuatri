@@ -37,5 +37,9 @@ export class PedidosService {
     return this.afStore.doc(`mesaCliente/${doc_id}`).valueChanges({idField: "doc_id"});
   }
 
+  CerrarMesa(doc_id:string){
+    return this.afStore.doc(`mesaCliente/${doc_id}`).delete();
+  }
+
   
 }

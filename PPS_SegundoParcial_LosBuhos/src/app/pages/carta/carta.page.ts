@@ -4,6 +4,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { timeStamp } from 'console';
 import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
+import { eEstadoProducto } from 'src/app/enums/eEstadoProducto';
 import { eProducto } from 'src/app/enums/eProducto';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
@@ -46,6 +47,8 @@ export class CartaPage implements OnInit {
       this.productos.forEach( x => {
         x.cantidad = 0;
         x.selected = false;
+        x.listoParaServir = false;
+        x.estado = eEstadoProducto.PENDIENTE
       })
     });
     //Traigo mesa-cliente
@@ -99,22 +102,22 @@ export class CartaPage implements OnInit {
   }
 
   ScanQr() {
-    window.cordova.plugins.barcodeScanner.scan(
-        (result) => {
-          this.AgregarConQr(result.text);
-        },
-        (err) => {
-          console.log(err);
-          //error al escanear
-        },
-        {
-          showTorchButton: true,
-          prompt: 'Scan your code',
-          formats: 'QR_CODE',
-         resultDisplayDuration: 2,
-        }
-     );
-    this.AgregarConQr("FPy6MuRtVpIPmLNXiX42");
+     window.cordova.plugins.barcodeScanner.scan(
+         (result) => {
+           this.AgregarConQr(result.text);
+         },
+         (err) => {
+           console.log(err);
+           //error al escanear
+         },
+         {
+           showTorchButton: true,
+           prompt: 'Scan your code',
+           formats: 'QR_CODE',
+          resultDisplayDuration: 2,
+         }
+      );
+    //this.AgregarConQr("FPy6MuRtVpIPmLNXiX42");
   }
 
   CalcularDemora(){

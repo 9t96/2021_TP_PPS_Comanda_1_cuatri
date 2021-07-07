@@ -7,9 +7,13 @@
 
 <ion-content>
 <div *ngIf="isLoaded">
-  <p>Estado:         <ion-chip color="medium">
+
+  <h1 *ngIf="isMozo && pedido.listoParaServir && pedido.estado == 'ESPERANDO_PEDIDO'" class="attention heartbeat">¡Todo listo para servir!</h1>
+  <p>Estado:         
+    <ion-chip color="medium">
     <ion-label color="dark">{{pedido.estado}}</ion-label>
-  </ion-chip></p>
+    </ion-chip>
+  </p>
   <p>Nro mesa: {{pedido.nro_mesa}}</p>
   <p *ngIf="pedido.demora_estimada">Demora: {{pedido.demora_estimada}} min</p>
   <p *ngIf="pedido.productos">Total: ${{pedido.total}}</p>
@@ -22,6 +26,7 @@
         <h1>{{item.nombre}}</h1>
         <ion-row>
           <h2>Estado: </h2>
+          <ion-badge color="medium">{{item.estado}}</ion-badge>
           <h2 style="margin-left:1em"><ion-icon name="timer-outline"></ion-icon>{{item.tiempo_elaboracion}} min</h2>
         </ion-row>
       </ion-label>
@@ -38,6 +43,12 @@
     <ion-button *ngIf="pedido.estado == 'CONFIRMANDO_PEDIDO'" (click)="AprobarPedido()">
       Aprobar pedido
     </ion-button>
+    <ion-button *ngIf="pedido.listoParaServir && pedido.estado == 'ESPERANDO_PEDIDO'" (click)="ServirPedido()">
+      Servir
+    </ion-button>
+    <ion-button *ngIf="pedido.estado == 'PAGANDO'" (click)="CerrarMesa()">
+      Aprobar pago
+    </ion-button>
     <ion-button>
       Chat
     </ion-button>
@@ -45,9 +56,16 @@
   </div>
   <!-- ACTIONS CLIENTE -->
   <div *ngIf="!isMozo">
-    <ion-button *ngIf="pedido.estado == 'PEDIDO_ENTREGADO'">
+    <ion-button *ngIf="pedido.estado == 'PEDIDO_ENTREGADO'" (click)="ConfirmarRecepcion()">
       Confirmar recepcion
     </ion-button>
+    <ion-button *ngIf="pedido.estado == 'COMIENDO'" (click)="SolicitarCuenta()">
+      Solicitar cuenta
+    </ion-button>
+    <div *ngIf="pedido.estado == 'PAGANDO'" style="display:flex; flex-direction:column; justify-content:center; align-items:center">
+      <h1>En breve el mozo estara en su mesa</h1>
+      <h1>¡Gracias por venir!</h1>
+    </div>
   </div>
 </div>
 </ion-content>

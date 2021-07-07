@@ -245,4 +245,8 @@ export class RegistroEmpleadoComponent implements OnInit {
       this.router.navigate(['login']);
     })
   }
+
+  return(){
+    this.router.navigate(['supervisor/users']);
+  }
 }

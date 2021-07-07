@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Photo } from '@capacitor/camera';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/clases/usuario';
+import { eRol } from 'src/app/enums/eRol';
 import { eToastType } from 'src/app/enums/eToastType';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
@@ -16,6 +17,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./usuario-modificacion.component.scss'],
 })
 export class UsuarioModificacionComponent implements OnInit {
+  
   form1:FormGroup;  
   spinner: any;  
   formSelected:number;
@@ -23,6 +25,7 @@ export class UsuarioModificacionComponent implements OnInit {
   uploadProgress:number;
   hasErrorPerfil:boolean;
   @Input() user:Usuario;
+  @Input() uid:string;
 
   constructor(
     private authService:AuthService, 
@@ -32,14 +35,23 @@ export class UsuarioModificacionComponent implements OnInit {
     private loadingController: LoadingController,
     private cameraService:CameraService,
     private storageService: StorageService,
-    private userService:UserService    
+    private userService:UserService,
+    private modalController:ModalController    
     ) {    
       this.formSelected = 1; 
       this.hasErrorPerfil = false;                
   }
 
   ngOnInit() {
-    this.createForm();    
+    if(this.user.rol == eRol.EMPLEADO){
+      this.createFormEmpleado();
+    }
+    else{
+      this.createForm()
+    }
+      
+    // console.log("user", this.user);
+    // console.log("uid", this.uid); 
   }
 
   tomarFotoPerfil(){    
@@ -50,12 +62,21 @@ export class UsuarioModificacionComponent implements OnInit {
     return dataCuil.slice(0, 2) + dni + dataCuil.slice(2);
   }
 
-  createForm() {
+  createFormEmpleado() {
     this.form1 = this.formBuilder.group({
       name: ["", [Validators.required, Validators.minLength(2)]],
       lastName: ["", [Validators.required, Validators.minLength(2)]],      
       dni:['', [Validators.required, Validators.max(999999999), Validators.min(1000000), Validators.pattern("^[0-9]*$")]],
       cuil:['',[Validators.required, Validators.minLength(10), Validators.maxLength(15) , Validators.pattern("^[0-9]*$")]]
+    });
+  }
+
+  createForm() {
+    this.form1 = this.formBuilder.group({
+      name: ["", [Validators.required, Validators.minLength(2)]],
+      lastName: ["", [Validators.required, Validators.minLength(2)]],      
+      dni:['', [Validators.required, Validators.max(999999999), Validators.min(1000000), Validators.pattern("^[0-9]*$")]],
+      cuil:['']
     });
   }
 
@@ -68,33 +89,48 @@ export class UsuarioModificacionComponent implements OnInit {
     await this.presentLoading();
     this.spinner.present();    
     
-    this.userService.updateCurrentUser(this.user)    
-    .then(async() => {   
-      await this.presentToast("Se actualizaron los datos correctamente", eToastType.Success)
-    }).catch((err) => {
-      console.log(err);
-      this.presentToast("Error al actualizar el usuario", eToastType.Warning);
-    }).finally(()=>{
-      this.spinner.dismiss();
-    });
+    if(this.uid == this.authService.getUid()){
+      this.userService.updateCurrentUser(this.user)    
+      .then(async() => {   
+        await this.presentToast("Se actualizaron los datos correctamente", eToastType.Success)
+      }).catch((err) => {
+        console.log(err);
+        this.presentToast("Error al actualizar el usuario", eToastType.Warning);
+      }).finally(()=>{
+        this.spinner.dismiss();
+        this.dismiss();
+      });
+    }else{
+      this.userService.updateUser(this.user, this.uid)    
+      .then(async() => {   
+        await this.presentToast("Se actualizaron los datos correctamente", eToastType.Success)
+      }).catch((err) => {
+        console.log(err);
+        this.presentToast("Error al actualizar el usuario", eToastType.Warning);
+      }).finally(()=>{
+        this.spinner.dismiss();
+        this.dismiss();
+      });
+    }
+
   }
 
-  async deleteUser(){        
-    await this.presentLoading();
-    this.spinner.present();    
+  // async deleteUser(){        
+  //   await this.presentLoading();
+  //   this.spinner.present();    
     
-    this.authService.deleteUser()    
-    .then(async() => {  
-      await this.userService.deleteCurrentUser(); 
-      await this.presentToast("Se borró la cuenta correctamente", eToastType.Success)
-      this.router.navigate(['login']);
-    }).catch((err) => {
-      console.log(err);
-      this.presentToast("Error al borrar la cuenta", eToastType.Warning);
-    }).finally(()=>{
-      this.spinner.dismiss();
-    });
-  }
+  //   this.authService.deleteUser()    
+  //   .then(async() => {  
+  //     await this.userService.deleteCurrentUser(); 
+  //     await this.presentToast("Se borró la cuenta correctamente", eToastType.Success)
+  //     this.router.navigate(['login']);
+  //   }).catch((err) => {
+  //     console.log(err);
+  //     this.presentToast("Error al borrar la cuenta", eToastType.Warning);
+  //   }).finally(()=>{
+  //     this.spinner.dismiss();
+  //   });
+  // }
 
 
   async presentToast(message:string, type:eToastType){
@@ -145,5 +181,9 @@ export class UsuarioModificacionComponent implements OnInit {
     this.authService.SignOut().then(()=>{
       this.router.navigate(['login']);
     })
+  }
+
+  dismiss(){
+    this.modalController.dismiss();
   }
 }

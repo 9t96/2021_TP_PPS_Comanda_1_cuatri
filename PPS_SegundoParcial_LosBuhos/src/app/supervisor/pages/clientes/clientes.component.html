@@ -1,11 +1,12 @@
-<ion-content fullscreen color="">
-  <ion-header>
-    <ion-item>    
-      <ion-icon slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
-      <ion-label>Listado Clientes</ion-label>
-    </ion-item>
-  </ion-header>
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button (click)="return()" slot="start"></ion-back-button>
+    <ion-title>Listado Clientes</ion-title>
+    <ion-icon class="logout-icon" slot="end" name="log-out-outline" size="large" (click)="logout()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content>
   <div class="container mt-3 mb-3 h-100">
 
     <div class="row mb-1">

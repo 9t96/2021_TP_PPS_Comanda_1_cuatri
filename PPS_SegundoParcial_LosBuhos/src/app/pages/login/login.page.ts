@@ -86,7 +86,7 @@ export class LoginPage implements OnInit {
   testUser(accountNumber: number){
     switch (accountNumber) {
       case 1:
-        this.loginForm.controls['email'].setValue('supervisor@usuario.com') 
+        this.loginForm.controls['email'].setValue('supervisor@user.com') 
         this.loginForm.controls['password'].setValue('123123')
         break;
       case 2:

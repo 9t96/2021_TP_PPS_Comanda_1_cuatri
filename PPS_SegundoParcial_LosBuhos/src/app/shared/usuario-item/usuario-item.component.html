@@ -7,9 +7,9 @@
     <h3>{{usuario.rol}}</h3>
   </ion-label>
   <ion-avatar slot="end" class="m-1">
-    <ion-icon name="pencil-outline" size=""></ion-icon>          
+    <ion-icon name="pencil-outline" size="" (click)="editarUsuario()"></ion-icon>          
   </ion-avatar>
   <ion-avatar slot="end" class="m-1">
-    <ion-icon class="red" name="trash-outline" size=""></ion-icon>
+    <ion-icon class="red" name="trash-outline" size="" (click)="eliminarUsuario()" *ngIf="usuario.uid != currentUserId"></ion-icon>
   </ion-avatar>
 </ion-item>

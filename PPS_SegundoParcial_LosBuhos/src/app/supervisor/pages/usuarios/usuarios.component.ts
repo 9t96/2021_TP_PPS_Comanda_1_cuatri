@@ -22,6 +22,7 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() {
     this.userService.items.subscribe((users) => {
       this.users = users;
+      //console.log(this.users);
     })
   }
 
@@ -29,6 +30,14 @@ export class UsuariosComponent implements OnInit {
     this.authService.SignOut().then(()=>{
       this.router.navigate(['login']);
     })
+  }
+
+  addUser(){
+    this.router.navigate(['supervisor/register']);
+  }
+
+  return(){
+    this.router.navigate(['supervisor/home']);
   }
 
 }

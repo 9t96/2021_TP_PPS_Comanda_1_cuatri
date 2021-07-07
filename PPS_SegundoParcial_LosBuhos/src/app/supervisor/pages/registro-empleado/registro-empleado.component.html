@@ -1,11 +1,12 @@
-<ion-content fullscreen color="">
-  <ion-header>
-    <ion-item>    
-      <ion-icon slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
-      <ion-label>Registrar Personal</ion-label>
-    </ion-item>
-  </ion-header>
 
+  <ion-header>
+    <ion-toolbar color="medium">
+      <ion-back-button (click)="return()" slot="start"></ion-back-button>
+      <ion-title>Nuevo Usuario</ion-title>
+      <ion-icon class="logout-icon" slot="end" name="log-out-outline" size="large" (click)="logout()"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen color="">
   <div class="form-register mt-1">
 
     <div [ngSwitch]="formSelected">

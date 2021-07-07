@@ -78,4 +78,8 @@ export class ClientesComponent implements OnInit {
       this.router.navigate(['login']);
     })
   }
+
+  return(){
+    this.router.navigate(['supervisor/home']);
+  }
 }

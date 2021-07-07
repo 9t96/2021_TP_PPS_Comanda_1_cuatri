@@ -1,11 +1,11 @@
-<ion-content fullscreen color="">
-  <ion-header>
-    <ion-item>    
-      <ion-icon slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
-      <ion-label>Registrar Personal</ion-label>
-    </ion-item>
-  </ion-header>
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title>Detalle Usuario</ion-title>
+    <ion-icon slot="end" (click)="dismiss()" size="large" name="close-circle-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content fullscreen color="">
   <div class="form-register mt-1">
 
     <div [ngSwitch]="formSelected">
@@ -78,7 +78,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.maxlength && getCuilControl()?.touched && !getCuilControl()?.errors?.pattern">Máximo de caracteres 15</small> 
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.pattern && getCuilControl()?.touched">Sólo se permiten números</small>
       </div>
-      <ion-item color="" fill="outline">
+      <ion-item color="" fill="outline" *ngIf="user.rol != 'CLIENTE'">
         <ion-label position= "fixed"> CUIL</ion-label><br>
         <ion-input 
           type="text" 
@@ -89,11 +89,7 @@
       </ion-item>
       
       <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Actualizar</ion-button>
-      </p>
-
-      <p class="ion-padding-start ion-padding-end" > 
-        <ion-button type="button" expand="block" color="danger" class="btn-siguiente" [disabled]="form1.invalid" (click)="deleteUser()">Baja de usuario</ion-button>
+        <ion-button type="submit" expand="block" color="" class="btn-siguiente" [disabled]="form1.invalid">Guardar Cambios</ion-button>
       </p>
       </form>
 

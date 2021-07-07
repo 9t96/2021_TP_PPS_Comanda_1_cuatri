@@ -18,7 +18,7 @@ export class BaseService<T> {
 
     protected setCollection(collName:string){
       this.itemsCollection = this.afs.collection<T>(collName);
-      this.items = this.itemsCollection.valueChanges();
+      this.items = this.itemsCollection.valueChanges({idField: "uid"});
     }
 
     protected setCollectionOrderBy(collName:string, field:string){

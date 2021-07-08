@@ -9,6 +9,7 @@ import { eProducto } from 'src/app/enums/eProducto';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
 import { ModalPage } from '../modal/modal.page';
 declare let window: any;
 @Component({
@@ -32,7 +33,7 @@ export class CartaPage implements OnInit {
   public showOK: boolean = false;
   public backbuttonHref: string;
   public saveProdIndex: any
-  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController,public modalController: ModalController) { }
+  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController,public modalController: ModalController, public toastSrv:ToastService) { }
 
   navigateBack(){
     this.navCtrl.back();
@@ -137,7 +138,7 @@ export class CartaPage implements OnInit {
       console.log(this.saveProdIndex)
       this.openModal(this.productos[obj])
     } else {
-      console.log("no existe")
+      this.toastSrv.presentToast("No se encontro el producto buscado..", 2000,'warning');
     }
   }
 
@@ -152,7 +153,7 @@ export class CartaPage implements OnInit {
       this.ShowSpinner();
     }
     else{
-      console.log("ERROR NO TIENE PRODUCTOS EN CARRTITO");
+      this.toastSrv.presentToast("Debe agregar productos antes de confirmar...", 2000,'warning');
     }
   }
 

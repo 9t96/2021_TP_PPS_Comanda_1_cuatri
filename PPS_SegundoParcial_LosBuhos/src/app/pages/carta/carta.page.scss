@@ -46,9 +46,24 @@ ion-list{
 }
 
 .footer{
-    height: 5em;
+    height: 6em;
     position: fixed;
     bottom: 0;
-    background: red;
+    background: blanchedalmond;
     width: 100%;
+    border-top: 1px solid var(--ion-color-tertiary);
+    .details{
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        strong{
+            font-size: 1.5em;
+        }
+    }
+    .submit{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
 }

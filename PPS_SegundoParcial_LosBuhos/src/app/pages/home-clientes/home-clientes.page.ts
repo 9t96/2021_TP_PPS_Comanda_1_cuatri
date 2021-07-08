@@ -14,6 +14,7 @@ import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 import { Event as NavigationEvent } from "@angular/router";
 import { filter } from 'rxjs/operators';
+import { ToastService } from 'src/app/services/toast/toast.service';
 declare let window: any;
 
 
@@ -44,7 +45,7 @@ export class HomeClientesPage implements OnInit {
   public showGamesBtn: boolean = false;
   public showEncuestaBtn: boolean = false;
   public espera_docid : string;
-  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService, public authSrv: AuthService, public router: Router) {
+  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService, public authSrv: AuthService, public router: Router, public toastSrv:ToastService) {
     this.mesaSolicitada = new Mesa();
   }
 
@@ -67,7 +68,6 @@ export class HomeClientesPage implements OnInit {
       //console.log("Esta sentado?" + this.isOnMesa)
       this.currentMesaCliente = this.mesasCliente.find( x =>  x.user_uid == this.currentUser.uid)
       //console.log("Datos de mi mesa:" + JSON.stringify(this.currentMesaCliente));
-      this.ResolveActionInMesa();
     });
     //TRAIGO LISTA DE ESPERA PARA CHEKEAR QUE YA ESTE O NO EN ESPERA
     this.mesasSrv.TraerListaEspera().subscribe(data => {
@@ -76,8 +76,6 @@ export class HomeClientesPage implements OnInit {
       this.isOnEspera = data.some( x => x.user_uid === this.currentUser.uid) ? true : false;
       if(this.isOnEspera) this.espera_docid = (data.find( x => x.user_uid === this.currentUser.uid)).doc_id;
       this.qrBtnText = this.SetQrBtnText();
-      //console.log("Esta en lista de espera?" + this.isOnEspera);
-      //console.log("Object lista espera" + this.espera_docid);
     });
 
     //TRAIGO MESAS PARA VER SU ESTADO
@@ -105,7 +103,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-    window.cordova.plugins.barcodeScanner.scan(
+   /*  window.cordova.plugins.barcodeScanner.scan(
       (result) => {
         this.resolveAction(result.text);
       },
@@ -119,8 +117,8 @@ export class HomeClientesPage implements OnInit {
         formats: 'QR_CODE',
         resultDisplayDuration: 2,
       }
-    );
-    //this.resolveAction("2");
+    ); */
+    this.resolveAction("7");
   }
 
   AgregarProducto(index: any) {
@@ -196,8 +194,7 @@ export class HomeClientesPage implements OnInit {
     if (!this.isOnEspera) {
       this.mesasSrv.SolicitarMesa(this.currentUser);
     } else {
-      console.log('YA SE ENCUENTRA EN LISTA DE ESPERA');
-      //Error usted ya se encuentra en lista de espera.
+      this.toastSrv.presentToast("Usted ya se encuentra en lista de espera", 2000,'warning');
     }
   }
 
@@ -219,13 +216,13 @@ export class HomeClientesPage implements OnInit {
           this.mesasSrv.AsignarMesaCliente(nro_mesa, this.docID_Mesa, this.currentUser.uid);
 
           this.mesasSrv.EliminarClienteListaEspera(this.espera_docid);
-
-          alert("REDIRIGIR...");
+          this.showCartaBtn = true;
+          this.toastSrv.presentToast("Ingesaste a la mesa" + nro_mesa, 2000,'success');
       } else {
-        alert("MESA OCUPADA MOSTRAR MENSAJE");
+        this.toastSrv.presentToast("La mesa escaneada se encuentra OCUPADA", 2000,'warning');
       }
     } else {
-      alert("NO ESTA EN ESPERA"); //MOSTRAR ERROR
+      this.toastSrv.presentToast("No se encuentra en lista de espera...", 2000,'warning');
     }
   }
 

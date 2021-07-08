@@ -82,6 +82,7 @@ export class DetallePedidoPage implements OnInit {
     this.mesasSrv.ActualizarMesaEstado(this.pedido.id_mesa,eEstadoMesa.LIBRE)
     //this.pedidosSrv.CambiarEstadoMesaCli(this.pedido.doc_id,eEstadoMesaCliente.CERRADA)
     this.pedidosSrv.CerrarMesa(this.pedido.doc_id);
+    this.router.navigate(['mesas'])
   }
 
   async SolicitarCuenta(){

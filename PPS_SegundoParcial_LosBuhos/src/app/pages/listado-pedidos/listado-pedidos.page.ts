@@ -6,6 +6,7 @@ import { eEstadoProducto } from 'src/app/enums/eEstadoProducto';
 import { eProducto } from 'src/app/enums/eProducto';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-listado-pedidos',
@@ -19,7 +20,7 @@ export class ListadoPedidosPage implements OnInit {
   public currentUser: any;
   public sectorProd: any;
 
-  constructor(public pedidosSrv:PedidosService, public prodSrv: ProductosService) { }
+  constructor(public pedidosSrv:PedidosService, public prodSrv: ProductosService, public toastSrv: ToastService) { }
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
@@ -51,6 +52,7 @@ export class ListadoPedidosPage implements OnInit {
     let nuevoestado = nuevoEstado;
     this.mesas[item.mesaIndex].productos[item.prodIndex].estado = nuevoestado;
     this.prodSrv.CambiarEstadoProducto(item.parentDocId,this.mesas[item.mesaIndex].productos);
+    this.toastSrv.presentToast("Se cambio el estado de pedido con exito!", 2000,'success');
   }
 
 }

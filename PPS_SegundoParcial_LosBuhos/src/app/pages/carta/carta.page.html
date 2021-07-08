@@ -25,14 +25,14 @@
         <ion-icon name="add-outline" (click)="AddProducto(index)" class="add"></ion-icon>
       </ion-item>
     </ion-list>
-  
+
     <ion-row class="footer">
-      <ion-col>
-        <p>Total: ${{total}}</p>
-        <p>Demora estimada: {{demoraEstimada}} min</p>
+      <ion-col size="6" class="details">
+        <strong>Total ${{total}}</strong>
+        <strong><ion-icon name="timer-outline"></ion-icon> {{demoraEstimada}} min</strong>
       </ion-col>
-      <ion-col>
-        <ion-button (click)="EnviarPedido()">
+      <ion-col size="6" class="submit">
+        <ion-button size="large" color="success" (click)="EnviarPedido()">
           Confirmar
         </ion-button>
       </ion-col>

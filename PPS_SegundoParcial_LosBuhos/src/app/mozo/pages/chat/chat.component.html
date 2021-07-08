@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button (click)="return()" slot="start"></ion-back-button>
+    <ion-title>{{title}}</ion-title>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+<div *ngIf="currentMesaCliente">
+    <app-sala-chat [user]="currentUser" [uid]="currentUid" [mesaNumber]="currentMesaCliente.nro_mesa" [idMesaCliente]="currentMesaCliente.doc_id"></app-sala-chat>
+</div>
+</ion-content>

@@ -49,7 +49,7 @@
     <ion-button *ngIf="pedido.estado == 'PAGANDO'" (click)="CerrarMesa()">
       Aprobar pago
     </ion-button>
-    <ion-button>
+    <ion-button (click)="goToChat()">
       Chat
     </ion-button>
     

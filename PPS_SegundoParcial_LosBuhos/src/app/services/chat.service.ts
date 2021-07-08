@@ -12,11 +12,8 @@ export class ChatService extends BaseService<Message> {
     super(fire);    
   } 
 
-  setCollName(collName:string){
-    this.setCollection(collName);
-  }
-
-  getMessagesByRoom(idRoom:number){
-    return this.getItemByFilter("sala", idRoom).then();
+  setChatCollection(mesaCliente:string){
+    let collName = "Chats";
+    this.setCollFilter(mesaCliente, collName, "fecha", "mesaClienteId");
   }
 }

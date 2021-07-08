@@ -29,7 +29,7 @@ export class BaseService<T> {
     protected setCollFilter(valueFilter:string, collName:string, field:string, filterField:string){
       this.itemsCollection = this.afs.collection<T>(collName, ref => ref
         .where(filterField, '==', valueFilter)
-        .orderBy(field, "desc"));
+        .orderBy(field, "asc"));
       this.items = this.itemsCollection.valueChanges();
     }
   

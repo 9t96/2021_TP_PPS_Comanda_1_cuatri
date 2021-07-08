@@ -28,6 +28,10 @@ const routes: Routes = [
     loadChildren: () => import('./supervisor/supervisor.module').then( m => m.SupervisorModule)
   },
   {
+    path: 'mozo',
+    loadChildren: () => import('./mozo/mozo.module').then( m => m.MozoModule)
+  },
+  {
     path: 'cliente',
     loadChildren: () => import('./cliente/cliente.module').then( m => m.ClienteModule)
   },

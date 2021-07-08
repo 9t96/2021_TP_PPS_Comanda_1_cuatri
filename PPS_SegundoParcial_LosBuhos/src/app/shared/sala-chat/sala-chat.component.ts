@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Message } from 'src/app/clases/message';
 import { Usuario } from 'src/app/clases/usuario';
@@ -22,7 +22,7 @@ export class SalaChatComponent implements OnInit {
   title:string;
   @Input() user:Usuario;
   @Input() uid:string;
-  @Input() mesaNumber:string;
+  @Input() mesaNumber:number;
   @Input() idMesaCliente:string;
   //@Input() idMesa:string;
 
@@ -31,15 +31,15 @@ export class SalaChatComponent implements OnInit {
     private authService:AuthService, 
     private fb:FormBuilder,
     private router:Router) 
-  {
-    this.title = "Consultas mesa Nro. " + this.mesaNumber;
+  {    
     this.mensaje="";    
-    this.bgSala = "container cont-chat bg-sala-b";    
+    this.bgSala = "container cont-chat";    
     this.mensajes=[];
   }
 
   ngOnInit() {
-    this.mjeService.setCollName(this.idMesaCliente);
+    this.title = "Consultas Mesa " + this.mesaNumber.toString();
+    this.mjeService.setChatCollection(this.idMesaCliente);
 
     this.mjeService.items.subscribe(
       (mje)=>{   
@@ -50,7 +50,7 @@ export class SalaChatComponent implements OnInit {
     );  
 
     this.chatForm = this.fb.group({
-      messageCtrl:['', []],      
+      messageCtrl:['', [Validators.required]],      
     });                
   }
 
@@ -62,9 +62,10 @@ export class SalaChatComponent implements OnInit {
       userName:this.user.nombre + ' ' + this.user.apellido,
       //idMesa:this.idMesa,
       idMesa:"",
-      Mesa: this.mesaNumber,
+      Mesa: this.mesaNumber.toString(),
       uid: this.uid,
-      rol: this.user.rol == eRol.CLIENTE? "Cliente" : "Mozo"
+      rol: this.user.rol == eRol.CLIENTE? "Cliente" : "Mozo",
+      mesaClienteId: this.idMesaCliente
     };  
     
     this.mjeService.setItemWithId(mje, mje.fecha.toString());    
@@ -76,7 +77,7 @@ export class SalaChatComponent implements OnInit {
     return this.chatForm.controls["messageCtrl"];
   }
 
-  goToHome(){
+  return(){
     this.router.navigate(["home-clientes"]);
   }
 

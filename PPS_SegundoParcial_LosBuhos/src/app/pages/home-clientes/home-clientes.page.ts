@@ -49,7 +49,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log("vava entrar")
+    //console.log("vava entrar")
     this.showCartaBtn = false
     this.showChatBtn = false
     this.showDetalleBtn = false
@@ -57,16 +57,17 @@ export class HomeClientesPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("lo corrio oninit")
+    //console.log("lo corrio oninit")
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
     //Traigo mesaCliente
     this.pedidosSrv.TraerMesaCliente().subscribe( data =>{
       this.mesasCliente = data;
-      console.log(data)
+      //console.log(data)
       this.isOnMesa = this.mesasCliente.some( x => {return x.user_uid == this.currentUser.uid})
-      console.log("Esta sentado?" + this.isOnMesa)
+      //console.log("Esta sentado?" + this.isOnMesa)
       this.currentMesaCliente = this.mesasCliente.find( x =>  x.user_uid == this.currentUser.uid)
-      console.log("Datos de mi mesa:" + JSON.stringify(this.currentMesaCliente));
+      //console.log("Datos de mi mesa:" + JSON.stringify(this.currentMesaCliente));
+      this.ResolveActionInMesa();
     });
     //TRAIGO LISTA DE ESPERA PARA CHEKEAR QUE YA ESTE O NO EN ESPERA
     this.mesasSrv.TraerListaEspera().subscribe(data => {
@@ -75,15 +76,15 @@ export class HomeClientesPage implements OnInit {
       this.isOnEspera = data.some( x => x.user_uid === this.currentUser.uid) ? true : false;
       if(this.isOnEspera) this.espera_docid = (data.find( x => x.user_uid === this.currentUser.uid)).doc_id;
       this.qrBtnText = this.SetQrBtnText();
-      console.log("Esta en lista de espera?" + this.isOnEspera);
-      console.log("Object lista espera" + this.espera_docid);
+      //console.log("Esta en lista de espera?" + this.isOnEspera);
+      //console.log("Object lista espera" + this.espera_docid);
     });
 
     //TRAIGO MESAS PARA VER SU ESTADO
     this.mesasSrv.TraerMesas().subscribe(data => {
       this.mesas = data;
     });
-    console.log(this.currentUser);
+    console.log(this.currentUser);    
   }
 
   SetQrBtnText():string{
@@ -164,6 +165,7 @@ export class HomeClientesPage implements OnInit {
   ResolveActionInMesa(){
     if (this.currentMesaCliente.estado == eEstadoMesaCliente.SENTADO) {
       this.showCartaBtn = true;
+      this.showChatBtn = true;
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.CONFIRMANDO_PEDIDO) {
       this.showChatBtn = true;

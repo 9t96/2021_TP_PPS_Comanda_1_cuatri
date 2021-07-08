@@ -7,4 +7,5 @@ export interface Message {
     idMesa:string;
     Mesa:string;
     rol:string;
+    mesaClienteId:string;
 }

@@ -96,4 +96,8 @@ export class DetallePedidoPage implements OnInit {
     return await modal.present();
   }
 
+  goToChat(){
+    this.router.navigate(['mozo/chat', {nroMesa: this.pedido.nro_mesa}]);
+  }
+
 }

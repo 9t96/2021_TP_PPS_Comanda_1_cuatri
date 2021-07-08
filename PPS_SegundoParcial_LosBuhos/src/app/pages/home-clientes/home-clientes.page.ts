@@ -103,7 +103,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-   /*  window.cordova.plugins.barcodeScanner.scan(
+    window.cordova.plugins.barcodeScanner.scan(
       (result) => {
         this.resolveAction(result.text);
       },
@@ -117,8 +117,8 @@ export class HomeClientesPage implements OnInit {
         formats: 'QR_CODE',
         resultDisplayDuration: 2,
       }
-    ); */
-    this.resolveAction("7");
+    );
+    //this.resolveAction("7");
   }
 
   AgregarProducto(index: any) {

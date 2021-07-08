@@ -15,3 +15,21 @@
     top: 2rem;
     right: 1rem;
 }
+
+.hero{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-top: 2em;
+    img{
+        height: 10em;
+    }
+}
+
+.options{
+    display:flex;
+    flex-direction: column;
+    ion-row{
+        margin-top: 3em;
+    }
+}

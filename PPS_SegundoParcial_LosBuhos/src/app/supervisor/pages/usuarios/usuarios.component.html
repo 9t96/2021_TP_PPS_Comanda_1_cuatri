@@ -2,6 +2,9 @@
   <ion-toolbar color="medium">
     <ion-back-button (click)="return()" slot="start"></ion-back-button>
     <ion-title>Gestionar Usuarios</ion-title>
+      <ion-fab-button (click)="addUser()" slot="end" color="tertiary">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
   </ion-toolbar>
 </ion-header>
 
@@ -12,10 +15,4 @@
       <app-usuario-item [usuario]="user"></app-usuario-item>
     </div>    
   </ion-list>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addUser()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

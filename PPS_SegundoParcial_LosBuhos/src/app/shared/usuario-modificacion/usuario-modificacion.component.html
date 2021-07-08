@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="medium">
     <ion-title>Detalle Usuario</ion-title>
-    <ion-icon slot="end" (click)="dismiss()" size="large" name="close-circle-outline"></ion-icon>
+    <ion-icon slot="end" (click)="dismiss()" size="large" name="close-circle-outline" style="margin-right: 0.5em;"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +17,7 @@
         <div class="" >
           <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="hasErrorPerfil">Debe cargar una foto de perfil</small>          
         </div>
-        <ion-item >          
+        <ion-item class="user-image">          
           <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">            
             <img [src]="user.img_src" *ngIf="user.img_src != null">
             <img [src]="imagenPerfil" *ngIf="user.img_src == null">
@@ -29,7 +29,7 @@
           <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.required && getNameControl().touched">Campo obligatorio</small>
           <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getNameControl().errors?.minlength && getNameControl().touched">Mínimo 2 caracteres</small>
         </div>
-      <ion-item color=""fill="outline">
+      <ion-item color=""fill="outline" class="input-wrapper">
         <ion-label position= "fixed"> Nombre</ion-label><br>
         <ion-input 
           type="text" 
@@ -44,7 +44,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getLastNameControl().errors?.required && getLastNameControl().touched">Campo obligatorio</small>
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getLastNameControl().errors?.minlength && getLastNameControl().touched">Mínimo 2 caracteres</small>
       </div>
-      <ion-item color="" fill="outline">
+      <ion-item color="" fill="outline" class="input-wrapper">
         <ion-label position= "fixed"> Apellido</ion-label><br>
         <ion-input 
           type="text" 
@@ -61,7 +61,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="(getDniControl()?.errors?.min || getDniControl()?.errors?.max) && getDniControl()?.touched && !getDniControl()?.errors?.pattern">El valor debe estar entre 999999999 y 1000000</small>
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getDniControl()?.errors?.pattern && getDniControl()?.touched">Sólo se permiten números</small>
       </div>
-      <ion-item color="" fill="outline">
+      <ion-item color="" fill="outline" class="input-wrapper">
         <ion-label position= "fixed"> DNI</ion-label><br>
         <ion-input 
           type="text" 
@@ -78,7 +78,7 @@
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.maxlength && getCuilControl()?.touched && !getCuilControl()?.errors?.pattern">Máximo de caracteres 15</small> 
         <small class="error-input-message ion-padding-start ion-padding-end" *ngIf="getCuilControl()?.errors?.pattern && getCuilControl()?.touched">Sólo se permiten números</small>
       </div>
-      <ion-item color="" fill="outline" *ngIf="user.rol != 'CLIENTE'">
+      <ion-item color="" fill="outline" *ngIf="user.rol != 'CLIENTE'" class="input-wrapper">
         <ion-label position= "fixed"> CUIL</ion-label><br>
         <ion-input 
           type="text" 

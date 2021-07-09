@@ -122,7 +122,7 @@ export class AltaProductoComponent implements OnInit {
         this.producto.img_src.push(downloadURL);
 
         this.i_NroImagen++;
-        alert("Cntidad fotos cargadas: " + this.i_NroImagen + "\n URL:" + this.producto.img_src);
+        alert("Cntidad fotos cargadas: " + this.i_NroImagen + "   URL:" + this.producto.img_src);
         console.log(this.producto.img_src);
       } else {
         alert("IMAGEN NO CORRECTA . NO SE CONTABILIZA " + this.i_NroImagen);

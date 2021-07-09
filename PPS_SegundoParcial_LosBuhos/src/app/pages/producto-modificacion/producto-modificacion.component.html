@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-toolbar color="medium">
     <ion-back-button defaultHref="producto-modificar" slot="start"></ion-back-button>
@@ -6,25 +5,31 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of productos" >
+      <ion-avatar>
+        <img [src]="item.img_src">
+      </ion-avatar>
+      <ion-label>
+        
+          <input disable [producto_mod.nombre]='item.nombre' value={{item.nombre}} ></input>
+          <h1>
+              {{item.nombre}}
+      </h1>
+      </ion-label>
+      
+          <input  disabled [producto_mod.precio]='item.precio' value={{item.precio}}></input>
+          <strong>
+          ${{item.precio}}
+      </strong>
+      <ion-button (click)="modificarProducto()">
+        Modificar
+      </ion-button>
 
-  <ion-item *ngFor="let item of productos">
-    <ion-avatar>
-      <img [src]="item.img_src">
-    </ion-avatar>
-    <ion-label>
-      <h1>{{item.nombre}}</h1>
-       
-    </ion-label>
-    <strong>${{item.precio}}</strong>
 
-    <ion-button>
-      Modificar
-    </ion-button>
-     
-
-  </ion-item>
+    </ion-item>
+  </ion-list>
 
 
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
-
+import { AltaProductoComponent } from './../alta-producto/alta-producto.component';
 @Component({
   selector: 'app-home-cocinero',
   templateUrl: './home-cocinero.page.html',
@@ -18,5 +18,7 @@ export class HomeCocineroPage implements OnInit {
       this.router.navigate(['login']);
     })
   }
+
+ 
 
 }

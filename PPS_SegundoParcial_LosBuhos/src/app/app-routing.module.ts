@@ -103,7 +103,11 @@ const routes: Routes = [
   { 
     path: 'modal',
     loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
+  },  {
+    path: 'modal-producto',
+    loadChildren: () => import('./pages/modal-producto/modal-producto.module').then( m => m.ModalProductoPageModule)
   }
+
 
 
 ];

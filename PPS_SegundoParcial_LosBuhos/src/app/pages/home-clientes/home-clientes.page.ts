@@ -68,6 +68,7 @@ export class HomeClientesPage implements OnInit {
       //console.log("Esta sentado?" + this.isOnMesa)
       this.currentMesaCliente = this.mesasCliente.find( x =>  x.user_uid == this.currentUser.uid)
       //console.log("Datos de mi mesa:" + JSON.stringify(this.currentMesaCliente));
+      //this.ResolveActionInMesa();
     });
     //TRAIGO LISTA DE ESPERA PARA CHEKEAR QUE YA ESTE O NO EN ESPERA
     this.mesasSrv.TraerListaEspera().subscribe(data => {
@@ -172,10 +173,14 @@ export class HomeClientesPage implements OnInit {
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.ESPERANDO_PEDIDO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
+      this.showGamesBtn = true;
+      this.showEncuestaBtn = true;
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PEDIDO_ENTREGADO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
+      this.showGamesBtn = true;
+      this.showEncuestaBtn = true;
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.COMIENDO) {
       this.showChatBtn = true;
@@ -186,6 +191,7 @@ export class HomeClientesPage implements OnInit {
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PAGANDO) {
       this.showDetalleBtn = true;
       this.showEncuestaBtn = true;
+      this.showChatBtn = true;
     }
 
   }
@@ -271,6 +277,10 @@ export class HomeClientesPage implements OnInit {
 
   goToChat(){
     this.router.navigate(['cliente/chat']);
+  }
+
+  goToGame(){
+    this.router.navigate(['cliente/game']);
   }
 
 }

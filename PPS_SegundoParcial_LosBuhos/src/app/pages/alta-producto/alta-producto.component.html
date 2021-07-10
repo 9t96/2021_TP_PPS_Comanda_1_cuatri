@@ -1,5 +1,12 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button (click)="navigateBack()" slot="start">Atras</ion-back-button>
+    <ion-title>Alta de producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
 <div class="container">
-  <h1 class="title">Alta de productos</h1>
+  
   <form  [formGroup]="formProducto">
       
     <!-- Nombre -->
@@ -7,7 +14,6 @@
       <ion-label position="fixed">Nombre</ion-label><br />
       <ion-input type="text" class="form-control" #nombre formControlName="nombre">
       </ion-input>
-
       <small class="invalid" *ngIf="formProducto.controls.nombre.errors?.required && formProducto.controls.nombre.touched ">El nombre es requerido</small> 
     </ion-item>
     <!-- descripcion -->
@@ -73,7 +79,7 @@
       [disabled]="!formProducto.valid">Guardar </ion-button>
     </ion-row>
   </form>
-
-  <p>CANTIDAD IMAGENES: {{i_NroImagen }} </p>
+ 
 
 </div>
+</ion-content>

@@ -11,19 +11,16 @@
       <ion-avatar>
         <img [src]="item.img_src">
       </ion-avatar>
-      <ion-label>
-        
-          <input disable [producto_mod.nombre]='item.nombre' value={{item.nombre}} ></input>
+      <ion-label >
           <h1>
               {{item.nombre}}
-      </h1>
+          </h1>
       </ion-label>
-      
-          <input  disabled [producto_mod.precio]='item.precio' value={{item.precio}}></input>
           <strong>
           ${{item.precio}}
       </strong>
-      <ion-button (click)="modificarProducto()">
+
+      <ion-button (click)="modificarProducto(item.doc_id)" >
         Modificar
       </ion-button>
 

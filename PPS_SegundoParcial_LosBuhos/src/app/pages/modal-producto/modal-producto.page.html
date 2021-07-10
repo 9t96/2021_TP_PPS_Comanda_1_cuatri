@@ -1,29 +1,59 @@
 <ion-header>
   <ion-toolbar color="medium">
-    <ion-title>{{producto.nombre}}</ion-title>
+    <ion-title>{{titulo}}</ion-title>
     <ion-icon slot="end" (click)="dismiss()" name="close-circle-outline"></ion-icon>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-slides pager="true" [options]="slideOpts" style="margin-top:1em">
+  <ion-slides  pager="true" [options]="slideOpts" style="margin-top:1em">
     <ion-slide *ngFor="let image of producto.img_src">
-        <img [src]="image" style="height: 10em;">
+        <img [src]="image" style="height: 5em;">
     </ion-slide>
   </ion-slides>
-  <div class="detail">
-    <ion-label>
-      <ion-row>
-          <input type="number" value={{producto.precio}} >
-         
-        <h2 style="margin-left:1em"><ion-icon name="timer-outline"></ion-icon>{{producto.tiempo_elaboracion}} min</h2>
-      </ion-row>
-      <ion-row>
-        <p>{{producto.desscripcion}}</p>
-      </ion-row>
-    </ion-label>
-    <ion-button class="btn-sucess">Modificar</ion-button>
-    <ion-button class="btn-danger" (click)="dismiss()">Cancelar</ion-button>
+  <form [formGroup]="formProducto">
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Nombre: </ion-label>
+
+      <ion-input type="text" placeholder={{producto.nombre}} class="form-control" formControlName="nombre" #nombre
+       [disabled]="isDisabled">
+      </ion-input>
+    </ion-item>
+      <ion-item lines="full" class="input-wrapper">
+        <ion-label position="fixed">Descripcion</ion-label>
+        <ion-input type="text" placeholder={{producto.descripcion}} formControlName="descripcion" class="form-control" #descripcion
+        [disabled]="isDisabled">
+        </ion-input>
+      </ion-item>
+        <ion-item lines="full" class="input-wrapper">
+          <ion-label position="fixed">Precio $</ion-label>
+          <ion-input type="number" placeholder={{producto.precio}} formControlName="precio" class="form-control" #precio
+          [disabled]="isDisabled">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="full" class="input-wrapper">
+          <ion-label position="fixed">Tiempo de elaboracion: </ion-label>
+          <ion-input type="number" placeholder={{producto.tiempo_elaboracion}} formControlName="tiempo" class="form-control" #tiempo  
+          [disabled]="isDisabled">
+          </ion-input>
+        </ion-item>
+
+        <!-- sector -->
+        <ion-item lines="full" class="input-wrapper">
+          <ion-label position="fixed">Sector</ion-label>
+          <ion-select value="0" #sector class="form-control" interface="popover" formControlName="sector"
+            placeholder="Seleccione una opcion"  [disabled]="isDisabled" >
+            <ion-select-option value="BEBIDA">Bebidas</ion-select-option>
+            <ion-select-option value="COCINA">Cocina</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-button class="btn btn-success"  (click)="modificarProducto()" *ngIf="modificar">Modificar</ion-button>
+          <ion-button class="btn btn-danger" (click)="eliminarConfirm()" *ngIf="eliminar">Eliminar</ion-button>
+          <ion-button class="btn-danger" (click)="dismiss()">Cancelar</ion-button>
+        </ion-item>
+  </form>
+   
  
-  </div>
 </ion-content>

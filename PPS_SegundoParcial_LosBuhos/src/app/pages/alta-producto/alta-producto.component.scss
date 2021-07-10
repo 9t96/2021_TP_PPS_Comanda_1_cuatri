@@ -1,5 +1,5 @@
 .form-register{
-    margin-top: 0rem;
+    margin-top: 1rem;
 }
 
 .form-register .btn-register{
@@ -11,10 +11,7 @@
 .form-register .btn-login{
     height: 4rem;
 }
-
-.form-register ion-item{
-    margin-bottom: 1rem;
-}
+ 
 
 .error-input-message{
     color:#eb445a;
@@ -35,3 +32,38 @@
     height: auto;
     margin-top: -20px;
 }
+ion-toolbar{
+    ion-icon{
+        font-size: 2em;
+        margin-right: 0.5em;
+    }
+}
+.remove{
+    margin-right: 0.5em;
+    font-size: 2em;
+}
+.add{
+    margin-left: 0.5em;
+    font-size: 2em;
+}
+strong{
+    font-size: 1.5em;
+}
+
+.detail{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    ion-row{
+        margin-top: 1em;
+    }
+    .buttons{
+        margin-top: 1em;
+        display: flex;
+        align-items: center;
+    }
+}
+
+  
+
+ 

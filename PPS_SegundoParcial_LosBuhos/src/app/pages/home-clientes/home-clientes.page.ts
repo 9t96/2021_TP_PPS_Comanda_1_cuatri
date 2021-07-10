@@ -15,6 +15,7 @@ import { ProductosService } from 'src/app/services/productos/productos.service';
 import { Event as NavigationEvent } from "@angular/router";
 import { filter } from 'rxjs/operators';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { eToastType } from 'src/app/enums/eToastType';
 declare let window: any;
 
 
@@ -45,7 +46,13 @@ export class HomeClientesPage implements OnInit {
   public showGamesBtn: boolean = false;
   public showEncuestaBtn: boolean = false;
   public espera_docid : string;
-  constructor(public mesasSrv: MesasService,public prodSrv: ProductosService, public pedidosSrv:PedidosService, public authSrv: AuthService, public router: Router, public toastSrv:ToastService) {
+
+  constructor(public mesasSrv: MesasService,
+    public prodSrv: ProductosService, 
+    public pedidosSrv:PedidosService, 
+    public authSrv: AuthService, 
+    public router: Router, 
+    public toastSrv:ToastService) {
     this.mesaSolicitada = new Mesa();
   }
 
@@ -68,7 +75,7 @@ export class HomeClientesPage implements OnInit {
       //console.log("Esta sentado?" + this.isOnMesa)
       this.currentMesaCliente = this.mesasCliente.find( x =>  x.user_uid == this.currentUser.uid)
       //console.log("Datos de mi mesa:" + JSON.stringify(this.currentMesaCliente));
-      this.ResolveActionInMesa();
+      //this.ResolveActionInMesa();
     });
     //TRAIGO LISTA DE ESPERA PARA CHEKEAR QUE YA ESTE O NO EN ESPERA
     this.mesasSrv.TraerListaEspera().subscribe(data => {
@@ -284,7 +291,10 @@ export class HomeClientesPage implements OnInit {
   }
 
   goToEncuesta(){
-    this.router.navigate(['cliente/encuesta']);
+    if(this.currentMesaCliente.hasEncuesta){
+      this.toastSrv.presentToast("Usted ya ha completado la encuesta", 2000,'warning');
+    }else{
+      this.router.navigate(['cliente/encuesta', {mesaClienteId: this.currentMesaCliente.doc_id}]);
+    }
   }
-
 }

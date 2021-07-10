@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Encuesta } from 'src/app/clases/encuesta';
+import { eLoMejorPeor } from 'src/app/enums/eLoMejorPeor';
 import { eToastType } from 'src/app/enums/eToastType';
+import { eValoracionComidas } from 'src/app/enums/eValoracionComidas';
+import { eValoracionVelocidad } from 'src/app/enums/eValoracionVelocidad';
 import { EncuestaService } from 'src/app/services/encuesta.service';
+import { MesaClienteService } from 'src/app/services/mesa-cliente.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,17 +26,21 @@ export class EncuestaComponent implements OnInit {
   valoracionVelocidadOpt:string[];
   loMejorPeorOpt:string[];
   recomienda:boolean;
+  mesaClienteId:string;
 
   constructor(private bf:FormBuilder, 
     private userService:UserService, 
     private encuestaService:EncuestaService,
+    private mesaClienteService: MesaClienteService,
     private router:Router,
+    private route: ActivatedRoute,
     public toastController:ToastController) { 
       this.showSpinner = false;
       this.recomienda = false;
     }
 
   ngOnInit(): void {
+    this.mesaClienteId = this.route.snapshot.paramMap.get('mesaClienteId');
     this.alertMessage = "";
     this.alertMessageOK = "";
     this.initOpciones();
@@ -61,10 +69,12 @@ export class EncuestaComponent implements OnInit {
     encuesta.valoracionComidas = this.getValoracionComidas().value;
     encuesta.valoracionVelocidad = this.getValoracionVelocidad().value;
 
-    this.encuestaService.addItem(encuesta).then(() => {
+    this.encuestaService.addItem(encuesta).then(async() => {
       this.showSpinner = false;
       this.disableControls(false); 
-      this.presentToast("Encuesta guardada correctamente", eToastType.Success);
+      await this.mesaClienteService.setEncuesta(this.mesaClienteId, true);
+      await this.presentToast("Encuesta guardada correctamente", eToastType.Success);
+      this.return();
     }).catch((err)=>{
       console.log(err);
       this.presentToast("Error al guardar encuesta", eToastType.Warning);
@@ -132,15 +142,24 @@ export class EncuestaComponent implements OnInit {
 
   initOpciones(){
     this.valoracionComidasOpt = [
-      "Muy buena", "Buena", "Regular", "Mala"
+      eValoracionComidas.MUYBUENA,
+      eValoracionComidas.BUENA,
+      eValoracionComidas.REGULAR,
+      eValoracionComidas.MALA,
     ];
 
     this.valoracionVelocidadOpt = [
-      "Rápida", "Normal", "Lenta", "Muy lenta"
+      eValoracionVelocidad.RAPIDA,
+      eValoracionVelocidad.NORMAL,
+      eValoracionVelocidad.LENTA,
+      eValoracionVelocidad.MUYLENTA,
     ];
 
     this.loMejorPeorOpt = [
-      "La comida", "La atención", "Las instalaciones", "La aplicación para celular"
+      eLoMejorPeor.COMIDA, 
+      eLoMejorPeor.ATENCION,
+      eLoMejorPeor.APP,
+      eLoMejorPeor.INSTALACIONES
     ];
   }
 }

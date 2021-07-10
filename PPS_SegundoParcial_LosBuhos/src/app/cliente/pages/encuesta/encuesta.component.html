@@ -12,7 +12,7 @@
         <form [formGroup]="encuestaForm" (ngSubmit)="clickGuardarEncuesta()"> 
       
         <!-- Puntaje Mozo -->
-        <h3>Puntuaje del mozo</h3>
+        <h3>Puntuaje del mozo <span>{{getPuntajeMozo().value}}</span></h3>
         <ion-item>
           <ion-range min="1" max="10" pin="true" formControlName="puntajeMozo"></ion-range>
         </ion-item>
@@ -47,7 +47,7 @@
         <!-- Lo Mejor -->
         <ion-item>
           <ion-label>Lo mejor fue:</ion-label>
-          <ion-select value="notifications" interface="action-sheet" valoracionComidas="loMejor">
+          <ion-select value="notifications" interface="action-sheet" formControlName="loMejor">
             <ion-select-option *ngFor="let game of loMejorPeorOpt" [value]="game">{{game}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -58,7 +58,7 @@
         <!-- Lo Peor -->
         <ion-item>
           <ion-label>La peor fue:</ion-label>
-          <ion-select value="notifications" interface="action-sheet" valoracionComidas="loPeor">
+          <ion-select value="notifications" interface="action-sheet" formControlName="loPeor">
             <ion-select-option *ngFor="let game of loMejorPeorOpt" [value]="game">{{game}}</ion-select-option>
           </ion-select>
         </ion-item>

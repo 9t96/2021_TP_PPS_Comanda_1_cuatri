@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button (click)="return()" slot="start"></ion-back-button>
+    <ion-title>Encuesta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen color="secondary">
+
+  <div class="container">    
+    <main class="form-signin">
+        <form [formGroup]="encuestaForm" (ngSubmit)="clickGuardarEncuesta()"> 
+      
+        <!-- Puntaje Mozo -->
+        <h3>Puntuaje del mozo</h3>
+        <ion-item>
+          <ion-range min="1" max="10" pin="true" formControlName="puntajeMozo"></ion-range>
+        </ion-item>
+        <ion-row class="errors">
+          <small class="invalid" *ngIf="getPuntajeMozo()?.errors?.required && getPuntajeMozo()?.touched">Campo obligatorio</small>             
+        </ion-row>
+
+        <h3>Cómo calificaría a:</h3>
+        <!-- Valoración Comida -->
+        <ion-item>
+          <ion-label>La comida</ion-label>
+          <ion-select value="notifications" interface="action-sheet" formControlName="valoracionComidas">
+            <ion-select-option *ngFor="let game of valoracionComidasOpt" [value]="game">{{game}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-row class="errors">
+          <small class="invalid" *ngIf="getValoracionComidas()?.errors?.required && getValoracionComidas()?.touched">Campo obligatorio</small>               
+        </ion-row>
+
+        <!-- Valoración velocidad -->
+        <ion-item>
+          <ion-label>La velocidad de atención</ion-label>
+          <ion-select value="notifications" interface="action-sheet" formControlName="valoracionVelocidad">
+            <ion-select-option *ngFor="let game of valoracionVelocidadOpt" [value]="game">{{game}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-row class="errors">
+          <small class="invalid" *ngIf="getValoracionVelocidad()?.errors?.required && getValoracionVelocidad()?.touched">Campo obligatorio</small>               
+        </ion-row>
+
+        <h3>Lo mejor y lo peor</h3>
+        <!-- Lo Mejor -->
+        <ion-item>
+          <ion-label>Lo mejor fue:</ion-label>
+          <ion-select value="notifications" interface="action-sheet" valoracionComidas="loMejor">
+            <ion-select-option *ngFor="let game of loMejorPeorOpt" [value]="game">{{game}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-row class="errors">
+          <small class="invalid" *ngIf="getLoMejor()?.errors?.required && getLoMejor()?.touched">Campo obligatorio</small>               
+        </ion-row>
+
+        <!-- Lo Peor -->
+        <ion-item>
+          <ion-label>La peor fue:</ion-label>
+          <ion-select value="notifications" interface="action-sheet" valoracionComidas="loPeor">
+            <ion-select-option *ngFor="let game of loMejorPeorOpt" [value]="game">{{game}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-row class="errors">
+          <small class="invalid" *ngIf="getLoPeor()?.errors?.required && getLoPeor()?.touched">Campo obligatorio</small>               
+        </ion-row>
+        <br>
+        <!-- Recomienda -->
+        <ion-item>
+          <ion-label position="fluid">¿Recomendaría el Restaurante?</ion-label><br />
+          <ion-toggle (click)="setRecomienda()"></ion-toggle>   
+        </ion-item> 
+      
+        <!-- Enviar -->
+        <div class="actions" style="margin-top: 3em;">
+          <p class="ion-padding-start ion-padding-end">
+            <ion-button type="submit" expand="block" class="btn-register" [disabled]="encuestaForm.invalid">
+              Enviar
+            </ion-button>
+          </p>
+        </div>
+        <br>
+      </form>
+    </main>   
+  </div>   
+
+</ion-content>

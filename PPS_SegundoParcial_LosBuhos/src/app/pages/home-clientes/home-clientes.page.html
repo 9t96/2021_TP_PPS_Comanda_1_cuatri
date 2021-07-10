@@ -30,7 +30,7 @@
         <ion-icon name="game-controller-outline"></ion-icon>
         <p>Juegos</p>
       </div>
-      <div class="menu-item" *ngIf="showEncuestaBtn">
+      <div class="menu-item" *ngIf="showEncuestaBtn" (click)="goToEncuesta()">
         <ion-icon name="document-text-outline"></ion-icon>
         <p>Encuesta</p>
       </div>

@@ -68,7 +68,7 @@ export class HomeClientesPage implements OnInit {
       //console.log("Esta sentado?" + this.isOnMesa)
       this.currentMesaCliente = this.mesasCliente.find( x =>  x.user_uid == this.currentUser.uid)
       //console.log("Datos de mi mesa:" + JSON.stringify(this.currentMesaCliente));
-      //this.ResolveActionInMesa();
+      this.ResolveActionInMesa();
     });
     //TRAIGO LISTA DE ESPERA PARA CHEKEAR QUE YA ESTE O NO EN ESPERA
     this.mesasSrv.TraerListaEspera().subscribe(data => {
@@ -281,6 +281,10 @@ export class HomeClientesPage implements OnInit {
 
   goToGame(){
     this.router.navigate(['cliente/game']);
+  }
+
+  goToEncuesta(){
+    this.router.navigate(['cliente/encuesta']);
   }
 
 }

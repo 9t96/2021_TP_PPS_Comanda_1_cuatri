@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button (click)="return()" slot="start"></ion-back-button>
+    <ion-title>Piedra Papel o Tijera</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="container">
+    <div class="p-3 p-md-3 mb-3 text-white rounded  game-div">
+        <div class="row justify-content-center text-center">
+            <div class="col-sm col-md-3 px-0">                    
+                <h1 class="text-center">{{userName}}</h1>
+                <h2 class="text-center">{{triunfos}}</h2>
+            </div>
+            <div class="col">
+                <a [routerLink]="" (click)="chose(1)"  >
+                    <img class="bd-placeholder-img rounded-circle" [src]="srcPiedra" title="Piedra" height="70px">
+                </a>
+            </div>
+            <div class="col">
+                <a [routerLink]="" (click)="chose(2)">
+                    <img class="bd-placeholder-img rounded-circle" [src]="srcPapel" title="Papel" height="70px">     
+                </a>          
+            </div>
+            <div class="col">
+                <a [routerLink]="" (click)="chose(3)">
+                    <img class="bd-placeholder-img rounded-circle" [src]="srcTijera" title="Tijera" height="70px">               
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="p-3 p-md-3 mb-5 text-white rounded ">
+        <div class="row justify-content-center">
+            <div class="col-sm col-md-3 px-0">                    
+                <h1 class="text-center">Adversario</h1>
+                <h2 class="text-center">{{derrotas}}</h2>
+            </div>
+            <div class="col-sm col-md-1 px-">
+                   
+            </div>
+            <div class="col-sm col-md-4 text-center">
+                <img class="bd-placeholder-img rounded-circle" [src]="srcIncognita" title="Papel" height="130px">     
+            </div>
+            <div class="col-sm col-md-4 px-0 text-center m-2">                    
+                <img class="bd-placeholder-img rounded-circle" [src]="srcResultado" title="Tijera" height="130px">                                                     
+            </div>
+        </div>
+    </div>
+  </div>
+
+</ion-content>

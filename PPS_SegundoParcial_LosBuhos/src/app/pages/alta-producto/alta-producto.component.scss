@@ -1,37 +1,35 @@
-.form-register{
-    margin-top: 0rem;
-}
 
-.form-register .btn-register{
-    height: 6rem;
-    margin-bottom: 0rem;
-    margin-top: -2rem;
-}
-
-.form-register .btn-login{
-    height: 4rem;
-}
-
-.form-register ion-item{
-    margin-bottom: 1rem;
-}
-
-.error-input-message{
-    color:#eb445a;
-    margin-top: -5%;
-    margin-bottom: 0%;
-}
-
-.circular--portrait {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    overflow: hidden;
-    border-radius: 50%;
+  .input-wrapper {
+    --background: #fdf0d5;
+    color:  #333333
   }
+
+  ion-item{
+      margin-top: 2em
+  }
+
+  form{
+    padding-left: 10px;
+    padding-right: 10px;
+    small{
+        color: red;
+    }
+  }
+
+  .image-item{
+      --background: transparent
+  }
+
+  .image-default{
+      img{
+        height: 5em;
+      }
+  }
+
+  .uploaded-images{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
   
-.circular--portrait img {
-    width: 100%;
-    height: auto;
-    margin-top: -20px;
-}

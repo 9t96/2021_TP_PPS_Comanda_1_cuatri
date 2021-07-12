@@ -7,6 +7,7 @@ import { eEmpleado } from 'src/app/enums/eEmpleado';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { eRol} from '../../enums/eRol';
+import { NgxSpinnerService } from "ngx-spinner";
 
 class LoginUser{
   email: string;
@@ -31,11 +32,12 @@ export class LoginPage implements OnInit {
 
   get password() { return this.loginForm.get('password'); }
 
-  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder, public userSrv: UserService) { 
+  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder, public userSrv: UserService,
+    private spinner: NgxSpinnerService) { 
     this.user = new LoginUser();
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.loginForm = this.fromBuilder.group({
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
       password: [this.user.password, Validators.compose([Validators.required])]
@@ -44,6 +46,7 @@ export class LoginPage implements OnInit {
 
 
   Login(){
+    this.spinner.show();
     this.user.email = this.loginForm.get('email').value;
     this.user.password = this.loginForm.get('password').value;
     
@@ -77,6 +80,9 @@ export class LoginPage implements OnInit {
     })
     .catch( err =>{ 
     err.code == "auth/wrong-password" ? this.presentErrors("Uno o más campos son inválidos...") : this.presentErrors("Ha ocurrido un error vuelva a intentar.")
+    })
+    .finally(()=>{
+      this.spinner.hide();
     });
   }
 

@@ -22,6 +22,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductoBajaComponent } from './pages/producto-baja/producto-baja.component' 
 import { ProductoModificacionComponent } from './pages/producto-modificacion/producto-modificacion.component' 
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,8 +45,9 @@ import { ProductoModificacionComponent } from './pages/producto-modificacion/pro
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
-    HttpClientModule 
-    
+    HttpClientModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule
   ],
   providers: [
     BarcodeScanner,

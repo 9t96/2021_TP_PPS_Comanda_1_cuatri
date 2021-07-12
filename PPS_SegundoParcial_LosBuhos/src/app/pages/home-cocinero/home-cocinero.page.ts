@@ -8,13 +8,20 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./home-cocinero.page.scss'],
 })
 export class HomeCocineroPage implements OnInit {
+  solvedSurvey: any;
 
   constructor(public authSrv: AuthService, public router: Router) { }
 
+  ionViewWillEnter(){
+    this.solvedSurvey = JSON.parse(localStorage.getItem("solvedSurvey"))
+  }
+
   ngOnInit() {
+    
   }
   logout(){
     this.authSrv.SignOut().then(()=>{
+      localStorage.clear();
       this.router.navigate(['login']);
     })
   }

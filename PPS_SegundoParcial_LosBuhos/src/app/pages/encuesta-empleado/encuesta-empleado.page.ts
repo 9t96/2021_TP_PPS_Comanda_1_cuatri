@@ -7,11 +7,11 @@ import { Usuario } from 'src/app/clases/usuario';
 import { eRol } from 'src/app/enums/eRol';
 import { EncuestaService } from 'src/app/services/encuesta/encuesta.service';
 @Component({
-  selector: 'app-encuesta',
-  templateUrl: './encuesta.page.html',
-  styleUrls: ['./encuesta.page.scss'],
+  selector: 'app-encuesta-empleado',
+  templateUrl: './encuesta-empleado.page.html',
+  styleUrls: ['./encuesta-empleado.page.scss'],
 })
-export class EncuestaPage implements OnInit {
+export class EncuestaEmpleadoPage implements OnInit {
 
   public surveyForm: FormGroup;
   public currentUser: Usuario; //Datos de la sesion
@@ -57,13 +57,14 @@ export class EncuestaPage implements OnInit {
     if (!this.surveyForm.invalid) {
       let nuevoReporte = {
         comentarios: this.surveyForm.get('q4').value,
-        cumpleHorario: this.surveyForm.get('q5').value,
-        realizaTareas: this.surveyForm.get('q3').value,
+        estaContento: this.surveyForm.get('q5').value,
+        orden: this.surveyForm.get('q3').value,
         limpieza: this.surveyForm.get('q2').value,
-        respeta: this.surveyForm.get('q1').value,
+        tareasAnteriores: this.surveyForm.get('q1').value,
         userName: this.reportedUsername
       }
-      this.encuestasSrv.AgregarNuevoReporte(nuevoReporte)
+      this.encuestasSrv.NuevaEncuestaEmpleado(nuevoReporte)
+      localStorage.setItem("solvedSurvey","true");
       this.ClossingMessage();
     } else {
       
@@ -77,7 +78,7 @@ export class EncuestaPage implements OnInit {
       this.showSpinner = false
       this.showOK = true;
       setTimeout(() => {
-        this.router.navigate(['supervisor/users'])
+        this.router.navigate(['home-cocinero'])
       }, 2000);
     }, 2000);
   }

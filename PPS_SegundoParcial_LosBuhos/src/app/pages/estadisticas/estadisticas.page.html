@@ -17,26 +17,29 @@
       <ion-label>Supervisor</ion-label>
     </ion-segment-button>
   </ion-segment>
-<div [ngStyle]="{'display': showSupervisor == true ? 'block' : 'none'}">
-  <canvas #pieChart></canvas>
-  <canvas #barChart></canvas>
-  <canvas #barChartVertical></canvas>
-  <canvas #donutChart></canvas>
+  <div [ngStyle]="{'display': showSupervisor == true ? 'block' : 'none'}">
+    <canvas #pieChart></canvas>
+    <canvas #barChart></canvas>
+    <canvas #barChartVertical></canvas>
+    <canvas #donutChart></canvas>
 
-  <h1>Comentarios</h1>
-  <ion-slides>
-    <ion-slide *ngFor="let report of reportes">
-      <div class="slide">
-        <h2>Comentario sobre {{report.userName}}</h2>
-        <p>{{report.comentarios}}</p>
-      </div>
-    </ion-slide>
-  </ion-slides>
-</div>
-<div [ngStyle]="{'display': showClientes == true ? 'block' : 'none'}">
-<p>clientes</p>
-</div>
-<div [ngStyle]="{'display': showEmpleados == true ? 'block' : 'none'}">
-  <p>empleados</p>
+    <h1>Comentarios</h1>
+    <ion-slides>
+      <ion-slide *ngFor="let report of reportes">
+        <div class="slide">
+          <h2>Comentario sobre {{report.userName}}</h2>
+          <p>{{report.comentarios}}</p>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div [ngStyle]="{'display': showClientes == true ? 'block' : 'none'}">
+    <p>clientes</p>
+  </div>
+  <div [ngStyle]="{'display': showEmpleados == true ? 'block' : 'none'}">
+    <canvas #pieChartEmp></canvas>
+    <canvas #barChartEmp></canvas>
+    <canvas #barChartVerticalEmp></canvas>
+    <canvas #donutChartEmp></canvas>
   </div>
 </ion-content>

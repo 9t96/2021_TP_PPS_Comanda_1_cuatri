@@ -9,11 +9,13 @@ import { Observable } from 'rxjs';
 export class EncuestaService {
 
   public dbRef: AngularFirestoreCollection<any>;
+  public dbRefEmp: AngularFirestoreCollection<any>;
   constructor(
     public afStore: AngularFirestore,
     public ngFireAuth: AngularFireAuth
   ) {
     this.dbRef = this.afStore.collection("reporte-sobre-empleados");
+    this.dbRefEmp = this.afStore.collection("encuesta-empleados");
   }
 
 
@@ -23,5 +25,13 @@ export class EncuestaService {
 
   TrearReportes() :Observable<any>{
     return this.dbRef.valueChanges();
+  }
+
+  NuevaEncuestaEmpleado(nuevoReporte: any){
+    this.dbRefEmp.add(nuevoReporte);
+  }
+
+  TrearReportesEmpleados() :Observable<any>{
+    return this.dbRefEmp.valueChanges();
   }
 }

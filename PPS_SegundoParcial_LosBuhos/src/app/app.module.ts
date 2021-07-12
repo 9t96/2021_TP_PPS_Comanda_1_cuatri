@@ -23,6 +23,9 @@ import { ProductoBajaComponent } from './pages/producto-baja/producto-baja.compo
 import { ProductoModificacionComponent } from './pages/producto-modificacion/producto-modificacion.component' 
 import { Interception } from './services/Interception';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,8 +46,9 @@ import { Interception } from './services/Interception';
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
-    HttpClientModule 
-    
+    HttpClientModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule
   ],
   providers: [
     BarcodeScanner,

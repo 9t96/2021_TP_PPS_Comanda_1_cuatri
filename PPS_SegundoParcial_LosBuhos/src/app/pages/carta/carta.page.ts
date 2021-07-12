@@ -7,6 +7,7 @@ import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { eEstadoProducto } from 'src/app/enums/eEstadoProducto';
 import { eProducto } from 'src/app/enums/eProducto';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
@@ -33,7 +34,7 @@ export class CartaPage implements OnInit {
   public showOK: boolean = false;
   public backbuttonHref: string;
   public saveProdIndex: any
-  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController,public modalController: ModalController, public toastSrv:ToastService) { }
+  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController,public modalController: ModalController, public toastSrv:ToastService, public pushSrv: NotificationsService) { }
 
   navigateBack(){
     this.navCtrl.back();
@@ -150,6 +151,7 @@ export class CartaPage implements OnInit {
     if(prodSelected > 0){
       this.pedidosSrv.GenerarPedido(this.currentMesaClient.doc_id,this.productos.filter( x=> { return x.selected == true}))
       this.pedidosSrv.CambiarEstadoMesaCli(this.currentMesaClient.doc_id, eEstadoMesaCliente.CONFIRMANDO_PEDIDO);
+      this.pushSrv.sendNotification("Nuevo pedido pendiente de aprobacion","La mesa nro " + this.currentMesaClient.nro_mesa + " hizo un pedido.",'mozo')
       this.ShowSpinner();
     }
     else{

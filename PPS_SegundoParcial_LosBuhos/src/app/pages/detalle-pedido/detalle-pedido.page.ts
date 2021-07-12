@@ -6,6 +6,7 @@ import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { eEstadoProducto } from 'src/app/enums/eEstadoProducto';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { CheckoutPage } from '../checkout/checkout.page';
 
@@ -20,7 +21,7 @@ export class DetallePedidoPage implements OnInit {
   public isLoaded: boolean = false;
   public currentUser: any;
   public isMozo: boolean;
-  constructor(private route: ActivatedRoute, private router: Router, public pedidosSrv: PedidosService, public modalController: ModalController, public mesasSrv: MesasService) {
+  constructor(private route: ActivatedRoute, private router: Router, public pedidosSrv: PedidosService, public modalController: ModalController, public mesasSrv: MesasService, public pushSrv: NotificationsService) {
   }
 
   ngOnInit() {
@@ -64,6 +65,14 @@ export class DetallePedidoPage implements OnInit {
 
   //Mozo aprueba el pedido realizado
   AprobarPedido(){
+    let hasBebida = this.pedido.productos.find( x => {return x.sector == "BEBIDA"})
+    let hasCocina = this.pedido.productos.find( x => {return x.sector == "COCINA"})
+    if (hasBebida) {
+      this.pushSrv.sendNotification("Nuevo pedidos en cocina","Hay nuevos pedidos pendientes",'cocina')
+    }
+    if (hasCocina) {
+      this.pushSrv.sendNotification("Nuevo pedido en barra", "Hay nuevos pedidos pendientes",'bar')
+    }
     this.pedidosSrv.CambiarEstadoMesaCli(this.pedido.doc_id,eEstadoMesaCliente.ESPERANDO_PEDIDO)
   }
 

@@ -4,6 +4,7 @@ import { eEmpleado } from 'src/app/enums/eEmpleado';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { eEstadoProducto } from 'src/app/enums/eEstadoProducto';
 import { eProducto } from 'src/app/enums/eProducto';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
@@ -20,7 +21,7 @@ export class ListadoPedidosPage implements OnInit {
   public currentUser: any;
   public sectorProd: any;
 
-  constructor(public pedidosSrv:PedidosService, public prodSrv: ProductosService, public toastSrv: ToastService) { }
+  constructor(public pedidosSrv:PedidosService, public prodSrv: ProductosService, public toastSrv: ToastService, public pushSrv: NotificationsService) { }
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
@@ -51,6 +52,15 @@ export class ListadoPedidosPage implements OnInit {
     //Send push if all products are ready
     let nuevoestado = nuevoEstado;
     this.mesas[item.mesaIndex].productos[item.prodIndex].estado = nuevoestado;
+    let countReady = 0;
+    this.mesas[item.mesaIndex].productos.forEach( (element,index) => {
+      if(element.estado == eEstadoProducto.LISTO){
+        countReady+=1; 
+        if(this.mesas[item.mesaIndex].productos.length == countReady){
+          this.pushSrv.sendNotification("Todo listo para servir","Los pedidos de la mesa " + this.mesas[item.mesaIndex].nro_mesa + " estan listos para servir",'mozo')
+        }
+      } 
+    });
     this.prodSrv.CambiarEstadoProducto(item.parentDocId,this.mesas[item.mesaIndex].productos);
     this.toastSrv.presentToast("Se cambio el estado de pedido con exito!", 2000,'success');
   }

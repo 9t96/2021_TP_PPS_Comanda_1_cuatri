@@ -3,5 +3,10 @@
   "integrations": {
     "capacitor": {}
   },
+  "plugins":{
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  },
   "type": "angular"
 }

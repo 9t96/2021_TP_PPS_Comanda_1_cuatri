@@ -13,9 +13,6 @@
       <ion-badge *ngIf="mesa.estado == 'LIBRE'" color="success">LIBRE</ion-badge>
       <ion-badge *ngIf="mesa.estado == 'OCUPADA'" color="danger">OCUPADA</ion-badge> 
       <ion-button *ngIf="mesa.mesaCliente"(click)="openDetailsWithQueryParams(mesa.mesaCliente.doc_id)">Ver detalle</ion-button>
-      <!-- <div *ngIf="mesa.mesaCliente" style="background: transparent;"> -->
-        <ion-icon name="alert-circle-outline" class="heartbeat" *ngIf="mesa.mesaCliente && mesa.mesaCliente.listoParaServir == true" style="font-size: 2.5em;color: azure;
-        margin-left: 1em;"></ion-icon>
     </div>
   </div>
 </ion-content>

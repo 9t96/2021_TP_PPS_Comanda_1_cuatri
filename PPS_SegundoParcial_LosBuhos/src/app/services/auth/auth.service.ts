@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { first, switchMap } from 'rxjs/operators';
 import { Usuario } from 'src/app/clases/usuario';
 import { firebaseUser } from 'src/app/interfaces/firebaseUser';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class AuthService {
     public afStore: AngularFirestore,
     public ngFireAuth: AngularFireAuth,
     public router: Router,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    public pushSrv: NotificationsService
   ) {
     this.user$ = this.ngFireAuth.authState.pipe(
       switchMap((user) => {
@@ -66,9 +68,11 @@ export class AuthService {
 
   // Sign-out
   async SignOut() {
+    this.pushSrv.DeleteFCM();
+    this.pushSrv.DeleteInstance();
     await this.ngFireAuth.signOut();
     localStorage.removeItem("userData");
-    localStorage.removeItem("uid");    
+    localStorage.removeItem("uid");  
   } 
 
   getCurrentUser(): Usuario{

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
 import { eEmpleado } from 'src/app/enums/eEmpleado';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { UserService } from 'src/app/services/user.service';
 import { eRol} from '../../enums/eRol';
 
@@ -31,7 +32,7 @@ export class LoginPage implements OnInit {
 
   get password() { return this.loginForm.get('password'); }
 
-  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder, public userSrv: UserService) { 
+  constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder, public userSrv: UserService, public pushSrv: NotificationsService ) { 
     this.user = new LoginUser();
   }
 
@@ -103,7 +104,7 @@ export class LoginPage implements OnInit {
         this.loginForm.controls['password'].setValue('999999')
         break;
       case 5:
-        this.loginForm.controls['email'].setValue('elbartender@mail.com') 
+        this.loginForm.controls['email'].setValue('mail@mail.com') 
         this.loginForm.controls['password'].setValue('123456')
         break;
       case 6:

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 @Component({
   selector: 'app-home-supervisor',
@@ -9,9 +10,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class HomeSupervisorComponent implements OnInit {
 
-  constructor(private router:Router, private authService:AuthService) { }
+  constructor(private router:Router, private authService:AuthService, public pushSrv:NotificationsService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pushSrv.InitPush()
+  }
 
   goToRegister(){
     this.router.navigate(['supervisor/register']);

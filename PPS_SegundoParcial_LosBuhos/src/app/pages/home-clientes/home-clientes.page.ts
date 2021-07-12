@@ -111,7 +111,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-    window.cordova.plugins.barcodeScanner.scan(
+/*     window.cordova.plugins.barcodeScanner.scan(
       (result) => {
         this.resolveAction(result.text);
       },
@@ -125,8 +125,8 @@ export class HomeClientesPage implements OnInit {
         formats: 'QR_CODE',
         resultDisplayDuration: 2,
       }
-    );
-    //this.resolveAction("7");
+    ); */
+    this.resolveAction("7");
   }
 
   AgregarProducto(index: any) {
@@ -172,10 +172,12 @@ export class HomeClientesPage implements OnInit {
     if (this.currentMesaCliente.estado == eEstadoMesaCliente.SENTADO) {
       this.showCartaBtn = true;
       this.showChatBtn = true;
+      this.showEncuestaBtn = true;
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.CONFIRMANDO_PEDIDO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
+      this.showEncuestaBtn = true;
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.ESPERANDO_PEDIDO) {
       this.showChatBtn = true;
@@ -285,7 +287,6 @@ export class HomeClientesPage implements OnInit {
   goToChat(){
     this.router.navigate(['cliente/chat']);
   }
-
   goToGame(){
     this.router.navigate(['cliente/game']);
   }

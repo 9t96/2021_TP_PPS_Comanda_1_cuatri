@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Encuesta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="surveyForm" *ngIf="showForm">
+    <!-- Radio -->
+    <div class="card">
+      <ion-radio-group value="" formControlName="q1">
+        <ion-list-header>
+          <ion-label>1. ¿Respeta a sus colegas?</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Siempre</ion-label>
+          <ion-radio slot="start" color="success" value="SIEMPRE"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>A veces</ion-label>
+          <ion-radio slot="start" color="tertiary" value="AVECES"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Pocas veces</ion-label>
+          <ion-radio slot="start" color="danger" value="POCASVECES"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </div>
+    <ion-row class="hiddenItems">
+      <small
+        *ngIf="surveyForm.get('q1').hasError('required') && submitted"
+        style="color: var(--ion-color-danger)"
+        >Este campo es obligatorio.</small
+      >
+    </ion-row>
+    <!-- Range -->
+    <div class="card">
+      <ion-list-header>2. ¿Que tan limpio es en su espacio de trabajo?</ion-list-header>
+      <ion-item>
+        <ion-range min="1" max="10" step="1" value="5" snaps color="dark" formControlName="q2">
+          <ion-icon  slot="start" size="small" color="danger" name="sad-outline"></ion-icon>
+          <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
+        </ion-range>
+      </ion-item>
+    </div>
+    <ion-row class="hiddenItems">
+      <small
+        *ngIf="surveyForm.get('q2').hasError('required') && submitted"
+        style="color: var(--ion-color-danger)"
+        >Este campo es obligatorio.</small
+      >
+    </ion-row>
+    <!-- Select -->
+    <div class="card">
+      <ion-list-header position="fixed">3. ¿Realiza sus tareas en tiempo y forma?</ion-list-header>
+      <ion-item lines="full" class="input-wrapper" style="margin-top: 0px;">
+        <ion-select value="0" interface="popover" formControlName="q3" placeholder="Seleccione una opcion"
+          required>
+          <ion-select-option value="SIEMPRE">Siempre</ion-select-option>
+          <ion-select-option value="GENERALMENTE">Generalmente</ion-select-option>
+          <ion-select-option value="POCASVECES">Pocas veces</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <ion-row class="hiddenItems">
+      <small
+        *ngIf="surveyForm.get('q3').hasError('required') && (surveyForm.get('q3').dirty || surveyForm.get('q3').touched  || submitted)"
+        style="color: var(--ion-color-danger)"
+        >Este campo es obligatorio.</small
+      >
+    </ion-row>
+    <!-- Input -->
+    <div class="card">
+      <ion-list-header>4. Comentarios adicionales</ion-list-header>
+      <ion-item lines="full" class="input-wrapper">
+        <ion-input type="email" formControlName="q4" required></ion-input>
+      </ion-item>
+    </div>
+    <ion-row class="hiddenItems">
+      <small
+        *ngIf="surveyForm.get('q4').hasError('required') && (surveyForm.get('q4').dirty || surveyForm.get('q4').touched || submitted)"
+        style="color: var(--ion-color-danger)"
+        >Este campo es obligatorio.</small
+      >
+      <small
+      *ngIf="surveyForm.get('q4').hasError('minlength')"
+      style="color: var(--ion-color-danger)"
+      >Minimo 4 caracteres.</small
+    >
+    </ion-row>
+    <!-- Checkbox -->
+    <div class="card">
+      <ion-list-header>5. ¿Cumple el horario?</ion-list-header>
+      <ion-item>
+        <ion-label>Si</ion-label>
+        <ion-checkbox [(ngModel)]="survey.q5" color="primary" formControlName="q5" aria-checked="false"></ion-checkbox>
+      </ion-item>
+    </div>
+
+    <ion-row style="margin-top: 1em;">
+      <ion-button color="success" (click)="SubmitEncuesta()">Enviar</ion-button>
+    </ion-row>
+  </form>
+  <div *ngIf="showSpinner" class="spinner">
+    <img src="../../../assets/spinner_buho.gif" alt="">
+  </div>
+  <div *ngIf="showOK" class="ok">
+    <p class="title">¡Se registro el reporte con exito!</p>
+    <img src="../../../assets/images/okay.svg" alt="">
+  </div>
+</ion-content>

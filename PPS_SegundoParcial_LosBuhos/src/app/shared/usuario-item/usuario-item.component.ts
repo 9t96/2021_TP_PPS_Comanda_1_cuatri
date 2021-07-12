@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/clases/usuario';
 import { eRol } from 'src/app/enums/eRol';
@@ -23,7 +24,8 @@ export class UsuarioItemComponent implements OnInit {
     private loadingController: LoadingController,
     private userService:UserService,
     public modalController: ModalController,
-    private authService:AuthService
+    private authService:AuthService,
+    public router: Router
   ) { }
 
   ngOnInit() {
@@ -95,5 +97,9 @@ export class UsuarioItemComponent implements OnInit {
       cssClass: 'my-custom-class',
       message: 'Please wait...'
     });
+  }
+
+  CargarReporte(username:string){
+    this.router.navigate(['encuesta', {username: username}])
   }
 }

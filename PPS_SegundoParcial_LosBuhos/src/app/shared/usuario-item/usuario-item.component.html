@@ -4,8 +4,10 @@
   </ion-avatar>
   <ion-label>
     <h2>{{usuario.nombre}} {{usuario.apellido}}</h2>
-    <h3>{{usuario.rol}}</h3>
+    <h3 *ngIf="usuario.rol == 'EMPLEADO'">{{usuario.tipo_empleado}}</h3>
+    <h3 *ngIf="usuario.rol == 'CLIENTE'">{{usuario.ROL}}</h3>
   </ion-label>
+  <ion-icon name="newspaper-outline" (click)="CargarReporte(usuario.nombre)"></ion-icon>
   <ion-avatar slot="end" class="m-1" class="icon">
     <ion-icon name="pencil-outline" size="" (click)="editarUsuario()"></ion-icon>          
   </ion-avatar>

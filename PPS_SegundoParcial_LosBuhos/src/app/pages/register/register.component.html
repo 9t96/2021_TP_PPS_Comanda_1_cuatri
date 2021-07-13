@@ -12,16 +12,21 @@
       <form [formGroup]="form1" (ngSubmit)="goTo(2)" *ngSwitchCase="1">
         
         <!-- foto perfil -->
-        <div class="text-center">
-          <small class="ion-padding-start ion-padding-end">*Foto de perfil obligatoria</small>
+
+        <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+          <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">
+            <img [src]="user.img_src" *ngIf="user.img_src != null" (click)="tomarFotoPerfil()"/>
+            <img [src]="imagenPerfil" *ngIf="user.img_src == null" (click)="tomarFotoPerfil()"/>
+          </div>  
+          <div class="text-center">
+            <small class="ion-padding-start ion-padding-end">*Foto de perfil obligatoria</small>
+          </div> 
         </div>
-        <div class="mx-auto d-block circular--portrait" (click)="tomarFotoPerfil()">
-          <img [src]="user.img_src" *ngIf="user.img_src != null" (click)="tomarFotoPerfil()"/>
-          <img [src]="imagenPerfil" *ngIf="user.img_src == null" (click)="tomarFotoPerfil()"/>          
-        </div>   
+
+  
 
         <!-- Anónimo -->
-        <div class="ml-auto">
+        <div class="ml-auto" style="margin-top: 2em;">
           <ion-label position="fluid">Anónimo</ion-label><br />
           <ion-toggle (click)="setAnonimo()"></ion-toggle>     
         </div>       
@@ -162,7 +167,12 @@
       >
         <div
           class="mx-auto d-block circular--portrait"
-          (click)="tomarFotoPerfil()"
+          (click)="tomarFotoPerfil()" style="    display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 auto;
+          margin-bottom: 2em;
+          margin-top: 2em;"
         >
           <img [src]="user.img_src" *ngIf="user.img_src != null" />
         </div>
@@ -267,3 +277,9 @@
     </div>
   </div>
 </ion-content>
+<!-- Spinner -->
+<ngx-spinner
+type=null
+template="<img src='assets/spinner_buho.gif' height='125'/>"
+><p style="color: white" > Cargando... </p></ngx-spinner>
+

@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/clases/usuario';
 import { eRol } from 'src/app/enums/eRol';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 
 @Component({
   selector: 'app-sala-chat',
@@ -30,7 +31,8 @@ export class SalaChatComponent implements OnInit {
     private mjeService: ChatService, 
     private authService:AuthService, 
     private fb:FormBuilder,
-    private router:Router) 
+    private router:Router,
+    private notificationService:NotificationsService) 
   {    
     this.mensaje="";    
     this.bgSala = "container cont-chat";    
@@ -68,7 +70,16 @@ export class SalaChatComponent implements OnInit {
       mesaClienteId: this.idMesaCliente
     };  
     
-    this.mjeService.setItemWithId(mje, mje.fecha.toString());    
+    this.mjeService.setItemWithId(mje, mje.fecha.toString())
+    .then(() => {
+      if(this.user.rol == eRol.CLIENTE){
+        this.notificationService.sendNotification(
+          "Consulta",
+          mje.message,
+          'mozo'
+        );
+      }      
+    });    
 
     this.mensaje = "";
   }

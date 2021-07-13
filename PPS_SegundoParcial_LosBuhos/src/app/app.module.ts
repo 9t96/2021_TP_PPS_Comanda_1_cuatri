@@ -25,6 +25,7 @@ import { Interception } from './services/Interception';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
   ],
   providers: [
     BarcodeScanner,
+    Vibration,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide: HTTP_INTERCEPTORS, useClass: Interception, multi: true}
   ],

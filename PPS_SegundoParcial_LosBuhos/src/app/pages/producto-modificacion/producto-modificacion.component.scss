@@ -1,0 +1,18 @@
+ion-list{
+    background:none;
+    ion-item{
+        --background: none;
+        ion-label{
+            margin-left: 1em;
+        }
+    }
+}
+
+.edit{
+    color: black;
+    margin-right: 1em;
+}
+
+.remove{
+    color: red;
+}

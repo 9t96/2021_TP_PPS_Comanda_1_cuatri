@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CartaPageRoutingModule } from './carta-routing.module';
 
 import { CartaPage } from './carta.page';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CartaPageRoutingModule
+    CartaPageRoutingModule,
+    NgxSpinnerModule
   ],
   declarations: [CartaPage]
 })

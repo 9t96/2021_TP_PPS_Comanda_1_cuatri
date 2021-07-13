@@ -6,12 +6,13 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 import { UserService } from 'src/app/services/user.service';
 import { Observable } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Photo } from '@capacitor/camera';
 //import { timingSafeEqual } from 'crypto';
 import { Router } from '@angular/router';
+import { ToastService } from 'src/app/services/toast/toast.service';
 @Component({
   selector: 'app-alta-producto',
   templateUrl: './alta-producto.component.html',
@@ -26,9 +27,8 @@ export class AltaProductoComponent implements OnInit {
   public formProducto: FormGroup;
   public i_NroImagen: number = 0;
   public imagenPerfil = "../../../assets/plato.png";
-  public errorImagen: boolean= false;
+  public errorImagen: boolean;
   public uploadProgress: number;
-  public mostrar = true;
   public habilitarFotosBTN = false;
 
   constructor(private fb: FormBuilder,
@@ -38,15 +38,19 @@ export class AltaProductoComponent implements OnInit {
     public prodSrv: ProductosService,
     private loadingController: LoadingController,
     private cameraService: CameraService,
-    private storageService: StorageService) {
+    private storageService: StorageService,
+    public navCtrl: NavController,
+    public toastCtrl: ToastService
+    ) {
 
   }
 
+  navigateBack(){
+    this.navCtrl.back();
+  }
   ngOnInit() {
     this.producto = new Productos();
     this.producto.img_src = new Array();
-
-
     //  this.validarAltaProducto(this.formProducto);
     this.formProducto = this.fb.group({
       'nombre': ['', [Validators.required]],
@@ -55,9 +59,9 @@ export class AltaProductoComponent implements OnInit {
       'precio': ['', [Validators.required]],
       'sector': ['', [Validators.required]]
     });
-    if(this.validarCantidadFotos()){
+    /*if(this.validarCantidadFotos()){
       this.habilitarFotosBTN= true;
-    }
+    }*/
 
   }
 
@@ -71,19 +75,21 @@ export class AltaProductoComponent implements OnInit {
     this.producto.descripcion = this.formProducto.get('descripcion').value;
     this.producto.tiempo_elaboracion = this.formProducto.get('tiempo').value;
     this.producto.precio = this.formProducto.get('precio').value;
-    if (!this.validarCantidadFotos()) {//las imagenes son 3
+    this.producto.sector = this.formProducto.get('sector').value;
+    if (!this.validarCantidadFotos()) {
       this.errorImagen = false;
       var resp = this.prodSrv.GuardarNuevoProducto(this.producto)
       if (resp) {
         console.log("Producto guardado con exito");
         //exito al guardar
-        this.route.navigate(['/home-cocinero']);
+        this.toastCtrl.presentToast("Se guardo con el exito el producto", 2000,"success")
+        this.route.navigate(['/producto-modificar']);
       }
       else {
         console.log("error al guardar el nuevo producto ");
       }
 
-      alert("Nuevo producto a guardar: " + this.producto.nombre + " " + this.producto.img_src);
+      console.log("Nuevo producto a guardar: " + this.producto.nombre + " " + this.producto.img_src);
     } else {
       //mostrar el error de las imagenes
       this.errorImagen = true;
@@ -92,10 +98,8 @@ export class AltaProductoComponent implements OnInit {
 
   }
 
-
-
   tomarFotoProducto() {
-    if (this.i_NroImagen <3 ) {
+    if (this.i_NroImagen < 3 ) {
       this.addPhotoToGallery();
     }
   }
@@ -114,29 +118,24 @@ export class AltaProductoComponent implements OnInit {
 
     const uploadTask = this.storageService.saveFile(blob, filePath);
 
-    alert("nro actual de fotos cargadas: " + this.i_NroImagen);
+    console.log("nro actual de fotos cargadas: " + this.i_NroImagen);
     uploadTask.then(async res => {
       const downloadURL = await res.ref.getDownloadURL();
       if (downloadURL.length > 0) {
-        alert("URL  CORRECTO- i_IMG++");
+        console.log("URL  CORRECTO- i_IMG++");
         this.producto.img_src.push(downloadURL);
 
         this.i_NroImagen++;
-        alert("Cntidad fotos cargadas: " + this.i_NroImagen + "\n URL:" + this.producto.img_src);
+        console.log("Cntidad fotos cargadas: " + this.i_NroImagen + "\n URL:" + this.producto.img_src);
         console.log(this.producto.img_src);
       } else {
-        alert("IMAGEN NO CORRECTA . NO SE CONTABILIZA " + this.i_NroImagen);
+        console.log("IMAGEN NO CORRECTA . NO SE CONTABILIZA " + this.i_NroImagen);
       }
-
       this.validarCantidadFotos();
     })
       .catch((err) => {
         console.log("Error al subbir la imagen: ", err);
       });
-
-      if(this.i_NroImagen==3){
-        this.mostrar= false;
-      }
   }
 
 

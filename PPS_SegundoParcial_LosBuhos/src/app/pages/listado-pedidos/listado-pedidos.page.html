@@ -7,7 +7,7 @@
 
 <ion-content>
   <ion-list>
-      <ion-item *ngFor="let item of pedidosCocina; let j=index">
+      <ion-item *ngFor="let item of pedidosCocina; let j=index" >
         <ion-avatar>
           <img [src]="item.img_src">
         </ion-avatar>
@@ -15,9 +15,9 @@
           <h1>{{item.nombre}}</h1>
         </ion-label>
         <strong>X {{item.cantidad}}</strong>
-        <ion-button *ngIf="item.estado == 'PENDIENTE'" (click)="CambiarEstadoProducto(item,'PREPARANDO')">Poner en preparacion</ion-button>
+        <ion-button color="danger" *ngIf="item.estado == 'PENDIENTE'" (click)="CambiarEstadoProducto(item,'PREPARANDO')">Poner en preparacion</ion-button>
         <ion-button *ngIf="item.estado == 'PREPARANDO'" (click)="CambiarEstadoProducto(item,'LISTO')">Marcar como listo</ion-button>
-        <ion-button *ngIf="item.estado == 'LISTO'" disabled>Entregado</ion-button>
+        <ion-button color="success" *ngIf="item.estado == 'LISTO'" disabled>Entregado</ion-button>
       </ion-item>
   </ion-list>
 </ion-content>

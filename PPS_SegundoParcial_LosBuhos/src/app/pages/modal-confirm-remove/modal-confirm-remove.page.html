@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title>Confimar</ion-title>
+    <ion-icon slot="end" (click)="dismiss('no')" name="close-circle-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1 style="text-align:center">¿Esta seguro que desea eliminar el producto?</h1>
+  <ion-row style="display: flex;justify-content: space-evenly;">
+    <ion-button (click)="dismiss('yes')">Si</ion-button>
+    <ion-button color="danger" (click)="dismiss('no')">No</ion-button>
+  </ion-row>
+</ion-content>

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { HomeClientesPageRoutingModule } from './home-clientes-routing.module';
 
 import { HomeClientesPage } from './home-clientes.page';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { HomeClientesPage } from './home-clientes.page';
     FormsModule,
     IonicModule,
     HomeClientesPageRoutingModule,
+    NgxSpinnerModule
   ],
   declarations: [HomeClientesPage]
 })

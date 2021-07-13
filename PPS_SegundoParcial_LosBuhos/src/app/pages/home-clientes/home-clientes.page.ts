@@ -17,6 +17,7 @@ import { filter } from 'rxjs/operators';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { eToastType } from 'src/app/enums/eToastType';
 import { NotificationsService } from 'src/app/services/notifications/notifications.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare let window: any;
 
 
@@ -54,7 +55,8 @@ export class HomeClientesPage implements OnInit {
     public authSrv: AuthService, 
     public router: Router, 
     public toastSrv:ToastService,
-    public pushSrv: NotificationsService) {
+    public pushSrv: NotificationsService,
+    private spinner: NgxSpinnerService) {
     this.mesaSolicitada = new Mesa();
   }
 
@@ -63,6 +65,8 @@ export class HomeClientesPage implements OnInit {
     this.showCartaBtn = false
     this.showChatBtn = false
     this.showDetalleBtn = false
+    this.showEncuestaBtn = false;
+    this.showGamesBtn = false;
     this.ngOnInit()
   }
 
@@ -115,6 +119,7 @@ export class HomeClientesPage implements OnInit {
   ScanQr() {
     window.cordova.plugins.barcodeScanner.scan(
       (result) => {
+        this.spinner.show()
         this.resolveAction(result.text);
       },
       (err) => {
@@ -137,7 +142,6 @@ export class HomeClientesPage implements OnInit {
   }
 
   resolveAction(text: string){
-
     console.log("Resolve action")
     const regex = /^[0-9]*$/;
 
@@ -154,8 +158,9 @@ export class HomeClientesPage implements OnInit {
         this.ResolveActionMesa(nro_Mesa);
         break;
       default:
-        //Si el valor del qe es un numero se procede a asingar la mesa y se saca de la lista de espera al cliente
-        //Validar que no puede ponerse en espera una vez que se asigno a una mesa
+          //Si el valor del qe es un numero se procede a asingar la mesa y se saca de la lista de espera al cliente
+          //Validar que no puede ponerse en espera una vez que se asigno a una mesa
+          this.toastSrv.presentToast("El codigo escaneado es invalido", 2500, "danger")
         break;
     }
   }
@@ -165,7 +170,16 @@ export class HomeClientesPage implements OnInit {
       this.asignarMesa(nro_mesa);
     }
     else if(this.isOnMesa){
-      this.ResolveActionInMesa();
+      if (this.currentMesaCliente.nro_mesa == nro_mesa) {
+        this.ResolveActionInMesa();
+      } else {
+        this.spinner.hide();
+        this.toastSrv.presentToast("Por favor, no escane codigos de otras mesas", 2500, "danger")
+      }
+    }
+    else{
+      this.spinner.hide();
+      this.toastSrv.presentToast("Por favor, pongase en lista de espera", 2500, "danger")
     }
 
   }
@@ -175,41 +189,50 @@ export class HomeClientesPage implements OnInit {
       this.showCartaBtn = true;
       this.showChatBtn = true;
       this.showEncuestaBtn = true;
+      this.spinner.hide();
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.CONFIRMANDO_PEDIDO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
       this.showEncuestaBtn = true;
+      this.spinner.hide();
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.ESPERANDO_PEDIDO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
       this.showGamesBtn = true;
       this.showEncuestaBtn = true;
+      this.spinner.hide();
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PEDIDO_ENTREGADO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
       this.showGamesBtn = true;
       this.showEncuestaBtn = true;
+      this.spinner.hide();
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.COMIENDO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
       this.showGamesBtn = true;
       this.showEncuestaBtn = true;
+      this.spinner.hide();
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PAGANDO) {
       this.showDetalleBtn = true;
       this.showEncuestaBtn = true;
       this.showChatBtn = true;
+      this.spinner.hide();
     }
+    
 
   }
 
   SolicitarMesa() {
+    this.spinner.hide();
     if (!this.isOnEspera) {
       this.mesasSrv.SolicitarMesa(this.currentUser);
+      this.toastSrv.presentToast("Se ingreso a lista de espra con exito", 2500, "success");
       this.pushSrv.sendNotification("Hay nuevos clientes en lista de espera",this.currentUser.nombre + "ingreso a la lista de espera.",'mozo')
     } else {
       this.toastSrv.presentToast("Usted ya se encuentra en lista de espera", 2000,'warning');
@@ -222,24 +245,21 @@ export class HomeClientesPage implements OnInit {
    */
 
   asignarMesa(nro_mesa: number) {
-    //NO FUNCIONA BIEN LA VARIABLE DE SI ESTA EN ESPERA EL USUARIO.
-
     if (this.isOnEspera) {
-      //1 Verificar que la mesa este libre
       this.getMesa(nro_mesa);
       if (this.mesaSolicitada.estado == eEstadoMesa.LIBRE) {
-        //2 verificar que la mesa no este en mesaCliente activa
           this.mesasSrv.ActualizarMesaEstado(this.docID_Mesa, eEstadoMesa.OCUPADA);
-
           this.mesasSrv.AsignarMesaCliente(nro_mesa, this.docID_Mesa, this.currentUser.uid);
-
           this.mesasSrv.EliminarClienteListaEspera(this.espera_docid);
           this.showCartaBtn = true;
+          this.spinner.hide();
           this.toastSrv.presentToast("Ingesaste a la mesa" + nro_mesa, 2000,'success');
       } else {
+        this.spinner.hide();
         this.toastSrv.presentToast("La mesa escaneada se encuentra OCUPADA", 2000,'warning');
       }
     } else {
+      this.spinner.hide();
       this.toastSrv.presentToast("No se encuentra en lista de espera...", 2000,'warning');
     }
   }

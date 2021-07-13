@@ -1,30 +1,24 @@
-
 <ion-header>
   <ion-toolbar color="medium">
-    <ion-back-button defaultHref="producto-modificar" slot="start"></ion-back-button>
-    <ion-title>Modificar Producto</ion-title>
+    <ion-back-button defaultHref="home-cocinero" slot="start"></ion-back-button>
+    <ion-title>Gestionar productos</ion-title>
+    <ion-fab-button (click)="NavigateNuevoProd()" slot="end" color="tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
-
-  <ion-item *ngFor="let item of productos">
-    <ion-avatar>
-      <img [src]="item.img_src">
-    </ion-avatar>
-    <ion-label>
-      <h1>{{item.nombre}}</h1>
-       
-    </ion-label>
-    <strong>${{item.precio}}</strong>
-
-    <ion-button>
-      Modificar
-    </ion-button>
-     
-
-  </ion-item>
-
-
+  <ion-list>
+    <ion-item *ngFor="let item of productos" >
+      <ion-avatar>
+        <img [src]="item.img_src">
+      </ion-avatar>
+      <ion-label >
+          <h1>{{item.nombre}}</h1>
+      </ion-label>
+      <ion-icon name="pencil-outline" class="edit" (click)="ModificarProducto(item.doc_id)" ></ion-icon>
+      <ion-icon name="trash-outline" class="remove" (click)="ConfirmRemove(item.doc_id)"></ion-icon>
+    </ion-item>
+  </ion-list>
 </ion-content>

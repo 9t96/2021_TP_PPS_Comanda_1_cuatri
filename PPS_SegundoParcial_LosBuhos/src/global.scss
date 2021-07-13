@@ -37,10 +37,26 @@ ion-content{
    }
 }
 
+.modificar-producto-modal{
+    .modal-wrapper{
+        height: 70%;
+        width: 90%;
+        border-radius: 15px;
+      }
+}
+
 .modal-update-user{
     .modal-wrapper{
      height: 80%;
      width: 90%;
+     border-radius: 15px;
+   }
+}
+
+.modal-confirm-remove{
+    .modal-wrapper{
+     height: 25%;
+     width: 85%;
      border-radius: 15px;
    }
 }

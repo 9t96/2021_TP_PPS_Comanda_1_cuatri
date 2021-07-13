@@ -7,6 +7,8 @@ import { first, switchMap } from 'rxjs/operators';
 import { Usuario } from 'src/app/clases/usuario';
 import { firebaseUser } from 'src/app/interfaces/firebaseUser';
 import { NotificationsService } from '../notifications/notifications.service';
+import {Howl, Howler} from 'howler';
+const {Howl, Howler} = require('howler');
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +70,11 @@ export class AuthService {
 
   // Sign-out
   async SignOut() {
+    var sound = new Howl({
+      src: ['../assets/sounds/adios-adios.mp3']
+    });
+    
+    sound.play();
     this.pushSrv.DeleteFCM();
     this.pushSrv.DeleteInstance();
     await this.ngFireAuth.signOut();

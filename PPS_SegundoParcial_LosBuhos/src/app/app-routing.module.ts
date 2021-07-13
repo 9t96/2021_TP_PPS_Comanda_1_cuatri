@@ -127,6 +127,14 @@ const routes: Routes = [
   {
     path: 'encuesta-empleado',
     loadChildren: () => import('./pages/encuesta-empleado/encuesta-empleado.module').then( m => m.EncuestaEmpleadoPageModule)
+  },
+  {
+    path: 'modal-producto',
+    loadChildren: () => import('./pages/modal-producto/modal-producto.module').then( m => m.ModalProductoPageModule)
+  },
+  {
+    path: 'modal-confirm-remove',
+    loadChildren: () => import('./pages/modal-confirm-remove/modal-confirm-remove.module').then( m => m.ModalConfirmRemovePageModule)
   }
 
 

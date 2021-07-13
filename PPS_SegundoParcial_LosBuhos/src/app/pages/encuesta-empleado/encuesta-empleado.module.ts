@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EncuestaEmpleadoPageRoutingModule } from './encuesta-empleado-routing.module';
 
 import { EncuestaEmpleadoPage } from './encuesta-empleado.page';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { EncuestaEmpleadoPage } from './encuesta-empleado.page';
     FormsModule,
     IonicModule,
     EncuestaEmpleadoPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSpinnerModule
   ],
   declarations: [EncuestaEmpleadoPage]
 })

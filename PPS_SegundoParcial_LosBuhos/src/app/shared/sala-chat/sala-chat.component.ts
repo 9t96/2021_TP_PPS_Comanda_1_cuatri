@@ -74,7 +74,7 @@ export class SalaChatComponent implements OnInit {
     .then(() => {
       if(this.user.rol == eRol.CLIENTE){
         this.notificationService.sendNotification(
-          "Consulta",
+          "Consulta Mesa " + mje.Mesa,
           mje.message,
           'mozo'
         );

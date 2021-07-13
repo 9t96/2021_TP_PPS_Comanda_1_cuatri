@@ -384,12 +384,6 @@ export class EstadisticasPage implements OnInit {
     });
   }
 
-  ShowClientes(){
-    this.showClientes = true;
-    this.showEmpleados = false;
-    this.showSupervisor = false
-  }
-
   ShowEmpleados(){
     this.showClientes = false;
     this.showEmpleados = true;

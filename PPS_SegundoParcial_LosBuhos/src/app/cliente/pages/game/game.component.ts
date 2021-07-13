@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-game',
@@ -20,11 +24,19 @@ export class GameComponent implements OnInit {
   empates:number;
   userName:string;
   juegoIniciado:boolean;
+  doc_id: any;
+  currentUid: string;
+  mesasCliente: any;
+  currentMesaCliente: any;
   //registroJuego:RegistroJuego;
 
   constructor(
     //private userService:UsersService, private registroService: RegistroService,
-    private router:Router
+    private router:Router,
+    private spinner: NgxSpinnerService,
+    public toastSrv: ToastService,
+    public pedidosSrv: PedidosService,
+    public authService: AuthService
     ) { 
     this.triunfos = 0;
     this.derrotas = 0;
@@ -35,7 +47,12 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUid = this.authService.getUid();
 
+    this.pedidosSrv.TraerMesaCliente().subscribe( data =>{
+      this.mesasCliente = data;             
+      this.currentMesaCliente = this.mesasCliente.find( x =>  x.user_uid == this.currentUid)
+    });
     // this.userName = this.userService.currentUser.name;
     // this.registroJuego.juego = "Piedra, Papel o Tijera";
     // this.registroJuego.juegoId = 1;
@@ -85,7 +102,19 @@ export class GameComponent implements OnInit {
         this.derrotas++;
         this.srcResultado = this.srcBase + "perder.jpg";
         break;      
-    }    
+    }
+    if (this.derrotas >= 3) {
+      this.spinner.show()
+      this.toastSrv.presentToast("La maquina gano no hay descuento", 2500, "danger")
+      this.spinner.hide();
+    }   
+    else if(this.triunfos >= 3){
+      this.spinner.show();
+      this.toastSrv.presentToast("!Ganaste! Se te aplicara un 10% de descuento", 2500, "danger")
+      this.pedidosSrv.ActualizarEstadoJuego(this.currentMesaCliente.doc_id);
+      this.router.navigate(['home-clientes'])
+      this.spinner.hide();
+    } 
 
     this.waitTime(seconds);
   }

@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
       //console.log(user);
 
       if(user.rol == eRol.CLIENTE && !user.aceptado){
-        this.authService.SignOut();
+        this.authService.SignOut(true);
         this.presentErrors("Todavía no fue confirmada su cuenta")
       }else{
         user.uid = res.user.uid;
@@ -98,16 +98,16 @@ export class LoginPage implements OnInit {
         this.loginForm.controls['password'].setValue('123123')
         break;
       case 2:
-         this.loginForm.controls['email'].setValue('elcocinero@mail.com') 
-         this.loginForm.controls['password'].setValue('123456') 
+         this.loginForm.controls['email'].setValue('cocinero@user1.com') 
+         this.loginForm.controls['password'].setValue('123123') 
         break;
       case 3:
         this.loginForm.controls['email'].setValue('usuario@usuario.com') 
         this.loginForm.controls['password'].setValue('666666')
         break;
       case 4:
-        this.loginForm.controls['email'].setValue('hectornozo@mozo.com') 
-        this.loginForm.controls['password'].setValue('999999')
+        this.loginForm.controls['email'].setValue('elmozo@mail.com') 
+        this.loginForm.controls['password'].setValue('123456')
         break;
       case 5:
         this.loginForm.controls['email'].setValue('mail@mail.com') 

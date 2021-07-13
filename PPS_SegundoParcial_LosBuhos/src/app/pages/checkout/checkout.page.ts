@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController, NavParams } from '@ionic/angular';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { MesasService } from 'src/app/services/mesas/mesas.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 declare let window: any;
 @Component({
@@ -11,6 +13,7 @@ declare let window: any;
 })
 export class CheckoutPage implements OnInit {
   satisfaccion: string;
+  showJuego: boolean = false;
   
 
 
@@ -20,10 +23,14 @@ export class CheckoutPage implements OnInit {
   pedido:any
   showPropina: boolean = false
   valorPropina: number;
-  constructor(navParams: NavParams,public viewCtrl: ModalController, public mesasSrv: PedidosService) {
-
+  valorDescuento: number;
+  constructor(navParams: NavParams,public viewCtrl: ModalController, public mesasSrv: PedidosService, public pushSrv: NotificationsService, public router: Router) {
     this.pedido=navParams.get('pedido')
-
+    if (this.pedido.ganoJuego) {
+      this.valorDescuento =  this.pedido.total * 0.10
+      this.pedido.total = this.pedido.total - this.valorDescuento
+      this.showJuego = true;
+    }
   }
 
   dismiss() {
@@ -81,7 +88,9 @@ export class CheckoutPage implements OnInit {
 
   NotificarMozo(){
     this.mesasSrv.CambiarEstadoMesaCli(this.pedido.doc_id,eEstadoMesaCliente.PAGANDO)
+    this.pushSrv.sendNotification("Un cliente esta solicitando la cuenta","La mesa " + this.pedido.nro_mesa + " esta solicitando la cuenta",'mozo')
     this.viewCtrl.dismiss("ok");
+    this.router.navigate(['home-clientes']);
   }
 
 

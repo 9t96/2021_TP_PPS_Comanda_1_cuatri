@@ -37,7 +37,7 @@ export class MesasService {
     }
 
     SolicitarMesa(currentUser: any){
-      return this.dbRefEspera.add({user_uid: currentUser.uid, nombre: currentUser.nombre, apellido: currentUser.apellido, img_src: currentUser.img_src});
+      return this.dbRefEspera.add({user_uid: currentUser.uid, nombre: currentUser.nombre, apellido: currentUser.apellido, img_src: currentUser.img_src, ganoJuego: false});
     }
 
     EliminarClienteListaEspera(id_doc){

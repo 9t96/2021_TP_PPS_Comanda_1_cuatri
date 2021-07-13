@@ -69,10 +69,12 @@ export class AuthService {
   }
 
   // Sign-out
-  async SignOut() {
-    var sound = new Howl({
-      src: ['../assets/sounds/adios-adios.mp3']
-    });
+  async SignOut(param?:boolean) {
+    if(!param){
+      var sound = new Howl({
+        src: ['../assets/sounds/adios-adios.mp3']
+      });
+    }
     
     sound.play();
     this.pushSrv.DeleteFCM();

@@ -48,6 +48,7 @@ export class HomeClientesPage implements OnInit {
   public showGamesBtn: boolean = false;
   public showEncuestaBtn: boolean = false;
   public espera_docid : string;
+  showStatsBtn: boolean;
 
   constructor(public mesasSrv: MesasService,
     public prodSrv: ProductosService, 
@@ -62,11 +63,11 @@ export class HomeClientesPage implements OnInit {
 
   ionViewWillEnter(){
     //console.log("vava entrar")
-    this.showCartaBtn = false
-    this.showChatBtn = false
-    this.showDetalleBtn = false
-    this.showEncuestaBtn = false;
-    this.showGamesBtn = false;
+    //this.showCartaBtn = false
+    //this.showChatBtn = false
+    //this.showDetalleBtn = false
+    //this.showEncuestaBtn = false;
+    //this.showGamesBtn = false;
     this.ngOnInit()
   }
 
@@ -117,7 +118,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-    window.cordova.plugins.barcodeScanner.scan(
+/*     window.cordova.plugins.barcodeScanner.scan(
       (result) => {
         this.spinner.show()
         this.resolveAction(result.text);
@@ -132,8 +133,8 @@ export class HomeClientesPage implements OnInit {
         formats: 'QR_CODE',
         resultDisplayDuration: 2,
       }
-    );
-    //this.resolveAction("7");
+    ); */
+    this.resolveAction("1");
   }
 
   AgregarProducto(index: any) {
@@ -200,6 +201,7 @@ export class HomeClientesPage implements OnInit {
       this.showDetalleBtn = true;
       this.showGamesBtn = true;
       this.showEncuestaBtn = true;
+      this.showStatsBtn = true;
       this.spinner.hide();
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PEDIDO_ENTREGADO) {
@@ -207,6 +209,7 @@ export class HomeClientesPage implements OnInit {
       this.showDetalleBtn = true;
       this.showGamesBtn = true;
       this.showEncuestaBtn = true;
+      this.showStatsBtn = true;
       this.spinner.hide();
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.COMIENDO) {
@@ -214,12 +217,14 @@ export class HomeClientesPage implements OnInit {
       this.showDetalleBtn = true;
       this.showGamesBtn = true;
       this.showEncuestaBtn = true;
+      this.showStatsBtn = true;
       this.spinner.hide();
     }
     else if(this.currentMesaCliente.estado == eEstadoMesaCliente.PAGANDO) {
       this.showDetalleBtn = true;
       this.showEncuestaBtn = true;
       this.showChatBtn = true;
+      this.showStatsBtn = true;
       this.spinner.hide();
     }
     
@@ -230,8 +235,9 @@ export class HomeClientesPage implements OnInit {
     this.spinner.hide();
     if (!this.isOnEspera) {
       this.mesasSrv.SolicitarMesa(this.currentUser);
-      this.toastSrv.presentToast("Se ingreso a lista de espra con exito", 2500, "success");
-      this.pushSrv.sendNotification("Hay nuevos clientes en lista de espera",this.currentUser.nombre + "ingreso a la lista de espera.",'mozo')
+      this.toastSrv.presentToast("Se ingreso a lista de espera con exito", 2500, "success");
+      this.pushSrv.sendNotification("Hay nuevos clientes en lista de espera",this.currentUser.nombre + " ingreso a la lista de espera.",'mozo')
+      this.showStatsBtn = true;
     } else {
       this.toastSrv.presentToast("Usted ya se encuentra en lista de espera", 2000,'warning');
     }
@@ -250,8 +256,9 @@ export class HomeClientesPage implements OnInit {
           this.mesasSrv.AsignarMesaCliente(nro_mesa, this.docID_Mesa, this.currentUser.uid);
           this.mesasSrv.EliminarClienteListaEspera(this.espera_docid);
           this.showCartaBtn = true;
+          this.showChatBtn = true;
           this.spinner.hide();
-          this.toastSrv.presentToast("Ingesaste a la mesa" + nro_mesa, 2000,'success');
+          this.toastSrv.presentToast("Ingresaste a la mesa " + nro_mesa, 2000,'success');
       } else {
         this.spinner.hide();
         this.toastSrv.presentToast("La mesa escaneada se encuentra OCUPADA", 2000,'warning');
@@ -309,7 +316,12 @@ export class HomeClientesPage implements OnInit {
     this.router.navigate(['cliente/chat']);
   }
   goToGame(){
-    this.router.navigate(['cliente/game']);
+    if (!this.currentMesaCliente.ganoJuego) {
+      this.router.navigate(['cliente/game']);
+    }
+    else{
+      this.toastSrv.presentToast("Usted ya participo del juego..", 2500, "warning")
+    }
   }
 
   goToEncuesta(){

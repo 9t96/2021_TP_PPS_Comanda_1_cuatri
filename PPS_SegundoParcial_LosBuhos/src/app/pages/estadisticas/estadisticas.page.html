@@ -1,17 +1,14 @@
 <ion-header>
   <ion-toolbar color="medium">
     <ion-back-button slot="start"></ion-back-button>
-    <ion-title>Estadisticas</ion-title>
+    <ion-title>Estadísticas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-segment  [(ngModel)]="selected">
+  <ion-segment  [(ngModel)]="selected" color="dark">
     <ion-segment-button value="friends" (click)="ShowEmpleados()">
       <ion-label>Empleados</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="clientes" (click)="ShowClientes()">
-      <ion-label>Clientes</ion-label>
     </ion-segment-button>
     <ion-segment-button value="supervisor" (click)="ShowSupervisor()">
       <ion-label>Supervisor</ion-label>
@@ -32,9 +29,6 @@
         </div>
       </ion-slide>
     </ion-slides>
-  </div>
-  <div [ngStyle]="{'display': showClientes == true ? 'block' : 'none'}">
-    <p>clientes</p>
   </div>
   <div [ngStyle]="{'display': showEmpleados == true ? 'block' : 'none'}">
     <canvas #pieChartEmp></canvas>

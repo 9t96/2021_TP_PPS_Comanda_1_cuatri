@@ -33,13 +33,24 @@
       <strong>${{valorPropina}}</strong>
     </ion-item>
     <!-- fin Propina -->
+    <!-- Gano Juego -->
+    <ion-item *ngIf="showJuego">
+      <ion-avatar>
+        <ion-icon name="game-controller-outline" style="font-size: 2em;"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h1>Descuento 10%</h1>
+      </ion-label>
+      <strong>- ${{valorDescuento}}</strong>
+    </ion-item>
+    <!--  -->
   </ion-list>
-  <ion-row>
+  <ion-row style="display: flex;justify-content: space-around;">
     <ion-button (click)="AgregarPropina()">Agregar propina</ion-button>
     <p>Total: $ {{pedido.total}}</p>
   </ion-row>
-  <ion-row>
-    <ion-button (click)="NotificarMozo()">Notificar al mozo</ion-button>
+  <ion-row style="display: flex;justify-content: center;margin-top: 1em;">
+    <ion-button color="success"(click)="NotificarMozo()">Notificar al mozo</ion-button>
   </ion-row>
 </ion-content>
 

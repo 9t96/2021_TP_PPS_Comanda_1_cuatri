@@ -301,4 +301,8 @@ export class HomeClientesPage implements OnInit {
       this.router.navigate(['cliente/encuesta', {mesaClienteId: this.currentMesaCliente.doc_id}]);
     }
   }
+
+  goToEstadisticas(){
+    this.router.navigate(['cliente/estadisticas']);
+  }
 }

@@ -9,13 +9,15 @@ import { SharedModule } from '../shared/shared.module';
 import { EncuestaComponent } from './pages/encuesta/encuesta.component';
 import { GameComponent } from './pages/game/game.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { EstadisticasComponent } from './pages/estadisticas/estadisticas.component';
 
 
 @NgModule({
   declarations: [
     ChatComponent,
     GameComponent,
-    EncuestaComponent
+    EncuestaComponent,
+    EstadisticasComponent
   ],
   imports: [
     CommonModule,

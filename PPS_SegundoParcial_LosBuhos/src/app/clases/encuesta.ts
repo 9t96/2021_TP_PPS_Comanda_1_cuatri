@@ -1,8 +1,8 @@
 export class Encuesta {
     puntajeMozo:number;
-    valoracionComidas:string;
-    valoracionVelocidad:string;
-    loMejor:string;
-    loPeor:string;
+    valoracionComidas:string;    
+    loMejor:string;    
     recomienda:boolean;
+    comentarios:string;
+    srcFotos:string[];
 }

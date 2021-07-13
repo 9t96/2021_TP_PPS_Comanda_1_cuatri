@@ -8,13 +8,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { EncuestaComponent } from './pages/encuesta/encuesta.component';
 import { GameComponent } from './pages/game/game.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { EstadisticasComponent } from './pages/estadisticas/estadisticas.component';
 
 
 @NgModule({
   declarations: [
     ChatComponent,
     GameComponent,
-    EncuestaComponent
+    EncuestaComponent,
+    EstadisticasComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +25,8 @@ import { GameComponent } from './pages/game/game.component';
     IonicModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class ClienteModule { }

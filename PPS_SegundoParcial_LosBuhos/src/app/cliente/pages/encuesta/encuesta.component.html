@@ -7,82 +7,101 @@
 
 <ion-content fullscreen color="secondary">
 
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="camera-outline" (click)="takePhoto()"></ion-icon>
+    </ion-fab-button>
+    <ion-badge color="primary" class="badge-photo" *ngIf="srcPothos.length > 0">{{srcPothos.length}}</ion-badge>
+  </ion-fab>
+
+
   <div class="container">    
     <main class="form-signin">
-        <form [formGroup]="encuestaForm" (ngSubmit)="clickGuardarEncuesta()"> 
-      
-        <!-- Puntaje Mozo -->
-        <h3>Puntuaje del mozo <span>{{getPuntajeMozo().value}}</span></h3>
-        <ion-item>
-          <ion-range min="1" max="10" pin="true" formControlName="puntajeMozo"></ion-range>
-        </ion-item>
-        <ion-row class="errors">
-          <small class="invalid" *ngIf="getPuntajeMozo()?.errors?.required && getPuntajeMozo()?.touched">Campo obligatorio</small>             
-        </ion-row>
 
-        <h3>Cómo calificaría a:</h3>
-        <!-- Valoración Comida -->
-        <ion-item>
-          <ion-label>La comida</ion-label>
-          <ion-select value="notifications" interface="action-sheet" formControlName="valoracionComidas">
-            <ion-select-option *ngFor="let game of valoracionComidasOpt" [value]="game">{{game}}</ion-select-option>
-          </ion-select>
-        </ion-item>
+      <form [formGroup]="encuestaForm" (ngSubmit)="clickGuardarEncuesta()">
+
+        <!-- Radio -->
+        <div class="card">
+          <ion-radio-group value="" formControlName="valoracionComidas">
+            <ion-list-header>
+              <ion-label>1. ¿Cómo calificaría a la calidad de la comida?</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let opt of valoracionComidasOpt">
+              <ion-label>{{opt}}</ion-label>
+              <ion-radio slot="start" color="success" [value]="opt"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </div>
         <ion-row class="errors">
           <small class="invalid" *ngIf="getValoracionComidas()?.errors?.required && getValoracionComidas()?.touched">Campo obligatorio</small>               
         </ion-row>
 
-        <!-- Valoración velocidad -->
-        <ion-item>
-          <ion-label>La velocidad de atención</ion-label>
-          <ion-select value="notifications" interface="action-sheet" formControlName="valoracionVelocidad">
-            <ion-select-option *ngFor="let game of valoracionVelocidadOpt" [value]="game">{{game}}</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <!-- Range -->
+        <div class="card">
+          <ion-list-header>2. ¿Qué puntaje le asignaría al mozo?</ion-list-header>
+          <ion-item>
+            <ion-range min="1" max="10" step="1" value="5" snaps color="dark" formControlName="puntajeMozo">
+              <ion-icon  slot="start" size="small" color="danger" name="sad-outline"></ion-icon>
+              <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
+            </ion-range>
+          </ion-item>
+        </div>
         <ion-row class="errors">
-          <small class="invalid" *ngIf="getValoracionVelocidad()?.errors?.required && getValoracionVelocidad()?.touched">Campo obligatorio</small>               
+          <small class="invalid" *ngIf="getPuntajeMozo()?.errors?.required && getPuntajeMozo()?.touched">Campo obligatorio</small> 
         </ion-row>
 
-        <h3>Lo mejor y lo peor</h3>
-        <!-- Lo Mejor -->
-        <ion-item>
-          <ion-label>Lo mejor fue:</ion-label>
-          <ion-select value="notifications" interface="action-sheet" formControlName="loMejor">
-            <ion-select-option *ngFor="let game of loMejorPeorOpt" [value]="game">{{game}}</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <!-- Select -->
+        <div class="card">
+          <ion-list-header position="fixed">3. ¿Qué destacaría como positivo?</ion-list-header>
+          <ion-item lines="full" class="input-wrapper" style="margin-top: 0px;">
+            <ion-select value="0" interface="popover" formControlName="loMejor" placeholder="Seleccione una opcion"
+              required>
+              <ion-select-option *ngFor="let game of loMejorPeorOpt" [value]="game">{{game}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
         <ion-row class="errors">
-          <small class="invalid" *ngIf="getLoMejor()?.errors?.required && getLoMejor()?.touched">Campo obligatorio</small>               
+          <small class="invalid" *ngIf="getLoMejor()?.errors?.required && getLoMejor()?.touched">Campo obligatorio</small>      
         </ion-row>
 
-        <!-- Lo Peor -->
-        <ion-item>
-          <ion-label>La peor fue:</ion-label>
-          <ion-select value="notifications" interface="action-sheet" formControlName="loPeor">
-            <ion-select-option *ngFor="let game of loMejorPeorOpt" [value]="game">{{game}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-row class="errors">
-          <small class="invalid" *ngIf="getLoPeor()?.errors?.required && getLoPeor()?.touched">Campo obligatorio</small>               
+        <!-- Input -->
+        <div class="card">
+          <ion-list-header>4. Comentarios adicionales</ion-list-header>
+          <ion-item lines="full" class="input-wrapper">
+            <ion-input type="text" formControlName="comentarios"></ion-input>
+          </ion-item>
+        </div>
+        <ion-row class="errors">          
+          <small class="invalid" *ngIf="getComentarios()?.errors?.maxlength">30 caracteres máximo</small>
         </ion-row>
-        <br>
-        <!-- Recomienda -->
-        <ion-item>
-          <ion-label position="fluid">¿Recomendaría el Restaurante?</ion-label><br />
-          <ion-toggle (click)="setRecomienda()"></ion-toggle>   
-        </ion-item> 
-      
+
+        <!-- Checkbox -->
+        <div class="card">
+          <ion-list-header>5. ¿Recomendaría el Restaurante?</ion-list-header>
+          <ion-item>
+            <ion-label>Sí</ion-label>
+            <ion-checkbox [(ngModel)]="recomienda" color="primary" formControlName="recomienda" aria-checked="false"></ion-checkbox>
+          </ion-item>
+        </div>
+    
         <!-- Enviar -->
-        <div class="actions" style="margin-top: 3em;">
-          <p class="ion-padding-start ion-padding-end">
-            <ion-button type="submit" expand="block" class="btn-register" [disabled]="encuestaForm.invalid">
+        <ion-row style="margin-top: 1em;">
+
+            <ion-button type="submit" expand="block" style="width: 100%;" [disabled]="encuestaForm.invalid">
               Enviar
             </ion-button>
-          </p>
-        </div>
-        <br>
+
+        </ion-row>
       </form>
     </main>   
   </div>   
 
 </ion-content>
+
+<!-- Spinner -->
+<ngx-spinner 
+  type=null 
+  template="<img src='assets/spinner_buho.gif' height='125'/>">
+  <p style="color: white" > Cargando... </p>
+</ngx-spinner>

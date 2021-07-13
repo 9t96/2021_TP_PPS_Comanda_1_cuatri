@@ -8,6 +8,7 @@ import { Usuario } from 'src/app/clases/usuario';
 import { eRol } from 'src/app/enums/eRol';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { UserService } from 'src/app/services/user.service';
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
   showFaltaImg: boolean;
 
   constructor(
-
+    private notificationService:NotificationsService,
     private authService: AuthService,
     public toastController: ToastController,
     private router: Router,
@@ -119,8 +120,13 @@ export class RegisterComponent implements OnInit {
       .then((credential) => {
         this.userService.setItemWithId(this.user, credential.user.uid);
         this.spinner.hide()
-        this.toastSrv.presentToast("Registro exitoso!", 2500, "success")
-        this.router.navigate(['login'])
+        this.notificationService.sendNotification(
+          "Registro Pendiente",
+          "Hay un nuevo cliente que espera la aprobación de su registro",
+          "supervisor"
+        );
+        this.toastSrv.presentToast("Registro exitoso!", 2500, "success");
+        this.router.navigate(['login']);
       })
       .catch((err) => {
         console.log(err);

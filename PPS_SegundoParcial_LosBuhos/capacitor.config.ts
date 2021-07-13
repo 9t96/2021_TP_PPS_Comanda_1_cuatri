@@ -4,7 +4,12 @@ const config: CapacitorConfig = {
   appId: 'pps.segundoparcial.losbuhos',
   appName: 'PPS_SegundoParcial_LosBuhos',
   webDir: 'www',
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  plugins: {
+    PushNotifications: {
+      presentationOptions: ["badge", "sound", "alert"],
+    },
+  },
 };
 
 export default config;

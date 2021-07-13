@@ -16,6 +16,7 @@ import { Event as NavigationEvent } from "@angular/router";
 import { filter } from 'rxjs/operators';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { eToastType } from 'src/app/enums/eToastType';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 declare let window: any;
 
 
@@ -52,7 +53,8 @@ export class HomeClientesPage implements OnInit {
     public pedidosSrv:PedidosService, 
     public authSrv: AuthService, 
     public router: Router, 
-    public toastSrv:ToastService) {
+    public toastSrv:ToastService,
+    public pushSrv: NotificationsService) {
     this.mesaSolicitada = new Mesa();
   }
 
@@ -111,7 +113,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   ScanQr() {
-/*     window.cordova.plugins.barcodeScanner.scan(
+    window.cordova.plugins.barcodeScanner.scan(
       (result) => {
         this.resolveAction(result.text);
       },
@@ -125,8 +127,8 @@ export class HomeClientesPage implements OnInit {
         formats: 'QR_CODE',
         resultDisplayDuration: 2,
       }
-    ); */
-    this.resolveAction("7");
+    );
+    //this.resolveAction("7");
   }
 
   AgregarProducto(index: any) {
@@ -208,6 +210,7 @@ export class HomeClientesPage implements OnInit {
   SolicitarMesa() {
     if (!this.isOnEspera) {
       this.mesasSrv.SolicitarMesa(this.currentUser);
+      this.pushSrv.sendNotification("Hay nuevos clientes en lista de espera",this.currentUser.nombre + "ingreso a la lista de espera.",'mozo')
     } else {
       this.toastSrv.presentToast("Usted ya se encuentra en lista de espera", 2000,'warning');
     }

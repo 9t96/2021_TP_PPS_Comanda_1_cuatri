@@ -16,11 +16,12 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AltaProductoComponent } from './pages/alta-producto/alta-producto.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { ProductoBajaComponent } from './pages/producto-baja/producto-baja.component' 
 import { ProductoModificacionComponent } from './pages/producto-modificacion/producto-modificacion.component' 
+import { Interception } from './services/Interception';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -51,7 +52,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
   ],
   providers: [
     BarcodeScanner,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: HTTP_INTERCEPTORS, useClass: Interception, multi: true}
   ],
   bootstrap: [AppComponent],
 })

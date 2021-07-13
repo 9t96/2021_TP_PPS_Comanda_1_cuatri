@@ -82,21 +82,4 @@ export class EncuestaPage implements OnInit {
     }, 2000);
   }
 
-  //Guarda una nueva mesa.
-  GuardarNuevaMesa() {
-    /* this.nuevaMesa.nro_mesa = this.mesasForm.get('nro_mesa').value;
-    this.nuevaMesa.comensales = this.mesasForm.get('comensales').value;
-    this.nuevaMesa.tipo_mesa = this.mesasForm.get('tipo_mesa').value; */
-  }
-
-  ResetearFormulario() {
-/*  this.mesasForm.reset(); //Reseteo form
-    this.nuevaMesa = new Mesa();
-    let mesanuevanro = this.mesasList.length + 1;
-    this.mesasForm.get('comensales').setValue(null);
-    this.mesasForm.get('tipo_mesa').setValue(-1);
-    this.mesasForm.get('nro_mesa').setValue(mesanuevanro);
-    this.mesasForm.get('estado').setValue(this.nuevaMesa.estado); */
-  }
-
 }

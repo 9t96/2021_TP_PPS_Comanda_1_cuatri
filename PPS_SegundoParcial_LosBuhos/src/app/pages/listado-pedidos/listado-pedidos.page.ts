@@ -1,3 +1,4 @@
+import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
 import { Component, OnInit } from '@angular/core';
 import { Productos } from 'src/app/clases/productos';
 import { eEmpleado } from 'src/app/enums/eEmpleado';
@@ -21,12 +22,18 @@ export class ListadoPedidosPage implements OnInit {
   public currentUser: any;
   public sectorProd: any;
   selected: string;
-  pedidosFiltrados: any;
-
+  pendientes : Array<any> = [];
+  preparando : Array<any> = [];
+  listos : Array<any> = [];
+  showPendientes: boolean = false;
+  showPreparando: boolean = false;
+  showListos: boolean = false;
+  filtro: string;
   constructor(public pedidosSrv:PedidosService, public prodSrv: ProductosService, public toastSrv: ToastService, public pushSrv: NotificationsService) { }
 
   ngOnInit() {
     this.selected = "pendientes";
+    this.filtro == "PREPARANDO";
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
     this.sectorProd = this.currentUser.tipo_empleado == eEmpleado.COCINERO ? eProducto.COCINA : eProducto.BEBIDA;
     this.pedidosSrv.TraerMesaCliente().subscribe( mesas => {
@@ -44,19 +51,31 @@ export class ListadoPedidosPage implements OnInit {
           });
         }
       })
-      this.pedidosFiltrados = this.pedidosCocina
+      /* this.pendientes = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PENDIENTE})
+      this.preparando = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PREPARANDO})
+      this.preparando = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.LISTO})
+      this.showPendientes = true; */
       console.log(this.pedidosCocina)
     })
   }
 
   FilterPendientes(){
-    this.pedidosFiltrados = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PENDIENTE})
+    //this.pendientes = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PENDIENTE})
+    this.showPendientes = true;
+    this.showPreparando = false;
+    this.showListos = false;
   }
   FilterPreparacion(){
-    this.pedidosFiltrados = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PREPARANDO})
+    //this.preparando = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PREPARANDO})
+    this.showPendientes = false;
+    this.showPreparando = true;
+    this.showListos = false;
   }
   FilterListos(){
-    this.pedidosFiltrados = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.LISTO})
+    //this.listos = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.LISTO})
+    this.showPendientes = false;
+    this.showPreparando = false;
+    this.showListos = true;
   }
   CambiarEstadoProducto(item: any, nuevoEstado: string){
 

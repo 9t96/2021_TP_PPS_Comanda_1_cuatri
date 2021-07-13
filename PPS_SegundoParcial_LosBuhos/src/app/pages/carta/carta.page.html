@@ -8,25 +8,6 @@
 
 <ion-content>
   <div *ngIf="showCarta">
-      <p>Filtros:</p>
-  <ion-chip>
-    <ion-avatar>
-      <img src="../../../assets/images/comida.jpg">
-    </ion-avatar>
-    <ion-label>Comidas</ion-label>
-  </ion-chip>
-  <ion-chip>
-    <ion-avatar>
-      <img src="../../../assets/images/bebida.jpeg">
-    </ion-avatar>
-    <ion-label>Bebidas</ion-label>
-  </ion-chip>
-  <ion-chip>
-    <ion-avatar>
-      <img src="../../../assets/images/postre.png">
-    </ion-avatar>
-    <ion-label>Postres</ion-label>
-  </ion-chip>
     <ion-list>
       <ion-item *ngFor="let item of productos; let index=index" >
         <ion-avatar (click)="openModal(item)">

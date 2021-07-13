@@ -9,6 +9,7 @@
 </ion-header>
 <ion-content>
   <div style="display:flex; flex-direction: column;">
+    <h1 style="text-align: center;color: var(--ion-color-dark);">¡Bienvenido {{currentUser.nombre}} ! </h1>
     <div class="qr-item" (click)="ScanQr()">
       <ion-icon name="qr-code-outline" class="qricon"></ion-icon>
       <p>{{qrBtnText}}</p>
@@ -41,3 +42,8 @@
     </ion-row>
   </div>
 </ion-content>
+<!-- Spinner -->
+<ngx-spinner
+type=null
+template="<img src='assets/spinner_buho.gif' height='125'/>"
+><p style="color: white" > Cargando... </p></ngx-spinner>

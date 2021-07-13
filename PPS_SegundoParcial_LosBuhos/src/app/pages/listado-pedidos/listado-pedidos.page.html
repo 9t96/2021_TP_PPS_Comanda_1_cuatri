@@ -6,19 +6,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-segment  [(ngModel)]="selected">
-    <ion-segment-button value="pendientes" (click)="FilterPendientes()">
-      <ion-label>Pendientes</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="enpreparacion" (click)="FilterPreparacion()">
-      <ion-label>Preparando</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="listos" (click)="FilterListos()">
-      <ion-label>Listos</ion-label>
-    </ion-segment-button>
-  </ion-segment>
   <ion-list>
-      <ion-item *ngFor="let item of pedidosFiltrados; let j=index">
+      <ion-item *ngFor="let item of pedidosCocina; let j=index" >
         <ion-avatar>
           <img [src]="item.img_src">
         </ion-avatar>
@@ -26,9 +15,9 @@
           <h1>{{item.nombre}}</h1>
         </ion-label>
         <strong>X {{item.cantidad}}</strong>
-        <ion-button *ngIf="item.estado == 'PENDIENTE'" (click)="CambiarEstadoProducto(item,'PREPARANDO')">Poner en preparacion</ion-button>
+        <ion-button color="danger" *ngIf="item.estado == 'PENDIENTE'" (click)="CambiarEstadoProducto(item,'PREPARANDO')">Poner en preparacion</ion-button>
         <ion-button *ngIf="item.estado == 'PREPARANDO'" (click)="CambiarEstadoProducto(item,'LISTO')">Marcar como listo</ion-button>
-        <ion-button *ngIf="item.estado == 'LISTO'" disabled>Entregado</ion-button>
+        <ion-button color="success" *ngIf="item.estado == 'LISTO'" disabled>Entregado</ion-button>
       </ion-item>
   </ion-list>
 </ion-content>

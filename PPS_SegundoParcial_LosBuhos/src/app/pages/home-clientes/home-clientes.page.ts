@@ -56,7 +56,8 @@ export class HomeClientesPage implements OnInit {
     public router: Router, 
     public toastSrv:ToastService,
     public pushSrv: NotificationsService,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    ) {
     this.mesaSolicitada = new Mesa();
   }
 

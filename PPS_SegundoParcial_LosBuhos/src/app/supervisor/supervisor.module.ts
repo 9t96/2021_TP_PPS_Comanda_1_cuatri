@@ -10,6 +10,7 @@ import { ClientesComponent } from './pages/clientes/clientes.component';
 import { UsuarioUpdateComponent } from './pages/usuario-update/usuario-update.component';
 import { SharedModule } from '../shared/shared.module';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
     IonicModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class SupervisorModule { }

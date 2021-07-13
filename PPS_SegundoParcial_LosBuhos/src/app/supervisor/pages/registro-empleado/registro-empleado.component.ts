@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Photo } from '@capacitor/camera';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Usuario } from 'src/app/clases/usuario';
 import { eEmpleado } from 'src/app/enums/eEmpleado';
 import { eRol } from 'src/app/enums/eRol';
+import { eToastType } from 'src/app/enums/eToastType';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -21,7 +23,6 @@ export class RegistroEmpleadoComponent implements OnInit {
 
   form1:FormGroup;
   form2:FormGroup;
-  spinner: any;  
   user:Usuario;
   formSelected:number;
   imagenPerfil = "../../../assets/images/pngegg.png";
@@ -33,10 +34,10 @@ export class RegistroEmpleadoComponent implements OnInit {
     public toastController:ToastController,
     private router:Router,
     private formBuilder: FormBuilder,
-    private loadingController: LoadingController,
     private cameraService:CameraService,
     private storageService: StorageService,
-    private userService:UserService
+    private userService:UserService,
+    private spinner: NgxSpinnerService
     ) {    
       this.user = new Usuario();    
       this.user.apellido = '';
@@ -67,7 +68,7 @@ export class RegistroEmpleadoComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.presentToast("Error al escanear el DNI");
+        this.presentToast("Error al escanear el DNI", eToastType.Warning);
       },
       {
         showTorchButton: true,
@@ -110,34 +111,28 @@ export class RegistroEmpleadoComponent implements OnInit {
   getCuilControl() { return this.form1.controls["cuil"]; }
 
   async registrarseClick(){        
-    await this.presentLoading();
-    this.spinner.present();
+    this.spinner.show();
     
     this.authService.CreaterUser(this.user.correo, this.getPass1Control().value)
     .then((credential) => {   
       this.userService.setItemWithId(this.user, credential.user.uid);
+      this.presentToast("Registro exitoso", eToastType.Success);
+      this.return();
     }).catch((err) => {
       console.log(err);
-      this.presentToast("Error al registrar el usuario");
+      this.presentToast("Error al registrar el usuario", eToastType.Warning);
     }).finally(()=>{
-      this.spinner.dismiss();
+      this.spinner.hide();
     });
   }
 
-  async presentToast(message:string){
+  async presentToast(message:string, type:eToastType){
     const toast = await this.toastController.create({
-      color: 'warning',
+      color: type,
       message: message,
       duration: 2000
     });
     toast.present();
-  }
-
-  async presentLoading() {
-    this.spinner = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...'
-    });
   }
 
   setRol(rol:string){

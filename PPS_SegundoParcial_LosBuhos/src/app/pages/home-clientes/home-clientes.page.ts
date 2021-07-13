@@ -176,15 +176,15 @@ export class HomeClientesPage implements OnInit {
       if (this.currentMesaCliente.nro_mesa == nro_mesa) {
         this.ResolveActionInMesa();
       } else {
-        this.spinner.hide();
+        this.spinner.hide();        
+        this.toastSrv.presentToast("Por favor, no escanee códigos de otras mesas", 2500, "danger");
         this.vibration.vibrate(1500);
-        this.toastSrv.presentToast("Por favor, no escanee códigos de otras mesas", 2500, "danger")
       }
     }
     else{
-      this.spinner.hide();
+      this.spinner.hide();      
+      this.toastSrv.presentToast("Por favor, póngase en lista de espera", 2500, "danger");
       this.vibration.vibrate(1500);
-      this.toastSrv.presentToast("Por favor, póngase en lista de espera", 2500, "danger")
     }
 
   }
@@ -260,13 +260,15 @@ export class HomeClientesPage implements OnInit {
           this.toastSrv.presentToast("Ingesaste a la mesa" + nro_mesa, 2000,'success');
       } else {
         this.spinner.hide();
-        this.vibration.vibrate(1500);
+        
         this.toastSrv.presentToast("La mesa escaneada se encuentra OCUPADA", 2000,'warning');
+        this.vibration.vibrate(1500);
       }
     } else {
       this.spinner.hide();
-      this.vibration.vibrate(1500);
+      
       this.toastSrv.presentToast("No se encuentra en lista de espera...", 2000,'warning');
+      this.vibration.vibrate(1500);
     }
   }
 

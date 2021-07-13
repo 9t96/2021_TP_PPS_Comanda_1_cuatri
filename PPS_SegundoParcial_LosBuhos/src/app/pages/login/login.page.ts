@@ -9,6 +9,7 @@ import { NotificationsService } from 'src/app/services/notifications/notificatio
 import { UserService } from 'src/app/services/user.service';
 import { eRol} from '../../enums/eRol';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 class LoginUser{
   email: string;
@@ -34,7 +35,8 @@ export class LoginPage implements OnInit {
   get password() { return this.loginForm.get('password'); }
 
   constructor(private authService: AuthService, private router: Router, private fromBuilder: FormBuilder, public userSrv: UserService,
-    private spinner: NgxSpinnerService, public pushSrv: NotificationsService) { 
+    private spinner: NgxSpinnerService, public pushSrv: NotificationsService,
+    private vibration:Vibration) { 
     this.user = new LoginUser();
   }
 
@@ -121,12 +123,11 @@ export class LoginPage implements OnInit {
   }
 
   presentErrors(message: string){
+    this.vibration.vibrate(1500);
     this.message = message;
     this.showErrors = true;
     setTimeout(() => {
       this.showErrors = false;
     }, 3500);
   }
-
-
 }

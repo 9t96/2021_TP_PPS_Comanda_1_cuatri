@@ -43,7 +43,7 @@
             <div class="col-sm col-md-4 text-center">
                 <img class="bd-placeholder-img rounded-circle" [src]="srcIncognita" title="Papel" height="130px">     
             </div>
-            <div class="col-sm col-md-4 px-0 text-center m-2">                    
+            <div class="col-sm col-md-4 px-0 text-center m-2" *ngIf="srcResultado != ''">                    
                 <img class="bd-placeholder-img rounded-circle" [src]="srcResultado" title="Tijera" height="130px">                                                     
             </div>
         </div>

@@ -18,6 +18,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { eToastType } from 'src/app/enums/eToastType';
 import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Vibration } from '@ionic-native/vibration/ngx';
 declare let window: any;
 
 
@@ -57,7 +58,8 @@ export class HomeClientesPage implements OnInit {
     public router: Router, 
     public toastSrv:ToastService,
     public pushSrv: NotificationsService,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService, private vibration:Vibration
+    ) {
     this.mesaSolicitada = new Mesa();
   }
 
@@ -161,7 +163,8 @@ export class HomeClientesPage implements OnInit {
       default:
           //Si el valor del qe es un numero se procede a asingar la mesa y se saca de la lista de espera al cliente
           //Validar que no puede ponerse en espera una vez que se asigno a una mesa
-          this.toastSrv.presentToast("El codigo escaneado es invalido", 2500, "danger")
+          this.vibration.vibrate(1500);
+          this.toastSrv.presentToast("El código escaneado es inválido", 2500, "danger")
         break;
     }
   }
@@ -174,13 +177,15 @@ export class HomeClientesPage implements OnInit {
       if (this.currentMesaCliente.nro_mesa == nro_mesa) {
         this.ResolveActionInMesa();
       } else {
-        this.spinner.hide();
-        this.toastSrv.presentToast("Por favor, no escane codigos de otras mesas", 2500, "danger")
+        this.spinner.hide();        
+        this.toastSrv.presentToast("Por favor, no escanee códigos de otras mesas", 2500, "danger");
+        this.vibration.vibrate(1500);
       }
     }
     else{
-      this.spinner.hide();
-      this.toastSrv.presentToast("Por favor, pongase en lista de espera", 2500, "danger")
+      this.spinner.hide();      
+      this.toastSrv.presentToast("Por favor, póngase en lista de espera", 2500, "danger");
+      this.vibration.vibrate(1500);
     }
 
   }
@@ -235,10 +240,10 @@ export class HomeClientesPage implements OnInit {
     this.spinner.hide();
     if (!this.isOnEspera) {
       this.mesasSrv.SolicitarMesa(this.currentUser);
-      this.toastSrv.presentToast("Se ingreso a lista de espera con exito", 2500, "success");
+      this.toastSrv.presentToast("Se ingresó a lista de espera con éxito", 2500, "success");
       this.pushSrv.sendNotification("Hay nuevos clientes en lista de espera",this.currentUser.nombre + " ingreso a la lista de espera.",'mozo')
-      this.showStatsBtn = true;
     } else {
+      this.vibration.vibrate(1500);
       this.toastSrv.presentToast("Usted ya se encuentra en lista de espera", 2000,'warning');
     }
   }
@@ -261,11 +266,15 @@ export class HomeClientesPage implements OnInit {
           this.toastSrv.presentToast("Ingresaste a la mesa " + nro_mesa, 2000,'success');
       } else {
         this.spinner.hide();
+        
         this.toastSrv.presentToast("La mesa escaneada se encuentra OCUPADA", 2000,'warning');
+        this.vibration.vibrate(1500);
       }
     } else {
       this.spinner.hide();
+      
       this.toastSrv.presentToast("No se encuentra en lista de espera...", 2000,'warning');
+      this.vibration.vibrate(1500);
     }
   }
 
@@ -326,6 +335,7 @@ export class HomeClientesPage implements OnInit {
 
   goToEncuesta(){
     if(this.currentMesaCliente.hasEncuesta){
+      this.vibration.vibrate(1500);
       this.toastSrv.presentToast("Usted ya ha completado la encuesta", 2000,'warning');
     }else{
       this.router.navigate(['cliente/encuesta', {mesaClienteId: this.currentMesaCliente.doc_id}]);

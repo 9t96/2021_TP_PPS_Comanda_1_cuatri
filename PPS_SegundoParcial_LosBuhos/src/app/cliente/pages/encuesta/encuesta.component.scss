@@ -1,9 +1,14 @@
+.badge-photo{
+  margin-top: -1rem;
+  border-radius: 1rem;
+}
+
 .form-signin {
     width: 100%;
     //max-width: 400px;
     //padding: 3rem;
     //margin: auto;
-    margin-top: 3rem;
+    //margin-top: 3rem;
   }
   
   .form-signin .checkbox {
@@ -16,4 +21,47 @@
   
 .errors{
   margin-bottom: 10px;
+}
+
+form{
+  padding: 10px 10px 10px 10px;
+  .card{
+      display:flex;
+      background: wheat;
+      margin-top: 1em;
+  }
+}
+
+ion-row{
+  .hiddenItems {
+      height: 30px;
+      small {
+        margin-bottom: 7px;
+        color: var(--ion-color-danger);
+        font-weight: 700;
+        font-size: 14px;
+        align-self: center;
+        margin-left: 0.5em;
+      }
+  }
+}
+
+.ok{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2em;
+  img{
+      height: 10em;
+      margin-bottom: 2em;
+      margin-top: 2em;
+  }
+  .title{
+      font-size: 2em;
+  }
+  .sub{
+      font-size: 1.5em;
+      text-align: -webkit-center;
+  }
 }

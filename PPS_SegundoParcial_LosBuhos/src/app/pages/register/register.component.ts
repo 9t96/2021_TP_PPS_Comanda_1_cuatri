@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Photo } from '@capacitor/camera';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Usuario } from 'src/app/clases/usuario';
 import { eRol } from 'src/app/enums/eRol';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
 import { UserService } from 'src/app/services/user.service';
 declare let window: any;
 
@@ -19,13 +21,13 @@ declare let window: any;
 export class RegisterComponent implements OnInit {
   form1: FormGroup;
   form2: FormGroup;
-  spinner: any;
   user: Usuario;
   formSelected: number;
   imagenPerfil = '../../../assets/images/pngegg.png';
   uploadProgress: number;
   hasErrorPerfil: boolean;
   anonimo:boolean;
+  showFaltaImg: boolean;
 
   constructor(
 
@@ -36,7 +38,9 @@ export class RegisterComponent implements OnInit {
     private loadingController: LoadingController,
     private cameraService: CameraService,
     private storageService: StorageService,
-    private userService: UserService 
+    private userService: UserService,
+    public toastSrv: ToastService,
+    private spinner: NgxSpinnerService
 
   ) {
     this.user = new Usuario();
@@ -109,23 +113,21 @@ export class RegisterComponent implements OnInit {
   }
 
   async registrarseClick() {
-    await this.presentLoading();
-    this.spinner.present();
-
+    this.spinner.show()
     this.authService
       .CreaterUser(this.user.correo, this.getPass1Control().value)
       .then((credential) => {
         this.userService.setItemWithId(this.user, credential.user.uid);
-        this.presentToast('Registro Exitoso', 'success').then(() => {
-          this.router.navigate(['']);
-        });
+        this.spinner.hide()
+        this.toastSrv.presentToast("Registro exitoso!", 2500, "success")
+        this.router.navigate(['login'])
       })
       .catch((err) => {
         console.log(err);
+        this.spinner.hide()
         this.presentToast('Error al registrar el usuario', 'warning');
       })
       .finally(() => {
-        this.spinner.dismiss();
       });
   }
 
@@ -136,13 +138,6 @@ export class RegisterComponent implements OnInit {
       duration: 2000,
     });
     toast.present();
-  }
-
-  async presentLoading() {
-    this.spinner = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
   }
 
   getEmailControl() {
@@ -251,6 +246,9 @@ export class RegisterComponent implements OnInit {
       }
       else{
         invalid = true;
+        if (this.user.img_src == null) {
+          this.toastSrv.presentToast("Debe cargar una imagen antes de continuar", 3000, "warning")
+        }
       }
     }else{
       invalid = this.form1.invalid;

@@ -188,13 +188,11 @@ export class HomeClientesPage implements OnInit {
     if (this.currentMesaCliente.estado == eEstadoMesaCliente.SENTADO) {
       this.showCartaBtn = true;
       this.showChatBtn = true;
-      this.showEncuestaBtn = true;
       this.spinner.hide();
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.CONFIRMANDO_PEDIDO) {
       this.showChatBtn = true;
       this.showDetalleBtn = true;
-      this.showEncuestaBtn = true;
       this.spinner.hide();
     }
     else if (this.currentMesaCliente.estado == eEstadoMesaCliente.ESPERANDO_PEDIDO) {

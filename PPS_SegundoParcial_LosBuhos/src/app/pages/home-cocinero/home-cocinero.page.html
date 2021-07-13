@@ -34,30 +34,22 @@
   </div>
   <div style="display:flex; flex-direction: column;">
     <ion-row>
-      <div class="menu-item" [routerLink]="['/producto-alta']">
-        <ion-icon name="cafe-outline"></ion-icon>
-        <p>Alta productos</p>
-      </div>
       <div class="menu-item" [routerLink]="['/listado-pedidos']">
-        <ion-icon name="newspaper-outline"></ion-icon>
+        <ion-icon name="cafe-outline"></ion-icon>
         <p>Pedidos</p>
       </div>
     </ion-row>
-
     <ion-row>
       <div class="menu-item" [routerLink]="['/producto-modificar']">
-        <ion-icon name="cafe-outline"></ion-icon>
-        <p>Modificar productos</p>
-      </div>
-      <div class="menu-item" [routerLink]="['/producto-eliminar']">
-        <ion-icon name="cafe-outline"></ion-icon>
-        <p>Eliminar productos</p>
+        <ion-icon name="fast-food-outline"></ion-icon>
+        <p>Gestionar productos</p>
       </div>
       <div class="menu-item" [routerLink]="['/encuesta-empleado']" *ngIf="!solvedSurvey">
-        <ion-icon name="cafe-outline"></ion-icon>
+        <ion-icon name="newspaper-outline"></ion-icon>
         <p>Encuesta</p>
       </div>
     </ion-row>
   </div>
-</ion-content>
 
+
+</ion-content>

@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title>{{titulo}}</ion-title>
+    <ion-icon slot="end" (click)="dismiss()" name="close-circle-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-slides  pager="true" [options]="slideOpts" style="margin-top:1em">
+    <ion-slide *ngFor="let image of producto.img_src">
+        <img [src]="image" style="height: 5em;">
+    </ion-slide>
+  </ion-slides>
+  <form [formGroup]="formProducto">
+    <ion-item lines="full" class="input-wrapper">
+      <ion-label position="fixed">Nombre: </ion-label>
+      <ion-input type="text" placeholder={{producto.nombre}} formControlName="nombre" #nombre
+       [disabled]="isDisabled">
+      </ion-input>
+    </ion-item>
+      <ion-item lines="full" class="input-wrapper">
+        <ion-label position="fixed">Descripcion</ion-label>
+        <ion-input type="text" placeholder={{producto.descripcion}} formControlName="descripcion" #descripcion
+        [disabled]="isDisabled">
+        </ion-input>
+      </ion-item>
+        <ion-item lines="full" class="input-wrapper">
+          <ion-label position="fixed">Precio $</ion-label>
+          <ion-input type="number" placeholder={{producto.precio}} formControlName="precio" #precio
+          [disabled]="isDisabled">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="full" class="input-wrapper">
+          <ion-label position="fixed">Tiempo de elaboracion: </ion-label>
+          <ion-input type="number" placeholder={{producto.tiempo_elaboracion}} formControlName="tiempo" #tiempo  
+          [disabled]="isDisabled">
+          </ion-input>
+        </ion-item>
+
+        <!-- sector -->
+        <ion-item lines="full" class="input-wrapper">
+          <ion-label position="fixed">Sector</ion-label>
+          <ion-select value="0" #sector interface="popover" formControlName="sector"
+            placeholder="Seleccione una opcion"  [disabled]="isDisabled" >
+            <ion-select-option value="BEBIDA">Bebidas</ion-select-option>
+            <ion-select-option value="COCINA">Cocina</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-row style="margin-top: 1em; display:flex; justify-content: center">
+          <ion-button  (click)="modificarProducto()" *ngIf="modificar">Modificar</ion-button>
+          <ion-button  (click)="eliminarConfirm()" *ngIf="eliminar">Eliminar</ion-button>
+        </ion-row>
+  </form>
+   
+ 
+</ion-content>

@@ -9,11 +9,11 @@
 </ion-header>
 <ion-content>
   <div style="display:flex; flex-direction: column;">
+    <div class="qr-item" (click)="ScanQr()">
+      <ion-icon name="qr-code-outline" class="qricon"></ion-icon>
+      <p>{{qrBtnText}}</p>
+    </div>
     <ion-row>
-      <div class="menu-item" (click)="ScanQr()">
-        <ion-icon name="qr-code-outline"></ion-icon>
-        <p>{{qrBtnText}}</p>
-      </div>
       <div class="menu-item" *ngIf="showChatBtn" (click)="goToChat()">
         <ion-icon name="chatbubbles-outline"></ion-icon>
         <p>Consulta al Mozo</p>

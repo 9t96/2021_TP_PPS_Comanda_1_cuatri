@@ -6,12 +6,12 @@
 </ion-header>
 
 <ion-content>
-<div *ngIf="isLoaded">
+<div *ngIf="isLoaded" style="padding: 10px 10px 10px 10px;">
 
   <h1 *ngIf="isMozo && pedido.listoParaServir && pedido.estado == 'ESPERANDO_PEDIDO'" class="attention heartbeat">¡Todo listo para servir!</h1>
   <p>Estado:         
-    <ion-chip color="medium">
-    <ion-label color="dark">{{pedido.estado}}</ion-label>
+    <ion-chip color="danger">
+    <ion-label color="danger">{{pedido.estado}}</ion-label>
     </ion-chip>
   </p>
   <p>Nro mesa: {{pedido.nro_mesa}}</p>
@@ -36,7 +36,7 @@
     </ion-item>
   </ion-list>
   <!-- ACTIONS MOZO -->
-  <div *ngIf="isMozo">
+  <div *ngIf="isMozo" style="margin-top: 1em;">
     <ion-button *ngIf="pedido.estado == 'SENTADO'" (click)="navigateCarta()">
       Tomar pedido
     </ion-button>

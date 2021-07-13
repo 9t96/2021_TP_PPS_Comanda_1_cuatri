@@ -6,12 +6,13 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 import { UserService } from 'src/app/services/user.service';
 import { Observable } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Photo } from '@capacitor/camera';
 //import { timingSafeEqual } from 'crypto';
 import { Router } from '@angular/router';
+import { ToastService } from 'src/app/services/toast/toast.service';
 @Component({
   selector: 'app-alta-producto',
   templateUrl: './alta-producto.component.html',
@@ -26,7 +27,7 @@ export class AltaProductoComponent implements OnInit {
   public formProducto: FormGroup;
   public i_NroImagen: number = 0;
   public imagenPerfil = "../../../assets/plato.png";
-  public errorImagen: boolean= false;
+  public errorImagen: boolean;
   public uploadProgress: number;
   public habilitarFotosBTN = false;
 
@@ -37,15 +38,19 @@ export class AltaProductoComponent implements OnInit {
     public prodSrv: ProductosService,
     private loadingController: LoadingController,
     private cameraService: CameraService,
-    private storageService: StorageService) {
+    private storageService: StorageService,
+    public navCtrl: NavController,
+    public toastCtrl: ToastService
+    ) {
 
   }
 
+  navigateBack(){
+    this.navCtrl.back();
+  }
   ngOnInit() {
     this.producto = new Productos();
     this.producto.img_src = new Array();
-
-
     //  this.validarAltaProducto(this.formProducto);
     this.formProducto = this.fb.group({
       'nombre': ['', [Validators.required]],
@@ -54,9 +59,9 @@ export class AltaProductoComponent implements OnInit {
       'precio': ['', [Validators.required]],
       'sector': ['', [Validators.required]]
     });
-    if(this.validarCantidadFotos()){
+    /*if(this.validarCantidadFotos()){
       this.habilitarFotosBTN= true;
-    }
+    }*/
 
   }
 
@@ -77,7 +82,8 @@ export class AltaProductoComponent implements OnInit {
       if (resp) {
         console.log("Producto guardado con exito");
         //exito al guardar
-        this.route.navigate(['/home-cocinero']);
+        this.toastCtrl.presentToast("Se guardo con el exito el producto", 2000,"success")
+        this.route.navigate(['/producto-modificar']);
       }
       else {
         console.log("error al guardar el nuevo producto ");

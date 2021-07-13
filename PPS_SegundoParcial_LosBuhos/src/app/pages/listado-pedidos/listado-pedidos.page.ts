@@ -20,10 +20,13 @@ export class ListadoPedidosPage implements OnInit {
   public mesas: Array<any> = [];
   public currentUser: any;
   public sectorProd: any;
+  selected: string;
+  pedidosFiltrados: any;
 
   constructor(public pedidosSrv:PedidosService, public prodSrv: ProductosService, public toastSrv: ToastService, public pushSrv: NotificationsService) { }
 
   ngOnInit() {
+    this.selected = "pendientes";
     this.currentUser = JSON.parse(localStorage.getItem("userData"));
     this.sectorProd = this.currentUser.tipo_empleado == eEmpleado.COCINERO ? eProducto.COCINA : eProducto.BEBIDA;
     this.pedidosSrv.TraerMesaCliente().subscribe( mesas => {
@@ -40,13 +43,21 @@ export class ListadoPedidosPage implements OnInit {
             }
           });
         }
-      });
+      })
+      this.pedidosFiltrados = this.pedidosCocina
       console.log(this.pedidosCocina)
     })
-
-    
   }
 
+  FilterPendientes(){
+    this.pedidosFiltrados = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PENDIENTE})
+  }
+  FilterPreparacion(){
+    this.pedidosFiltrados = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.PREPARANDO})
+  }
+  FilterListos(){
+    this.pedidosFiltrados = this.pedidosCocina.map( x => { return x.estado == eEstadoProducto.LISTO})
+  }
   CambiarEstadoProducto(item: any, nuevoEstado: string){
 
     //Send push if all products are ready

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { timeStamp } from 'console';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { eEstadoMesa } from 'src/app/enums/eEstadoMesa';
 import { eEstadoMesaCliente } from 'src/app/enums/eEstadoMesaCliente';
 import { eEstadoProducto } from 'src/app/enums/eEstadoProducto';
@@ -12,6 +13,8 @@ import { PedidosService } from 'src/app/services/pedidos/pedidos.service';
 import { ProductosService } from 'src/app/services/productos/productos.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ModalPage } from '../modal/modal.page';
+
+
 declare let window: any;
 @Component({
   selector: 'app-carta',
@@ -29,12 +32,11 @@ export class CartaPage implements OnInit {
   public filtro: eProducto
   public mesaActual: any;
   public demoraEstimada: number = 0;
-  public showSpinner: boolean = false;
   public showCarta:boolean = true;
   public showOK: boolean = false;
   public backbuttonHref: string;
   public saveProdIndex: any
-  constructor(public prodSrv: ProductosService,public mesaSrv:MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController,public modalController: ModalController, public toastSrv:ToastService, public pushSrv: NotificationsService) { }
+  constructor(public prodSrv: ProductosService, public mesaSrv: MesasService, public pedidosSrv: PedidosService, public route: ActivatedRoute, public router: Router, public navCtrl: NavController, public modalController: ModalController, public toastSrv: ToastService, public pushSrv: NotificationsService,private spinner: NgxSpinnerService) { }
 
   navigateBack(){
     this.navCtrl.back();
@@ -160,10 +162,10 @@ export class CartaPage implements OnInit {
   }
 
   ShowSpinner(){
-    this.showCarta = false;
-    this.showSpinner = true;
+    this.spinner.show()
     setTimeout(() => {
-      this.showSpinner = false;
+      this.showCarta = false;
+      this.spinner.hide();
       this.showOK = true;
       setTimeout(() => {
         this.navigateBack();

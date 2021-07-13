@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { mainModule } from 'process';
 import { timeout } from 'rxjs/operators';
 import { Usuario } from 'src/app/clases/usuario';
@@ -29,9 +30,8 @@ export class EncuestaPage implements OnInit {
   reportedUsername: string;
   submitted: boolean;
   showOK:boolean  = false;
-  showSpinner: boolean = false;
   showForm : boolean = true;
-  constructor(private fromBuilder: FormBuilder, public route: ActivatedRoute, public encuestasSrv: EncuestaService, public router: Router) {
+  constructor(private fromBuilder: FormBuilder, public route: ActivatedRoute, public encuestasSrv: EncuestaService, public router: Router,private spinner: NgxSpinnerService) {
     this.surveyForm = this.fromBuilder.group({
       q1: [this.survey.q1, Validators.compose([Validators.required])],
       q2: [this.survey.q2, Validators.compose([Validators.required])],
@@ -71,10 +71,10 @@ export class EncuestaPage implements OnInit {
   }
 
   ClossingMessage() {
-    this.showForm = false
-    this.showSpinner = true;
+    this.spinner.show();
     setTimeout(() => {
-      this.showSpinner = false
+      this.showForm = false;
+      this.spinner.hide()
       this.showOK = true;
       setTimeout(() => {
         this.router.navigate(['supervisor/users'])

@@ -6,8 +6,19 @@
 </ion-header>
 
 <ion-content>
+  <ion-segment  [(ngModel)]="selected">
+    <ion-segment-button value="pendientes" (click)="FilterPendientes()">
+      <ion-label>Pendientes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enpreparacion" (click)="FilterPreparacion()">
+      <ion-label>Preparando</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="listos" (click)="FilterListos()">
+      <ion-label>Listos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
   <ion-list>
-      <ion-item *ngFor="let item of pedidosCocina; let j=index">
+      <ion-item *ngFor="let item of pedidosFiltrados; let j=index">
         <ion-avatar>
           <img [src]="item.img_src">
         </ion-avatar>

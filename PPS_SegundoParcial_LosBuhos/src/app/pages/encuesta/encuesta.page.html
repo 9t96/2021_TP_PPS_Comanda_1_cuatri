@@ -102,11 +102,13 @@
       <ion-button color="success" (click)="SubmitEncuesta()">Enviar</ion-button>
     </ion-row>
   </form>
-  <div *ngIf="showSpinner" class="spinner">
-    <img src="../../../assets/spinner_buho.gif" alt="">
-  </div>
   <div *ngIf="showOK" class="ok">
     <p class="title">¡Se registro el reporte con exito!</p>
     <img src="../../../assets/images/okay.svg" alt="">
   </div>
 </ion-content>
+
+<ngx-spinner
+type=null
+template="<img src='assets/spinner_buho.gif' height='125'/>"
+><p style="color: white" > Cargando... </p></ngx-spinner>

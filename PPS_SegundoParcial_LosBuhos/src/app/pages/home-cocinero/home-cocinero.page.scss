@@ -10,3 +10,13 @@
         color: var(--ion-color-primary)
     }
 }
+
+.hero{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-top: 2em;
+    img{
+        height: 10em;
+    }
+}
